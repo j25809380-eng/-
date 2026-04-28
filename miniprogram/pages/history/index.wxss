@@ -1,0 +1,165 @@
+@import "../../styles/theme.wxss";
+
+.small {
+  font-size: 28rpx;
+}
+
+.chart-card {
+  padding: 24rpx;
+}
+
+.trend-row {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  margin-bottom: 18rpx;
+}
+
+.trend-date,
+.trend-weight {
+  color: #9ea391;
+  font-size: 22rpx;
+}
+
+.trend-bar-wrap {
+  flex: 1;
+  height: 20rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.trend-bar {
+  height: 100%;
+  border-radius: 999rpx;
+  background: linear-gradient(135deg, #c3f400, #abd600);
+}
+
+.history-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.history-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12rpx;
+}
+
+.plan-title {
+  font-size: 32rpx;
+  font-weight: 800;
+}
+
+.muted-mini {
+  color: #9ea391;
+  font-size: 24rpx;
+}
+
+.report-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-top: 26rpx;
+}
+
+.report-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 54rpx;
+  padding: 0 20rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.05);
+  color: #c6cab7;
+  font-size: 22rpx;
+}
+
+.report-grid {
+  display: grid;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.report-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.export-btn {
+  height: 56rpx;
+  padding: 0 26rpx;
+  border-radius: 999rpx;
+  background: rgba(195, 244, 0, 0.18);
+  color: #c3f400;
+  font-size: 24rpx;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+}
+
+.report-card {
+  padding: 28rpx;
+}
+
+.report-title {
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.weekly-bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18rpx;
+  margin-top: 30rpx;
+}
+
+.weekly-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.weekly-bar {
+  width: 72rpx;
+  border-radius: 20rpx 20rpx 8rpx 8rpx;
+  background: linear-gradient(180deg, #c3f400, #6f8800);
+}
+
+.weekly-count,
+.weekly-label {
+  color: #9ea391;
+  font-size: 22rpx;
+}
+
+.exercise-trend-row {
+  margin-top: 22rpx;
+}
+
+.exercise-trend-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16rpx;
+  font-size: 24rpx;
+}
+
+.exercise-trend-track {
+  height: 20rpx;
+  margin-top: 14rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.exercise-trend-bar {
+  height: 100%;
+  border-radius: 999rpx;
+  background: linear-gradient(135deg, #c3f400, #abd600);
+}

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;700;800&amp;family=Inter:wght@300;400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#d2e5f5",
+                    "primary-fixed": "#c3f400",
+                    "on-primary-fixed-variant": "#3c4d00",
+                    "on-error": "#690005",
+                    "error-container": "#93000a",
+                    "surface-tint": "#abd600",
+                    "on-background": "#e2e2e2",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-secondary-fixed-variant": "#3c4d00",
+                    "outline-variant": "#444933",
+                    "on-primary-fixed": "#161e00",
+                    "surface-container-highest": "#353535",
+                    "primary": "#ffffff",
+                    "primary-container": "#c3f400",
+                    "background": "#131313",
+                    "secondary": "#b5d25e",
+                    "secondary-container": "#5d7602",
+                    "inverse-on-surface": "#303030",
+                    "on-surface": "#e2e2e2",
+                    "on-primary": "#283500",
+                    "on-tertiary-fixed-variant": "#374956",
+                    "on-tertiary-fixed": "#0b1d29",
+                    "inverse-surface": "#e2e2e2",
+                    "surface-bright": "#393939",
+                    "secondary-fixed-dim": "#b5d25e",
+                    "surface-variant": "#353535",
+                    "on-tertiary": "#21323e",
+                    "on-primary-container": "#556d00",
+                    "tertiary": "#ffffff",
+                    "on-secondary-container": "#defd83",
+                    "outline": "#8e9379",
+                    "on-secondary-fixed": "#161e00",
+                    "inverse-primary": "#506600",
+                    "error": "#ffb4ab",
+                    "surface-container": "#1f1f1f",
+                    "primary-fixed-dim": "#abd600",
+                    "on-surface-variant": "#c4c9ac",
+                    "on-tertiary-container": "#556774",
+                    "surface-dim": "#131313",
+                    "secondary-fixed": "#d0ef77",
+                    "tertiary-fixed-dim": "#b6c9d8",
+                    "surface-container-high": "#2a2a2a",
+                    "surface": "#131313",
+                    "on-secondary": "#283500",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-fixed": "#d2e5f5",
+                    "surface-container-low": "#1b1b1b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        background-color: #131313;
+        color: #e2e2e2;
+        -webkit-font-smoothing: antialiased;
+      }
+      .glass-card {
+        background: rgba(31, 31, 31, 0.6);
+        backdrop-filter: blur(12px);
+      }
+      .neon-glow {
+        box-shadow: 0 0 20px rgba(204, 255, 0, 0.2);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body selection:bg-primary-fixed selection:text-black pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#131313]/80 backdrop-blur-lg flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="professional portrait of an athlete with focused expression in cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZuQDDr-GX1G8mX8KblrdUD3t2ZGH0w_t4tzuZLN5cn8Pl5sKMuKPr6jQGaQDd1Q6CMEEX56HiwWijUa3S7NShBvkmETo3BbyhIcqenYUI-u7Q6SRM5nkixqKwoUYLgpkQjMtfg_9cpgIGQE8m9YGP8r3B99aZPCdKlPA84evOtd1F6b4OsoqunbJEGwlnC2Kyr7CEkf5LymET7ZtOC-CYiv2tFltzm9mdN6_-siguwrXzeF4f0Kxu6cIYxZgOYTRitq8Cw9TRVt0k"/>
+</div>
+<span class="font-manrope font-black tracking-widest uppercase text-2xl font-black italic text-lime-400 tracking-tighter">ONYX VOLT</span>
+</div>
+<button class="text-neutral-400 hover:opacity-80 transition-opacity active:scale-95 active:duration-100">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<main class="pt-24 px-6 max-w-2xl mx-auto">
+<!-- Tab Switcher -->
+<div class="flex p-1 bg-surface-container-low rounded-full mb-10 w-full">
+<button class="flex-1 py-3 text-sm font-bold tracking-widest uppercase rounded-full bg-primary-fixed text-black transition-all">
+                好友排名
+            </button>
+<button class="flex-1 py-3 text-sm font-bold tracking-widest uppercase rounded-full text-on-surface-variant hover:text-white transition-all">
+                全球榜单
+            </button>
+</div>
+<!-- Top 3 Podium (Asymmetric Bento Style) -->
+<div class="grid grid-cols-12 gap-4 mb-12">
+<!-- Rank 2 -->
+<div class="col-span-4 flex flex-col items-center justify-end pb-4 pt-12">
+<div class="relative mb-4">
+<div class="w-16 h-16 rounded-full border-2 border-neutral-600 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="male athlete profile picture with dramatic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZpSYhLNL1mdqalPfc_lCUBdy-eY7IdP9fTHtQuTcieg-wmx7aEN3XTFI1p8sToS2sFFxAh0VvnL_Rc89zF0m73ADyh3hzDdosFEL_UnVDuiEBgDmxx9E3dCnYnCU6bKK3j-H5GrTuPDWBD5mUNxp_R4Rv_2agMbUa2Bx3Z06t8bfyYWxRQtD1n2LrtD-MbcWFRqHuj4l5H_QPkTZKEFVTU5JAWq2Mb7b3i5JlyI3yBWcii9kWtoCm-VXTuCYNDAcsZgDfFTT3PCRJ"/>
+</div>
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-neutral-600 text-[10px] px-2 py-0.5 rounded-full font-black text-white">2ND</div>
+</div>
+<h3 class="font-headline font-bold text-sm text-center mb-1">Alex.W</h3>
+<p class="text-primary-fixed font-black text-xs tracking-tighter">12,490 VP</p>
+</div>
+<!-- Rank 1 (The Focus) -->
+<div class="col-span-4 flex flex-col items-center bg-surface-container-high rounded-xl p-4 border border-primary-fixed/20 neon-glow">
+<div class="relative mb-6">
+<div class="w-20 h-20 rounded-full border-4 border-primary-fixed overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="energetic woman in gym gear with vibrant lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCA6UgDOIuXUQGzFAI0FH5chdRwqjWNSW5i1RzXdQEgjsPjh2CmydcHrcIR31oEyuUHoswM_G5ORurzJ90pjoLh_clehLRyjry9CSshbIS8PEHYWUBMnLJ-t51B8Y4DcGDWqhX1bbqyn8FohobQNlb4qWwAlFA3uzkTP5sKOs0JCI296xq_AFTpIvndIWmOF2FQtreS2Lobva5a-FQHLpxbsZonFEXj-0U6ABdRZ4BCnEmHcwa9z7PuPuZrN9FclqhPyBCowTdgU56i"/>
+</div>
+<div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-primary-fixed text-black text-xs px-3 py-1 rounded-full font-black shadow-lg">WINNER</div>
+<div class="absolute -top-4 -right-4">
+<span class="material-symbols-outlined text-primary-fixed text-3xl" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+</div>
+<h3 class="font-headline font-extrabold text-base text-center mb-1">Sarah.K</h3>
+<p class="text-primary-fixed font-black text-sm tracking-tighter">15,820 VP</p>
+<div class="mt-4 px-3 py-1 bg-primary-fixed/10 border border-primary-fixed/20 rounded-full">
+<span class="text-[10px] font-bold text-primary-fixed uppercase tracking-widest">王者段位</span>
+</div>
+</div>
+<!-- Rank 3 -->
+<div class="col-span-4 flex flex-col items-center justify-end pb-4 pt-12">
+<div class="relative mb-4">
+<div class="w-16 h-16 rounded-full border-2 border-orange-700/50 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="fitness professional male portrait with dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDG1BSBaBJZAHYr3H3uUlVTFQ_MwVbnXB4x7dcvG5kWvMUSkQHLJLZoLVAr46ItSJDm9DqMwrM3ckgk8Y2PjPdMA3j0uq4vauJLgpnNMG630DdxOiRg7Utbvm3xL-m7vpQRolYJE-f8TkUfQWymqvLxUXEvgesVSRQ87ZRbtrVDS0gxgGVsG2w3FLVHyNYrcWTOcunQbHjoMadp2DhoUvS0tjDGJSbqi_H_ftJTxXhnhyFNL-S9aQhySPwauA8DyWNXoEtWMEbjuQQ9"/>
+</div>
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-orange-800 text-[10px] px-2 py-0.5 rounded-full font-black text-white">3RD</div>
+</div>
+<h3 class="font-headline font-bold text-sm text-center mb-1">Marcus</h3>
+<p class="text-primary-fixed font-black text-xs tracking-tighter">11,200 VP</p>
+</div>
+</div>
+<!-- Leaderboard List -->
+<section class="space-y-4">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline font-black text-xl uppercase tracking-widest">排行榜单</h2>
+<span class="text-on-surface-variant text-xs font-bold uppercase tracking-widest">最后更新: 2分钟前</span>
+</div>
+<!-- List Item: Self Highlight -->
+<div class="group relative flex items-center p-5 bg-primary-fixed rounded-lg transition-transform active:scale-[0.98]">
+<div class="flex items-center justify-center w-8 font-black text-black italic text-lg mr-4">
+                    4
+                </div>
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-black/20 mr-4">
+<img class="w-full h-full object-cover" data-alt="user self avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD027vPf3RX0D4odaf8fC_1vAhDYvuqB5PMklOmoGj6vsqQbkV5KehiSvHKTUJe1L19ITB_Qi9gp1-s34a38B4JpyQ0ZrpzQx0FwQqNMisLJTrfgbHqHNlwZg6jcneHU5WBJuN3jrbztkRAMqfCTg9_4WCC_V0dx4xW27h6rmGvxWIrU128GTtfGrIgmNlAwo8_gsutXFVnb3Mlh8xJzct8exmLNpah7jNMYzjdga8v0f_xYl1wk7VgeD1sHpNzLIwyTLUy4JabJT-z"/>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-black text-base">你 (You)</h4>
+<p class="text-on-primary-fixed-variant text-[10px] font-bold uppercase tracking-widest">超越了 82% 的好友</p>
+</div>
+<div class="text-right">
+<p class="font-black text-black text-lg leading-none tracking-tighter">9,845</p>
+<p class="text-on-primary-fixed-variant text-[10px] font-bold">VP</p>
+</div>
+</div>
+<!-- Normal List Items -->
+<div class="space-y-3">
+<!-- Rank 5 -->
+<div class="flex items-center p-4 bg-surface-container-low rounded-lg hover:bg-surface-container transition-colors group">
+<div class="flex items-center justify-center w-8 font-bold text-on-surface-variant mr-4">
+                        5
+                    </div>
+<div class="w-11 h-11 rounded-full overflow-hidden border border-outline-variant mr-4 grayscale group-hover:grayscale-0 transition-all">
+<img class="w-full h-full object-cover" data-alt="man smiling profile photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUnISjnQiTUOrKauaSwNIDt_rp2mNNh_YtC4_P4tzX5fLKjQEVevKthnW4YMZOg_Nxk2KCty_FIY8KSphk_XHG3vzcUqEpDsKYKDwWjaRi1HZy3hEvT9xD1RKMMdPbRFH01BHGwpf8vYY60sLTWix9ij-QjY35EmE7ro9Up4J_nKutQ8hJz25cmyOwaia5qC7iy2efpFvz-9zojfzL5z6-nP3yTT6_ywdN8XbFQG4qIi4yj3XmqgBAb5DpC9uMlRhB3VGiOGI2RYJo"/>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-on-surface text-sm">Li Wei</h4>
+<p class="text-on-surface-variant text-[10px] font-medium">连续运动 12 天</p>
+</div>
+<div class="text-right">
+<p class="font-black text-on-surface text-base leading-none tracking-tighter">8,210</p>
+<p class="text-on-surface-variant text-[10px] font-bold">VP</p>
+</div>
+</div>
+<!-- Rank 6 -->
+<div class="flex items-center p-4 bg-surface-container-low rounded-lg hover:bg-surface-container transition-colors group">
+<div class="flex items-center justify-center w-8 font-bold text-on-surface-variant mr-4">
+                        6
+                    </div>
+<div class="w-11 h-11 rounded-full overflow-hidden border border-outline-variant mr-4 grayscale group-hover:grayscale-0 transition-all">
+<img class="w-full h-full object-cover" data-alt="woman face portrait profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkZ9ziYKTcufU1QUr20ABLKzFgZKyMomj6iYEoVSjuyppYmnSy1QGj9fZzsLjB2yUhq3DUOQDsVGC2GIG3JkgvbZTRwyRcyCZQJ5oiRUtmpszHNsPcfTXBd2ra9ECcqL6fzFIh1xtaJxi4Xf6KC-TLmqlupojMaB8Zjf613pAO4sdMFk0IWjN3XB6MvDisNZZmos5_IQQS5nB0JM-4ieO9THPN3zaBh4nvak0pE6Yz2HrDdy2KRUwxNVBdJoVSLa3h089AYhLnrXKY"/>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-on-surface text-sm">Anna.S</h4>
+<p class="text-on-surface-variant text-[10px] font-medium">刚刚完成了 5KM 跑</p>
+</div>
+<div class="text-right">
+<p class="font-black text-on-surface text-base leading-none tracking-tighter">7,950</p>
+<p class="text-on-surface-variant text-[10px] font-bold">VP</p>
+</div>
+</div>
+<!-- Rank 7 -->
+<div class="flex items-center p-4 bg-surface-container-low rounded-lg hover:bg-surface-container transition-colors group">
+<div class="flex items-center justify-center w-8 font-bold text-on-surface-variant mr-4">
+                        7
+                    </div>
+<div class="w-11 h-11 rounded-full overflow-hidden border border-outline-variant mr-4 grayscale group-hover:grayscale-0 transition-all">
+<img class="w-full h-full object-cover" data-alt="professional male portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzT2vLOTHfHceqPpALYwkbUKs2kKUIzyLBTyhtD0XutTCi38LITbA7OGjRsoRmA88NrtQqhG4qmFioweD6aScWf4t20zveRIsNCP_X0XyFVsSQdj5pflETFfrZnOIF4Rh6YHKKPtn4ESJuRwRqoo2mj78ywAbgugJna6UMSv14vfi8iKPspiY4-PKlk4_31glvRkG95HYA40_lMNllRT2-FGgeYkaM7pvMV8QIfK_H6_LVX0wApTjFEasByJdz9_Yc1ye-UHtIgFox"/>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-on-surface text-sm">David Chen</h4>
+<p class="text-on-surface-variant text-[10px] font-medium">核心训练达人</p>
+</div>
+<div class="text-right">
+<p class="font-black text-on-surface text-base leading-none tracking-tighter">7,400</p>
+<p class="text-on-surface-variant text-[10px] font-bold">VP</p>
+</div>
+</div>
+<!-- Rank 8 -->
+<div class="flex items-center p-4 bg-surface-container-low rounded-lg hover:bg-surface-container transition-colors group">
+<div class="flex items-center justify-center w-8 font-bold text-on-surface-variant mr-4">
+                        8
+                    </div>
+<div class="w-11 h-11 rounded-full overflow-hidden border border-outline-variant mr-4 grayscale group-hover:grayscale-0 transition-all">
+<img class="w-full h-full object-cover" data-alt="casual female portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDABXBsq2-4pfyw79fwoQBt3z1KSdh_Ig1wAOVEs7jEDYNYEVSpD5RoC-Lf1UzbfYq46mPhlTQKJRF9Pz5dYcEYAlRij61u65rpdNyYzMKutoF1bMjMJi9C0GUGSeRFvMO73B3TLHlqJoBhy9Qm6L0MlrWzpHyHostpEaK_CCveAm2ZZbEpisJe0NiaiDf0JW2pkb2yGKM0DHjsHJqYOiVC8laaBsU2r5yXpO_u2VxQhAlh027yFDezhUlm7HXdOcRe2sUBqnhvc2H0"/>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-on-surface text-sm">Emma J.</h4>
+<p class="text-on-surface-variant text-[10px] font-medium">瑜伽初学者</p>
+</div>
+<div class="text-right">
+<p class="font-black text-on-surface text-base leading-none tracking-tighter">6,120</p>
+<p class="text-on-surface-variant text-[10px] font-bold">VP</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-8 py-4 bg-neutral-900/90 backdrop-blur-2xl rounded-t-[3rem] pb-safe shadow-[0_-10px_40px_rgba(204,255,0,0.05)]">
+<button class="flex flex-col items-center justify-center text-neutral-500 p-3 hover:text-lime-200 transition-colors active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">fitness_center</span>
+</button>
+<button class="flex flex-col items-center justify-center text-neutral-500 p-3 hover:text-lime-200 transition-colors active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">explore</span>
+</button>
+<!-- ACTIVE: Leaderboard -->
+<button class="flex flex-col items-center justify-center bg-lime-400 text-black rounded-full p-3 shadow-[0_0_20px_rgba(204,255,0,0.4)] active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-neutral-500 p-3 hover:text-lime-200 transition-colors active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">history</span>
+</button>
+</nav>
+</body></html>

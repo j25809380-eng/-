@@ -1,0 +1,9 @@
+{
+  "desc": "FitNote 小程序 sitemap",
+  "rules": [
+    {
+      "action": "allow",
+      "page": "*"
+    }
+  ]
+}

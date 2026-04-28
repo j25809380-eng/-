@@ -1,0 +1,142 @@
+@import "../../styles/theme.wxss";
+
+.template-row {
+  display: grid;
+  gap: 18rpx;
+}
+
+.template-card,
+.form-card,
+.day-card,
+.item-card {
+  padding: 28rpx;
+}
+
+.template-card {
+  border-radius: 28rpx;
+  background:
+    radial-gradient(circle at top right, rgba(195, 244, 0, 0.18), transparent 32%),
+    rgba(255, 255, 255, 0.03);
+}
+
+.template-title,
+.item-title {
+  margin-top: 14rpx;
+  font-size: 32rpx;
+  font-weight: 800;
+}
+
+.form-card,
+.day-card {
+  display: grid;
+  gap: 22rpx;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18rpx;
+}
+
+.field-block {
+  display: grid;
+  gap: 12rpx;
+}
+
+.field-block.compact {
+  min-width: 0;
+}
+
+.field-title {
+  color: #9ea391;
+  font-size: 22rpx;
+  letter-spacing: 0.08em;
+}
+
+.field-input,
+.field-textarea {
+  width: 100%;
+  color: #ffffff;
+  border-radius: 20rpx;
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 26rpx;
+}
+
+.field-input {
+  height: 84rpx;
+  padding: 0 24rpx;
+}
+
+.field-textarea {
+  min-height: 180rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
+}
+
+.active-tip {
+  margin-top: 16rpx;
+}
+
+.day-card {
+  margin-bottom: 22rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.04);
+}
+
+.day-card.active {
+  border-color: rgba(195, 244, 0, 0.3);
+  box-shadow: 0 0 0 2rpx rgba(195, 244, 0, 0.06);
+}
+
+.day-head,
+.item-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.day-head-left {
+  display: grid;
+  gap: 12rpx;
+}
+
+.item-card {
+  border-radius: 24rpx;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.mini-action,
+.ghost-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  font-weight: 800;
+}
+
+.mini-action {
+  height: 54rpx;
+  background: rgba(255, 255, 255, 0.05);
+  color: #d9dccf;
+}
+
+.mini-action.danger {
+  background: rgba(255, 123, 123, 0.12);
+  color: #ff9f9f;
+}
+
+.ghost-button {
+  height: 72rpx;
+  border: 1rpx solid rgba(195, 244, 0, 0.24);
+  color: #c3f400;
+  background: rgba(195, 244, 0, 0.08);
+}
+
+.add-day-button {
+  margin-top: 10rpx;
+}
+
+.submit-section {
+  padding-bottom: 60rpx;
+}

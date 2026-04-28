@@ -1,0 +1,32 @@
+@import "../../styles/theme.wxss";
+
+.set-card {
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+}
+
+.set-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.remove-text {
+  color: #8f937f;
+  font-size: 24rpx;
+}
+
+.section-mini {
+  margin-top: 20rpx;
+}
+
+.mini-card {
+  padding: 20rpx;
+  border-radius: 24rpx;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.set-input {
+  min-height: 88rpx;
+}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;700;800&amp;family=Inter:wght@300;400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#ffffff",
+                    "surface-container": "#1f1f1f",
+                    "outline-variant": "#444933",
+                    "surface-container-high": "#2a2a2a",
+                    "primary-fixed": "#c3f400",
+                    "on-secondary-fixed-variant": "#3c4d00",
+                    "on-primary-fixed": "#161e00",
+                    "inverse-on-surface": "#303030",
+                    "on-secondary-fixed": "#161e00",
+                    "on-background": "#e2e2e2",
+                    "tertiary-fixed": "#d2e5f5",
+                    "on-tertiary-fixed-variant": "#374956",
+                    "primary-container": "#c3f400",
+                    "surface": "#131313",
+                    "inverse-primary": "#506600",
+                    "surface-container-low": "#1b1b1b",
+                    "secondary-fixed": "#d0ef77",
+                    "background": "#131313",
+                    "on-primary": "#283500",
+                    "on-primary-container": "#556d00",
+                    "surface-container-highest": "#353535",
+                    "surface-bright": "#393939",
+                    "tertiary-container": "#d2e5f5",
+                    "primary-fixed-dim": "#abd600",
+                    "on-tertiary-container": "#556774",
+                    "error-container": "#93000a",
+                    "inverse-surface": "#e2e2e2",
+                    "on-surface": "#e2e2e2",
+                    "on-tertiary": "#21323e",
+                    "surface-dim": "#131313",
+                    "secondary": "#b5d25e",
+                    "error": "#ffb4ab",
+                    "surface-variant": "#353535",
+                    "on-primary-fixed-variant": "#3c4d00",
+                    "secondary-container": "#5d7602",
+                    "primary": "#ffffff",
+                    "outline": "#8e9379",
+                    "surface-tint": "#abd600",
+                    "secondary-fixed-dim": "#b5d25e",
+                    "on-secondary": "#283500",
+                    "on-surface-variant": "#c4c9ac",
+                    "on-error": "#690005",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary-fixed": "#0b1d29",
+                    "on-secondary-container": "#defd83",
+                    "surface-container-lowest": "#0e0e0e",
+                    "tertiary-fixed-dim": "#b6c9d8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        .glass-card {
+            background: rgba(31, 31, 31, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .text-glow {
+            text-shadow: 0 0 15px rgba(204, 255, 0, 0.4);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopAppBar -->
+<header class="bg-[#131313]/80 backdrop-blur-xl docked full-width top-0 z-50 flex justify-between items-center w-full px-6 py-4 fixed">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-primary-fixed/20">
+<img class="w-full h-full object-cover" data-alt="professional portrait of a fit athlete in dark gym environment with cinematic lighting and deep shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBA9rYio9XIwvavKHxNX7qm-Wu1rgozdorDyIVfQpFft0jIG9WJU7IMVVvZAHN8WTAWloerPjEnqKPnUrgj1J7mDZ3h4CYdMiM8UtnN4fFeb1-X3YnzBsxzl-ZCjP5-ewzv9XBxdKuWUyJ3eBd94ORpIzCF8zxkG8S8bssFIWCLtmWNbU_EZ2918oNpfWir2kb3lVUxpm-nzZUXBO4Ho-tKdxBlyD5XmJZiZn5TgY6mGuswAapgvZ7W5Iz52qhh8jyfuI0nNw1Y7tJr"/>
+</div>
+<span class="font-['Manrope'] font-black tracking-widest uppercase text-xl italic text-[#CCFF00]">ONYX VOLT</span>
+</div>
+<button class="text-[#CCFF00] hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined text-2xl" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-5xl mx-auto">
+<!-- Hero Section -->
+<section class="mb-12">
+<p class="font-headline text-primary-fixed uppercase tracking-[0.3em] text-xs font-bold mb-2">每日训练计划</p>
+<h1 class="font-headline text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none">选择你的 <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-fixed to-secondary">动能</span></h1>
+</section>
+<!-- Workout Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Hypertrophy - Featured Card -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-xl bg-surface-container-low h-[400px]">
+<img class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" data-alt="close-up of muscular arms lifting heavy chrome dumbbells in a dark high-tech industrial gym with neon highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU7lDzSCjMI4Y_ic2O7Yh5zJhRTfYg-BMFHaLd5zpwWGYYEvMexQGLWnAMV5FQmE4lF6Dq4XU864ZPYA7erZ5fEDcIzGY7Ft43rfrlTMhk6T6Is4AB8vZOixTA46wUmMr5Sqb3YdYzJG5mYCco3QZBpYX5cDGjCxqVbHe8JlyRsl3so5z9dvZde7c0LUXLi7smw06nvcJvGQdB3FwdHwR3d6WigZYdn9G6PJ1uGM2EvaD69NTiw_pbgLSbNts6rsZyLROU8BihZYRx"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="absolute bottom-0 p-8 w-full">
+<div class="flex justify-between items-end">
+<div>
+<span class="inline-block px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed text-[10px] font-black uppercase tracking-widest mb-4">热门推荐</span>
+<h2 class="font-headline text-4xl font-extrabold uppercase tracking-tight mb-2">增肌训练</h2>
+<div class="flex gap-4 text-on-surface-variant text-sm"><span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span> 65 分钟</span><span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="bolt">bolt</span> 进阶</span></div>
+</div>
+<span class="material-symbols-outlined text-primary-fixed text-4xl opacity-0 group-hover:opacity-100 transition-opacity" data-icon="arrow_forward_ios">arrow_forward_ios</span>
+</div>
+</div>
+</div>
+<!-- Strength Card -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-xl bg-surface-container-high h-[400px]">
+<img class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700" data-alt="dramatic wide shot of a heavy barbell on a squat rack in a dark moody gym with single overhead spotlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEN8xcAx-k-r_wIaAYW-XW23p-JUw3s-hDlZTyzSuF9f1d_GFuJX9DBph0jqfIAzoWbO6tdxHnVVLGQMYpyZirlDFRuwqlP3rhTpbAg8n9RwdmQcI3fnvDwfNqOtEllOz3pAVBeCvtEk3OmBtJ76zBlDB0t6E9s8vXaDq3GvAC0GdpIcBj-g9UrqhS4JSGKdksQrfgwIb3uWnV0QOwdhKltBH3kBG1O-d2UKIU-vbUJmrnyZABw3kO1gugs1mZWx20Nm3G-_CAshJN"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
+<div class="absolute bottom-0 p-8">
+<h2 class="font-headline text-3xl font-extrabold uppercase tracking-tight mb-2">力量训练</h2>
+<div class="flex flex-col gap-1 text-on-surface-variant text-sm"><span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span> 45 分钟</span><span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="fitness_center">fitness_center</span> 力量举</span></div>
+</div>
+</div>
+<!-- Cardio / Metabolic -->
+<div class="md:col-span-6 group relative overflow-hidden rounded-xl glass-card h-[300px]">
+<img class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-105 transition-transform duration-700" data-alt="dynamic shot of athlete sprinting on a curved treadmill in a dimly lit fitness studio with motion blur" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAg5Vik31xj_B_6kw_SBIb0csBIb4C5rxrhnMkV9Stb8N61DRIWUbW7oLY8HlUsYnqaKPrHMl3dCeEE01xZO8ExJbZTlu7D6JCXhbJOztT9goRfO5bDZ2jNGC7PgKfyzxEl_urEXkRRdU_mPBxauFQlx5ihe9LadJBt44nZshoYX2TGPVUNEN-YzwIeWQT9MBV7sEB2dadwsA2zAPvBGrV2gssw2-_-r-q8jgKJbTuEfXT_HNUpnfc5Cbt1ZNEwSySHSq1x72t8mvQN"/>
+<div class="relative z-10 p-8 flex flex-col h-full justify-between">
+<div class="flex justify-between">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="speed">speed</span>
+<span class="text-on-surface-variant font-black text-xs tracking-widest">代谢提升</span>
+</div>
+<div>
+<h2 class="font-headline text-3xl font-extrabold uppercase tracking-tight mb-1">代谢提升</h2>
+<p class="text-on-surface-variant text-sm">30 分钟 • 高强度</p>
+</div>
+</div>
+</div>
+<!-- Recovery / Mobility -->
+<div class="md:col-span-6 group relative overflow-hidden rounded-xl bg-surface-container-highest h-[300px]">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(204,255,0,0.1)_0%,_transparent_70%)]"></div>
+<div class="relative z-10 p-8 flex flex-col h-full justify-between border border-white/5">
+<div class="flex justify-between">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl" data-icon="self_care">self_care</span>
+<span class="text-on-surface-variant font-black text-xs tracking-widest">恢复</span>
+</div>
+<div>
+<h2 class="font-headline text-3xl font-extrabold uppercase tracking-tight mb-1">灵活性训练</h2>
+<p class="text-on-surface-variant text-sm">20 分钟 • 流动状态</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Session Prep Details -->
+<section class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="glass-card p-6 rounded-lg flex items-center gap-4">
+<div class="bg-surface-container-highest p-3 rounded-full">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="restaurant">restaurant</span>
+</div>
+<div><p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">练前饮食</p><p class="font-bold text-sm">1小时前已进食</p></div>
+</div>
+<div class="glass-card p-6 rounded-lg flex items-center gap-4">
+<div class="bg-surface-container-highest p-3 rounded-full">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="water_drop">water_drop</span>
+</div>
+<div><p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">补水状态</p><p class="font-bold text-sm">85% 最佳</p></div>
+</div>
+<div class="glass-card p-6 rounded-lg flex items-center gap-4">
+<div class="bg-surface-container-highest p-3 rounded-full">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="battery_very_high">battery_very_low</span>
+</div>
+<div><p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">准备就绪</p><p class="font-bold text-sm">高性能表现</p></div>
+</div>
+</section>
+</main>
+<!-- START SESSION FAB -->
+<div class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[60] w-full max-w-xs px-6">
+<button class="w-full bg-[#CCFF00] text-black font-headline font-black text-lg py-5 rounded-full shadow-[0_0_30px_rgba(204,255,0,0.4)] hover:scale-105 active:scale-95 transition-all duration-300 uppercase tracking-widest flex items-center justify-center gap-3 group">开始训练 <span class="material-symbols-outlined font-black group-hover:translate-x-2 transition-transform" data-icon="play_arrow" style="font-variation-settings: 'FILL' 1;">play_arrow</span></button>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md rounded-full border border-white/5 bg-[#131313]/90 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-50 flex justify-around items-center px-4 py-2">
+<button class="bg-[#CCFF00] text-black rounded-full p-3 shadow-[0_0_15px_rgba(204,255,0,0.4)] active:scale-90 duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="fitness_center" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+</button>
+<button class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+</button>
+<button class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+</button>
+<button class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+</button>
+<button class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+</nav>
+</body></html>

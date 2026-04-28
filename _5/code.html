@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;700;800&amp;family=Inter:wght@300;400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#ffffff",
+                    "surface-container": "#1f1f1f",
+                    "outline-variant": "#444933",
+                    "surface-container-high": "#2a2a2a",
+                    "primary-fixed": "#c3f400",
+                    "on-secondary-fixed-variant": "#3c4d00",
+                    "on-primary-fixed": "#161e00",
+                    "inverse-on-surface": "#303030",
+                    "on-secondary-fixed": "#161e00",
+                    "on-background": "#e2e2e2",
+                    "tertiary-fixed": "#d2e5f5",
+                    "on-tertiary-fixed-variant": "#374956",
+                    "primary-container": "#c3f400",
+                    "surface": "#131313",
+                    "inverse-primary": "#506600",
+                    "surface-container-low": "#1b1b1b",
+                    "secondary-fixed": "#d0ef77",
+                    "background": "#131313",
+                    "on-primary": "#283500",
+                    "on-primary-container": "#556d00",
+                    "surface-container-highest": "#353535",
+                    "surface-bright": "#393939",
+                    "tertiary-container": "#d2e5f5",
+                    "primary-fixed-dim": "#abd600",
+                    "on-tertiary-container": "#556774",
+                    "error-container": "#93000a",
+                    "inverse-surface": "#e2e2e2",
+                    "on-surface": "#e2e2e2",
+                    "on-tertiary": "#21323e",
+                    "surface-dim": "#131313",
+                    "secondary": "#b5d25e",
+                    "error": "#ffb4ab",
+                    "surface-variant": "#353535",
+                    "on-primary-fixed-variant": "#3c4d00",
+                    "secondary-container": "#5d7602",
+                    "primary": "#ffffff",
+                    "outline": "#8e9379",
+                    "surface-tint": "#abd600",
+                    "secondary-fixed-dim": "#b5d25e",
+                    "on-secondary": "#283500",
+                    "on-surface-variant": "#c4c9ac",
+                    "on-error": "#690005",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary-fixed": "#0b1d29",
+                    "on-secondary-container": "#defd83",
+                    "surface-container-lowest": "#0e0e0e",
+                    "tertiary-fixed-dim": "#b6c9d8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-mesh-gradient {
+            background: radial-gradient(circle at 20% 30%, rgba(204, 255, 0, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(204, 255, 0, 0.1) 0%, transparent 50%);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(204, 255, 0, 0.4);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen selection:bg-primary-fixed selection:text-black overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="bg-[#131313]/80 backdrop-blur-xl flex justify-between items-center w-full px-6 py-4 fixed top-0 z-50 shadow-none">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Close up portrait of a fit person with determined expression in moody gym lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj1yFXGeGYjMR-TPTClyapu7KfctuZ3yFk1PsOeuJ82ZRwyWhC5p2UvPC9VSLB_76d5Hrpg9aa6vVfHCm9gmT5JCCNedzpESBhKdp9rIv-FFIWwFvH3aXW5WH8k2SZic7dWRafccN8cBjj7B6_lX4wz-hLYFgJXpwWw8MEWKMtFnQNLhdetajRxK90uNcv5Mk1GqBsofF87jvG_s2r__fPWprVdSP-_kF6T2Cu6IGh0ZD1-dnOBFUj7jn7j5qq0gRmFR9whWjgPWvb"/>
+</div>
+<span class="font-['Manrope'] font-black tracking-widest text-[#CCFF00] text-xl italic uppercase">ONYX VOLT</span>
+</div>
+<button class="text-neutral-400 hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-4xl mx-auto bg-mesh-gradient">
+<!-- Hero Celebration Section -->
+<section class="text-center mb-12">
+<div class="inline-flex items-center justify-center bg-primary-fixed/10 px-4 py-1 rounded-full mb-6 border border-primary-fixed/20">
+<span class="material-symbols-outlined text-primary-fixed text-sm mr-2" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="text-primary-fixed font-headline font-bold text-xs tracking-widest uppercase">表现巅峰</span>
+</div>
+<h1 class="font-headline font-black text-6xl md:text-8xl tracking-tighter uppercase leading-none mb-4">训练 <br/>
+<span class="text-[#CCFF00] text-glow">完成</span></h1>
+<p class="text-on-surface-variant font-light text-lg tracking-wide max-w-md mx-auto">精准工程遇上原始力量。你今天超越了极限。</p>
+</section>
+<!-- Personal Record Badge -->
+<div class="relative group mb-12">
+<div class="absolute -inset-1 bg-gradient-to-r from-primary-fixed to-secondary-container rounded-xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+<div class="relative bg-surface-container-high rounded-xl p-8 flex flex-col md:flex-row items-center gap-8 border border-white/5 overflow-hidden">
+<div class="flex-shrink-0 w-24 h-24 bg-primary-fixed text-black rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(204,255,0,0.3)]">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+</div>
+<div>
+<h3 class="font-headline font-extrabold text-2xl uppercase tracking-tight text-white mb-1">刷新个人记录</h3>
+<p class="text-on-surface-variant text-sm font-medium leading-relaxed mb-4">你推动了 24,500 公斤的总负重——将之前的里程碑提升了 12%。</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-surface-container-highest rounded-full text-[10px] font-bold tracking-widest text-primary-fixed uppercase">力量举 II</span>
+<span class="px-3 py-1 bg-surface-container-highest rounded-full text-[10px] font-bold tracking-widest text-primary-fixed uppercase">容量野兽</span>
+</div>
+</div>
+<div class="md:ml-auto text-right">
+<span class="block text-4xl font-headline font-black text-white italic">+12%</span>
+<span class="block text-[10px] font-bold uppercase tracking-tighter text-on-surface-variant">效率提升</span>
+</div>
+</div>
+</div>
+<!-- Metric Bento Grid -->
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12">
+<!-- Total Volume -->
+<div class="col-span-2 md:col-span-1 bg-surface-container-low rounded-lg p-6 flex flex-col justify-between aspect-square md:aspect-auto border border-white/5">
+<span class="material-symbols-outlined text-primary-fixed mb-4">fitness_center</span>
+<div>
+<span class="block text-4xl font-headline font-black text-white">24.5k</span>
+<span class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest">强度曲线</span>
+</div>
+</div>
+<!-- Duration -->
+<div class="bg-surface-container-low rounded-lg p-6 flex flex-col justify-between border border-white/5">
+<span class="material-symbols-outlined text-primary-fixed mb-4">timer</span>
+<div>
+<span class="block text-4xl font-headline font-black text-white">68:12</span>
+<span class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest">活跃时长</span>
+</div>
+</div>
+<!-- Calories -->
+<div class="bg-surface-container-low rounded-lg p-6 flex flex-col justify-between border border-white/5">
+<span class="material-symbols-outlined text-primary-fixed mb-4">local_fire_department</span>
+<div>
+<span class="block text-4xl font-headline font-black text-white">842</span>
+<span class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest">消耗热量</span>
+</div>
+</div>
+<!-- Avg Heart Rate -->
+<div class="col-span-2 bg-surface-container-low rounded-lg p-6 flex items-center justify-between border border-white/5">
+<div class="flex flex-col gap-2">
+<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">强度曲线</span>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-headline font-black text-white">148</span>
+<span class="text-xs font-bold text-primary-fixed uppercase tracking-widest">平均心率</span>
+</div>
+</div>
+<div class="flex gap-1 items-end h-16 w-32">
+<div class="bg-surface-container-highest w-2 h-4 rounded-full"></div>
+<div class="bg-surface-container-highest w-2 h-6 rounded-full"></div>
+<div class="bg-primary-fixed w-2 h-10 rounded-full shadow-[0_0_10px_rgba(204,255,0,0.5)]"></div>
+<div class="bg-primary-fixed w-2 h-14 rounded-full shadow-[0_0_10px_rgba(204,255,0,0.5)]"></div>
+<div class="bg-primary-fixed w-2 h-12 rounded-full shadow-[0_0_10px_rgba(204,255,0,0.5)]"></div>
+<div class="bg-secondary-container w-2 h-8 rounded-full"></div>
+</div>
+</div>
+<!-- Rank -->
+<div class="bg-primary-fixed rounded-lg p-6 flex flex-col justify-between text-black">
+<span class="material-symbols-outlined mb-4" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+<div>
+<span class="block text-4xl font-headline font-black italic uppercase">前 3%</span>
+<span class="block text-[10px] font-black uppercase tracking-tight opacity-70">社区排名</span>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<div class="flex flex-col items-center gap-6">
+<button class="w-full bg-primary-fixed text-black font-headline font-black text-sm uppercase tracking-[0.2em] py-5 rounded-full flex items-center justify-center gap-3 shadow-[0_15px_40px_rgba(204,255,0,0.2)] active:scale-95 duration-300">分享到社区 <span class="material-symbols-outlined text-lg">share</span></button>
+<button class="text-on-surface-variant font-bold text-xs uppercase tracking-widest hover:text-white transition-colors">返回首页</button>
+</div>
+</main>
+<!-- BottomNavBar (Hidden on desktop, logic-based suppression avoided as it's a top-level confirmation) -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-[#131313]/90 backdrop-blur-2xl rounded-full border border-white/5 flex justify-around items-center px-4 py-2 z-50 shadow-[0_20px_50px_rgba(0,0,0,0.5)] md:hidden">
+<button class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out">
+<span class="material-symbols-outlined">fitness_center</span>
+</button>
+<button class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out">
+<span class="material-symbols-outlined">restaurant</span>
+</button>
+<button class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out">
+<span class="material-symbols-outlined">smart_toy</span>
+</button>
+<button class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out">
+<span class="material-symbols-outlined">groups</span>
+</button>
+<button class="bg-[#CCFF00] text-black rounded-full p-3 shadow-[0_0_15px_rgba(204,255,0,0.4)] active:scale-90 duration-300 ease-out">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+</button>
+</nav>
+</body></html>

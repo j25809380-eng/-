@@ -1,0 +1,31 @@
+<view class="page-shell login-shell">
+  <view class="icon-btn login-back-btn" bindtap="handleBack">Back</view>
+  <view class="login-glow"></view>
+  <view class="login-card">
+    <view class="hero-tag">FITNOTE Graduation Demo</view>
+    <view class="login-title">Track your training, build real progress</view>
+    <view class="hero-subtitle">Production-ready WeChat login, workout persistence, analytics, and admin moderation.</view>
+
+    <view class="login-panel">
+      <view class="metric-card">
+        <text class="metric-label">Core Capability</text>
+        <text class="metric-value">Training Records</text>
+        <text class="muted-text">Plan, history, PR, analytics, and community workflows in one app.</text>
+      </view>
+      <view class="grid-2 section">
+        <view class="metric-card">
+          <text class="metric-label">Frontend</text>
+          <text class="metric-value small">WeChat Mini Program</text>
+        </view>
+        <view class="metric-card">
+          <text class="metric-label">Backend</text>
+          <text class="metric-value small">Spring Boot + MySQL</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="primary-button" bindtap="handleLogin">
+      {{loading ? 'Signing in...' : 'WeChat Login'}}
+    </view>
+  </view>
+</view>

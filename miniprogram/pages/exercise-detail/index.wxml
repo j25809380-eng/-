@@ -1,0 +1,54 @@
+<view class="page-shell">
+  <view class="top-bar">
+    <view class="row">
+      <view class="icon-btn" bindtap="handleBack">返</view>
+      <view class="brand-block">
+        <view class="brand-avatar"></view>
+        <text class="brand-name">动作详情</text>
+      </view>
+    </view>
+    <view class="icon-btn" bindtap="startWorkout">练</view>
+  </view>
+
+  <view wx:if="{{detail}}" class="hero-card">
+    <view class="hero-tag">{{detail.category}}</view>
+    <view class="hero-title">{{detail.name}}</view>
+    <view class="row section">
+      <view class="badge">{{detail.difficulty}}</view>
+      <view class="badge">{{detail.equipment}}</view>
+    </view>
+    <view class="hero-subtitle">{{detail.description}}</view>
+  </view>
+
+  <view class="section">
+    <section-title title="受力肌群"></section-title>
+    <view class="grid-2">
+      <view class="metric-card">
+        <text class="metric-label">主肌群</text>
+        <text class="metric-value small">{{detail.primaryMuscle}}</text>
+      </view>
+      <view class="metric-card">
+        <text class="metric-label">辅助肌群</text>
+        <text class="metric-value small">{{detail.secondaryMuscles}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <section-title title="动作步骤"></section-title>
+    <block wx:for="{{detail.movementSteps}}" wx:key="*this">
+      <view class="list-card step-card">
+        <text class="step-index">0{{index + 1}}</text>
+        <text class="step-text">{{item}}</text>
+      </view>
+    </block>
+  </view>
+
+  <view class="section">
+    <section-title title="核心要点"></section-title>
+    <block wx:for="{{detail.tips}}" wx:key="*this">
+      <view class="list-card tip-card">{{item}}</view>
+    </block>
+    <view class="primary-button" bindtap="startWorkout">用这个动作开始记录</view>
+  </view>
+</view>

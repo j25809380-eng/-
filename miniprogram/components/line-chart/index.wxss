@@ -1,0 +1,23 @@
+.chart-shell {
+  width: 100%;
+}
+
+.chart-canvas {
+  width: 100%;
+  height: 260rpx;
+  border-radius: 20rpx;
+}
+
+.labels-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8rpx;
+  margin-top: 10rpx;
+}
+
+.label-item {
+  flex: 1;
+  text-align: center;
+  color: #9ea391;
+  font-size: 20rpx;
+}

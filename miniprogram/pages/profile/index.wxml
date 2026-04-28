@@ -1,0 +1,81 @@
+<view class="page-shell">
+  <view class="top-bar">
+    <view class="row">
+      <view class="icon-btn" bindtap="handleBack">返</view>
+      <view class="brand-block">
+        <view class="brand-avatar"></view>
+        <text class="brand-name">我的</text>
+      </view>
+    </view>
+    <view class="icon-btn" bindtap="goRanking">榜</view>
+  </view>
+
+  <view class="hero-card">
+    <view class="profile-hero-head">
+      <view class="avatar-shell" bindtap="chooseAvatar">
+        <image wx:if="{{avatarPreview}}" class="avatar-image" src="{{avatarPreview}}" mode="aspectFill"></image>
+        <view wx:else class="avatar-fallback">{{user.nickname ? user.nickname.slice(0, 1) : 'F'}}</view>
+        <view class="avatar-edit">{{uploadingAvatar ? '上传中' : '更换头像'}}</view>
+      </view>
+      <view class="profile-hero-copy">
+        <view class="hero-tag">个人训练档案</view>
+        <view class="hero-title">{{user.nickname}}</view>
+        <view class="hero-subtitle">{{profile.bio}}</view>
+      </view>
+    </view>
+    <view class="row section wrap">
+      <view class="badge">{{profile.targetType}}</view>
+      <view class="badge">{{profile.trainingLevel}}</view>
+      <view class="badge">身高 {{profile.heightCm}} cm</view>
+      <view class="badge">体重 {{profile.weightKg}} kg</view>
+    </view>
+  </view>
+
+  <view class="section grid-3">
+    <view class="metric-card">
+      <text class="metric-label">训练次数</text>
+      <text class="metric-value">{{stats.totalSessions}}</text>
+    </view>
+    <view class="metric-card">
+      <text class="metric-label">PR 数</text>
+      <text class="metric-value">{{stats.prCount}}</text>
+    </view>
+    <view class="metric-card">
+      <text class="metric-label">身体记录</text>
+      <text class="metric-value">{{stats.bodyMetricCount}}</text>
+    </view>
+  </view>
+
+  <view class="section profile-card">
+    <view class="upload-tip">支持上传头像，资料保存后会同步更新到训练档案与社区作者信息。</view>
+    <text class="form-label">昵称</text>
+    <input class="form-input" value="{{user.nickname}}" data-field="nickname" bindinput="updateUserField" />
+    <view class="divider"></view>
+    <text class="form-label">性别</text>
+    <input class="form-input" value="{{profile.gender}}" data-field="gender" bindinput="updateProfileField" />
+    <view class="divider"></view>
+    <text class="form-label">身高 (cm)</text>
+    <input class="form-input" type="number" value="{{profile.heightCm}}" data-field="heightCm" bindinput="updateProfileField" />
+    <view class="divider"></view>
+    <text class="form-label">体重 (kg)</text>
+    <input class="form-input" type="number" value="{{profile.weightKg}}" data-field="weightKg" bindinput="updateProfileField" />
+    <view class="divider"></view>
+    <text class="form-label">体脂率 (%)</text>
+    <input class="form-input" type="number" value="{{profile.bodyFatRate}}" data-field="bodyFatRate" bindinput="updateProfileField" />
+    <view class="divider"></view>
+    <text class="form-label">目标</text>
+    <input class="form-input" value="{{profile.targetType}}" data-field="targetType" bindinput="updateProfileField" />
+    <view class="divider"></view>
+    <text class="form-label">目标体重 (kg)</text>
+    <input class="form-input" type="number" value="{{profile.targetWeightKg}}" data-field="targetWeightKg" bindinput="updateProfileField" />
+    <view class="divider"></view>
+    <text class="form-label">训练等级</text>
+    <input class="form-input" value="{{profile.trainingLevel}}" data-field="trainingLevel" bindinput="updateProfileField" />
+    <view class="divider"></view>
+    <text class="form-label">个性签名</text>
+    <textarea class="form-textarea" value="{{profile.bio}}" data-field="bio" bindinput="updateProfileField"></textarea>
+  </view>
+
+  <view class="primary-button" bindtap="saveProfile">保存资料</view>
+  <bottom-nav active="profile"></bottom-nav>
+</view>

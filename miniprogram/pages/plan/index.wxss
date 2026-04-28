@@ -1,0 +1,119 @@
+@import "../../styles/theme.wxss";
+
+.plan-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.plan-left {
+  flex: 1;
+}
+
+.plan-title {
+  margin-top: 16rpx;
+  font-size: 34rpx;
+  font-weight: 800;
+}
+
+.plan-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.difficulty {
+  color: #c3f400;
+  font-size: 24rpx;
+  font-weight: 800;
+}
+
+.week {
+  color: #ffffff;
+  font-size: 28rpx;
+  font-weight: 900;
+}
+
+.detail-card {
+  padding: 28rpx;
+}
+
+.detail-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.day-card {
+  margin-top: 24rpx;
+  padding: 24rpx;
+  border-radius: 24rpx;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.day-title {
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.exercise-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.05);
+  font-size: 26rpx;
+}
+
+.muted-mini {
+  color: #9ea391;
+  font-size: 24rpx;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 18rpx;
+  margin-top: 28rpx;
+}
+
+.hero-button {
+  flex: 1;
+}
+
+.ghost-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 240rpx;
+  padding: 0 28rpx;
+  border-radius: 999rpx;
+  border: 1rpx solid rgba(195, 244, 0, 0.24);
+  color: #c3f400;
+  font-size: 24rpx;
+  font-weight: 800;
+  background: rgba(195, 244, 0, 0.08);
+}
+
+.create-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+  padding: 28rpx;
+  border-radius: 28rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.06);
+  background:
+    radial-gradient(circle at top right, rgba(195, 244, 0, 0.18), transparent 34%),
+    rgba(255, 255, 255, 0.03);
+}
+
+.create-badge {
+  align-self: flex-start;
+  padding: 10rpx 18rpx;
+  border-radius: 24rpx;
+  background: #c3f400;
+  color: #161e00;
+  font-size: 22rpx;
+  font-weight: 900;
+}

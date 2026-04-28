@@ -1,0 +1,41 @@
+.nav-shell {
+  position: fixed;
+  left: 32rpx;
+  right: 32rpx;
+  bottom: 28rpx;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12rpx;
+  border-radius: 999rpx;
+  background: rgba(19, 19, 19, 0.92);
+  border: 1rpx solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(24rpx);
+}
+
+.nav-item {
+  flex: 1;
+  height: 82rpx;
+  border-radius: 999rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-item.active {
+  background: linear-gradient(135deg, #c3f400, #abd600);
+  box-shadow: 0 0 24rpx rgba(195, 244, 0, 0.28);
+}
+
+.nav-text {
+  color: #8f937f;
+  font-size: 24rpx;
+  font-weight: 800;
+  letter-spacing: 3rpx;
+}
+
+.nav-item.active .nav-text {
+  color: #161e00;
+}

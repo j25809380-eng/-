@@ -1,0 +1,59 @@
+<view class="page-shell">
+  <view class="top-bar">
+    <view class="row">
+      <view class="icon-btn" bindtap="handleBack">返</view>
+      <view class="brand-block">
+        <view class="brand-avatar"></view>
+        <text class="brand-name">训练记录</text>
+      </view>
+    </view>
+    <view class="icon-btn" bindtap="addSet">+</view>
+  </view>
+
+  <view class="hero-card">
+    <view class="hero-tag">核心模块</view>
+    <view class="hero-title">新增训练记录</view>
+    <view class="hero-subtitle">自动记录动作、重量、次数与组数，支持后续 PR 分析和历史回溯。</view>
+  </view>
+
+  <view class="section input-card">
+    <text class="form-label">训练标题</text>
+    <input class="form-input" value="{{title}}" data-field="title" bindinput="updateField" />
+    <view class="divider"></view>
+    <text class="form-label">训练重点</text>
+    <input class="form-input" value="{{focus}}" data-field="focus" bindinput="updateField" />
+    <view class="divider"></view>
+    <text class="form-label">备注</text>
+    <textarea class="form-textarea" value="{{notes}}" data-field="notes" bindinput="updateField" placeholder="记录今天的状态、感觉或细节..." placeholder-style="color:#707363;" />
+  </view>
+
+  <view class="section">
+    <section-title title="训练组明细" actionText="新增一组" bind:action="addSet"></section-title>
+    <block wx:for="{{sets}}" wx:key="setNo">
+      <view class="glass-card set-card">
+        <view class="set-head">
+          <text class="badge">SET {{index + 1}}</text>
+          <text class="remove-text" data-index="{{index}}" bindtap="removeSet">删除</text>
+        </view>
+        <text class="form-label">动作名称</text>
+        <input class="form-input set-input" value="{{item.exerciseName}}" data-index="{{index}}" data-field="exerciseName" bindinput="updateSet" />
+        <view class="grid-3 section-mini">
+          <view class="mini-card">
+            <text class="form-label">重量</text>
+            <input class="form-input" type="number" value="{{item.weightKg}}" data-index="{{index}}" data-field="weightKg" bindinput="updateSet" />
+          </view>
+          <view class="mini-card">
+            <text class="form-label">次数</text>
+            <input class="form-input" type="number" value="{{item.reps}}" data-index="{{index}}" data-field="reps" bindinput="updateSet" />
+          </view>
+          <view class="mini-card">
+            <text class="form-label">RIR</text>
+            <input class="form-input" type="number" value="{{item.rir}}" data-index="{{index}}" data-field="rir" bindinput="updateSet" />
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="primary-button" bindtap="saveWorkout">保存并完成训练</view>
+</view>

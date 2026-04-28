@@ -1,0 +1,55 @@
+<view class="page-shell">
+  <view class="top-bar">
+    <view class="row">
+      <view class="icon-btn" bindtap="handleBack">返</view>
+      <view class="brand-block">
+        <view class="brand-avatar"></view>
+        <text class="brand-name">训练完成</text>
+      </view>
+    </view>
+    <view class="icon-btn" bindtap="backHome">首页</view>
+  </view>
+
+  <view wx:if="{{detail}}" class="hero-card complete-card">
+    <view class="hero-tag">表现巅峰</view>
+    <view class="hero-title">训练\n<text class="hero-title-accent">完成</text></view>
+    <view class="hero-subtitle">你今天的输出已经被系统记录，接下来可以查看 PR 与训练量表现。</view>
+  </view>
+
+  <view class="section">
+    <view class="grid-2">
+      <view class="metric-card">
+        <text class="metric-label">总训练量</text>
+        <text class="metric-value">{{detail.totalVolume}}</text>
+      </view>
+      <view class="metric-card">
+        <text class="metric-label">时长</text>
+        <text class="metric-value">{{detail.durationMinutes}}m</text>
+      </view>
+      <view class="metric-card">
+        <text class="metric-label">消耗热量</text>
+        <text class="metric-value">{{detail.calories}}</text>
+      </view>
+      <view class="metric-card">
+        <text class="metric-label">PR 数量</text>
+        <text class="metric-value">{{detail.sets.length}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <section-title title="本次训练明细"></section-title>
+    <block wx:for="{{detail.sets}}" wx:key="id">
+      <view class="list-card complete-set">
+        <view>
+          <view class="plan-title">{{item.exerciseName}} · 第 {{item.setNo}} 组</view>
+          <view class="muted-text">{{item.weightKg}}kg × {{item.reps}} 次</view>
+        </view>
+        <view class="badge" wx:if="{{item.isPr}}">NEW PR</view>
+      </view>
+    </block>
+  </view>
+
+  <view class="primary-button" bindtap="shareToCommunity">分享到社区</view>
+  <view class="ghost-button" bindtap="backHome">返回首页</view>
+</view>

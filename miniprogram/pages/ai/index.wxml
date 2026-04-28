@@ -1,0 +1,50 @@
+<view class="page-shell ai-shell">
+  <view class="top-bar">
+    <view class="row">
+      <view class="icon-btn" bindtap="handleBack">返</view>
+      <view class="brand-block">
+        <view class="brand-avatar"></view>
+        <text class="brand-name">VOLT AI</text>
+      </view>
+    </view>
+    <view class="icon-btn">AI</view>
+  </view>
+
+  <view wx:if="{{ai}}" class="hero-card">
+    <view class="hero-tag">LIVE</view>
+    <view class="hero-title">{{ai.assistantName}}</view>
+    <view class="hero-subtitle">{{ai.status}}</view>
+  </view>
+
+  <view class="section">
+    <view class="chat-row">
+      <view class="chat-avatar">AI</view>
+      <view class="glass-card chat-bubble">
+        <text>{{ai.welcomeMessage}}</text>
+      </view>
+    </view>
+    <view class="chat-row user">
+      <view class="glass-card chat-bubble user-bubble">
+        <text>分析我最近一次深蹲训练，并与历史峰值进行对比。</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <section-title title="快捷提问"></section-title>
+    <view class="grid-2">
+      <block wx:for="{{ai.cards}}" wx:key="title">
+        <view class="metric-card prompt-card" data-title="{{item.title}}" bindtap="fillPrompt">
+          <text class="metric-value prompt-title">{{item.title}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view class="input-shell">
+    <input class="search-input" placeholder="发送消息给 Volt AI..." placeholder-style="color:#707363;" value="{{inputValue}}" bindinput="fillPromptInput" />
+    <view class="send-btn" bindtap="sendMessage">发送</view>
+  </view>
+
+  <bottom-nav active="ai"></bottom-nav>
+</view>

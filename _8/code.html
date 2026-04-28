@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Inter:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#ffffff",
+                    "surface-container": "#1f1f1f",
+                    "outline-variant": "#444933",
+                    "surface-container-high": "#2a2a2a",
+                    "primary-fixed": "#c3f400",
+                    "on-secondary-fixed-variant": "#3c4d00",
+                    "on-primary-fixed": "#161e00",
+                    "inverse-on-surface": "#303030",
+                    "on-secondary-fixed": "#161e00",
+                    "on-background": "#e2e2e2",
+                    "tertiary-fixed": "#d2e5f5",
+                    "on-tertiary-fixed-variant": "#374956",
+                    "primary-container": "#c3f400",
+                    "surface": "#131313",
+                    "inverse-primary": "#506600",
+                    "surface-container-low": "#1b1b1b",
+                    "secondary-fixed": "#d0ef77",
+                    "background": "#131313",
+                    "on-primary": "#283500",
+                    "on-primary-container": "#556d00",
+                    "surface-container-highest": "#353535",
+                    "surface-bright": "#393939",
+                    "tertiary-container": "#d2e5f5",
+                    "primary-fixed-dim": "#abd600",
+                    "on-tertiary-container": "#556774",
+                    "error-container": "#93000a",
+                    "inverse-surface": "#e2e2e2",
+                    "on-surface": "#e2e2e2",
+                    "on-tertiary": "#21323e",
+                    "surface-dim": "#131313",
+                    "secondary": "#b5d25e",
+                    "error": "#ffb4ab",
+                    "surface-variant": "#353535",
+                    "on-primary-fixed-variant": "#3c4d00",
+                    "secondary-container": "#5d7602",
+                    "primary": "#ffffff",
+                    "outline": "#8e9379",
+                    "surface-tint": "#abd600",
+                    "secondary-fixed-dim": "#b5d25e",
+                    "on-secondary": "#283500",
+                    "on-surface-variant": "#c4c9ac",
+                    "on-error": "#690005",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary-fixed": "#0b1d29",
+                    "on-secondary-container": "#defd83",
+                    "surface-container-lowest": "#0e0e0e",
+                    "tertiary-fixed-dim": "#b6c9d8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopAppBar -->
+<header class="bg-[#131313]/80 backdrop-blur-xl flex justify-between items-center w-full px-6 py-4 docked full-width top-0 z-50">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="close up profile portrait of a focused athlete with sweat on face in a dark gym setting with neon lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp-8FFSdsDxPDiKial9eul1tDyOFpzqMjJJD0-NOlmiPogA_UCEaPtCX1W8Vr7TvSHXs-FBM7cU6K3RvY780TfN3-SyVfCVqpafE1PSnJu4u22m7dZEE6OAPv03KG6juSVlyvfPs8W3JGKLPFJMhJ9xaLynC2G-CSehSVE_WXQnRFcl0_a1lfJNL6NWu1F2U8xYK2TKQO87LImDa8LQ6i5qHHdV8fuIbqdqM9BAkIoNoS29PUeiNp31YyYdo7ymzhh7ptRfd_LdAJr"/>
+</div>
+<h1 class="text-xl font-['Manrope'] font-black italic tracking-widest text-[#CCFF00] uppercase">ONYX VOLT</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-neutral-400 hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-5xl mx-auto min-h-screen">
+<!-- Search & Header Section -->
+<div class="mb-10">
+<h2 class="text-4xl md:text-6xl font-headline font-black tracking-tighter mb-8 uppercase text-white">动作库 <span class="text-primary-fixed">Engine</span></h2>
+<div class="relative group">
+<div class="absolute inset-y-0 left-5 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline">search</span>
+</div>
+<input class="w-full bg-surface-container-low border-none rounded-full py-5 pl-14 pr-6 text-on-surface placeholder:text-neutral-600 focus:ring-2 focus:ring-primary-fixed/30 transition-all font-label tracking-widest text-sm uppercase" placeholder="搜索动作..." type="text"/>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="mb-12">
+<div class="flex gap-3 overflow-x-auto hide-scrollbar pb-2">
+<button class="bg-primary-fixed text-on-primary-fixed px-8 py-3 rounded-full font-label text-xs font-bold tracking-widest uppercase flex-shrink-0 shadow-[0_0_15px_rgba(204,255,0,0.2)]">全部</button>
+<button class="bg-surface-container-high text-on-surface-variant px-8 py-3 rounded-full font-label text-xs font-bold tracking-widest uppercase flex-shrink-0 hover:bg-surface-container-highest transition-colors">胸部</button>
+<button class="bg-surface-container-high text-on-surface-variant px-8 py-3 rounded-full font-label text-xs font-bold tracking-widest uppercase flex-shrink-0 hover:bg-surface-container-highest transition-colors">背部</button>
+<button class="bg-surface-container-high text-on-surface-variant px-8 py-3 rounded-full font-label text-xs font-bold tracking-widest uppercase flex-shrink-0 hover:bg-surface-container-highest transition-colors">腿部</button>
+<button class="bg-surface-container-high text-on-surface-variant px-8 py-3 rounded-full font-label text-xs font-bold tracking-widest uppercase flex-shrink-0 hover:bg-surface-container-highest transition-colors">肩部</button>
+<button class="bg-surface-container-high text-on-surface-variant px-8 py-3 rounded-full font-label text-xs font-bold tracking-widest uppercase flex-shrink-0 hover:bg-surface-container-highest transition-colors">手臂</button>
+</div>
+</div>
+<!-- Exercise Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Exercise Card 1 -->
+<div class="group bg-surface-container-low rounded-xl overflow-hidden hover:bg-surface-container-high transition-all duration-300 active:scale-[0.98]">
+<div class="flex items-center p-4 gap-6">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-highest relative">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="dramatic lighting of a muscular man performing a heavy barbell bench press in a gritty industrial gym" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlFYXRi6_jwkU7-E6FMyrgUrd6CIaAkCBEpkwyxOguJ4Ci6yLdYw6YsceomhyJVYj94GG39glZpo7GomCDAG-OZwAd_BMoQD5qQ6pfR3kXYeM4HekOivavyOix3GM8PQa57AlUMPQjo-imYTdUIyzuBV9TbfkjqJ9U29lBY4oSBAdEPbQjGJuDkvBG_Qw7Opj59g92_4M_gQgvK7_H_4jFus6wP8HGQKUstaLdyWf-LvTzMeXnvBZPb1aV-4yqJdqW58P5Y5HF0pm5"/>
+<div class="absolute inset-0 bg-primary-fixed/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline font-extrabold text-lg uppercase tracking-tight group-hover:text-primary-fixed transition-colors">杠铃卧推</h3>
+<span class="material-symbols-outlined text-primary-fixed text-sm" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+</div>
+<p class="text-on-surface-variant text-xs font-label uppercase tracking-wider mb-3">胸部 / 三头肌 / 肩部</p>
+<div class="flex gap-2">
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-[10px] font-bold text-neutral-400 uppercase tracking-tighter">力量</span>
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-[10px] font-bold text-neutral-400 uppercase tracking-tighter">复合动作</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Exercise Card 2 -->
+<div class="group bg-surface-container-low rounded-xl overflow-hidden hover:bg-surface-container-high transition-all duration-300 active:scale-[0.98]">
+<div class="flex items-center p-4 gap-6">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-highest relative">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="athlete in a dark gym performing heavy weighted squats with a barbell on shoulders, focused expression, cinematic smoke" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdkgQmbFelX7EybqC8czz-dXZEcnv7gm4ltG2OV6FwsR1yN_DgGk3zAIxfDzX4NzZvlmX1OCbTYgpkujpNvGjOlRsnhcH4tXfO_rTYq05REZki3Kqb_xbvRBgcLp4rbpAlSJIdCdvMflDIh5owLM2zI7cPMmSDDaGBjWyRvC4gwyh9CQqk0QrXhFuz0WKEwO_3JMtzgBftFDKPehutF4qRIIkRxOgUZ3tUtDivCu-fLgzDEIjU9Rfs0u8Ng8Q1Ikp8JuN8mKA4PE_n"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline font-extrabold text-lg uppercase tracking-tight group-hover:text-primary-fixed transition-colors">杠铃深蹲</h3>
+<span class="material-symbols-outlined text-primary-fixed text-sm" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+</div>
+<p class="text-on-surface-variant text-xs font-label uppercase tracking-wider mb-3">股四头肌 / 臀肌 / 核心</p>
+<div class="flex gap-2">
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-[10px] font-bold text-neutral-400 uppercase tracking-tighter">增肌</span>
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-[10px] font-bold text-neutral-400 uppercase tracking-tighter">高效</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Exercise Card 3 -->
+<div class="group bg-surface-container-low rounded-xl overflow-hidden hover:bg-surface-container-high transition-all duration-300 active:scale-[0.98]">
+<div class="flex items-center p-4 gap-6">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-highest relative">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="close up shot of hands gripping a pull up bar, muscular back engaged, dramatic overhead lighting on sweat" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3_O-pwetGLFy1GTpnkaWyujwByEbcvms0QHtlrWmhzy714WlVlYfBcKC5WAIOUkO6Dppa2XKhU2uAN0Y5we1rdfmv7gkwGXk1E1tr2HI9_YezKcE_pYR_QTqocMOpVvIzVCb_ddq5HMOyD3tHjpX49Q-BRfuStFg066JsLjmI-4QcDldAS3XXwMDfYbMNY8sYMAcf_IBlhAfpjjq4rnWILM3jySRHSqUNAjEAtE662KBkVm617Qx-dPWkn3Ml_7F4-qKryoyvRDrZ"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline font-extrabold text-lg uppercase tracking-tight group-hover:text-primary-fixed transition-colors">引体向上</h3>
+<span class="material-symbols-outlined text-primary-fixed text-sm" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+</div>
+<p class="text-on-surface-variant text-xs font-label uppercase tracking-wider mb-3">背阔肌 / 二头肌 / 三角肌后束</p>
+<div class="flex gap-2">
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-[10px] font-bold text-neutral-400 uppercase tracking-tighter">自重</span>
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-[10px] font-bold text-neutral-400 uppercase tracking-tighter">经典</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Exercise Card 4 -->
+<div class="group bg-surface-container-low rounded-xl overflow-hidden hover:bg-surface-container-high transition-all duration-300 active:scale-[0.98]">
+<div class="flex items-center p-4 gap-6">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-highest relative">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="top view of a person performing deadlifts with heavy iron plates in a dark minimalist gym" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtvQFi5MP5zRdVwXhs5qY6W0cbSBSnCDUc7e80M1YIjscMcTwXmpZnetZoZxgfXm6VAE1sSTS9PtMyiKvm4ZYyQsxsu57eWMXN1jZi6cpgD3SrksqHbUum6ONkBh49WPzZ2CvF9KWzHbMewnalQymaAZ-OpvmtIPnrv52H_9wdiHuAv0z4YZc4FE0oSSztEGoxtLlFAE5iCfmGKvoNle_Qnntbgnet5n8H6KhsG9eobI5YKzgex2HDh1e4RShzh9hWG2niN5jtPmea"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline font-extrabold text-lg uppercase tracking-tight group-hover:text-primary-fixed transition-colors">硬拉</h3>
+<span class="material-symbols-outlined text-primary-fixed text-sm" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+</div>
+<p class="text-on-surface-variant text-xs font-label uppercase tracking-wider mb-3">后侧链 / 背部 / 核心</p>
+<div class="flex gap-2">
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-[10px] font-bold text-neutral-400 uppercase tracking-tighter">爆发力</span>
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-[10px] font-bold text-neutral-400 uppercase tracking-tighter">全身</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- FAB (Contextual for exercise selection - indicating 'done' or 'next') -->
+<button class="fixed bottom-28 right-8 bg-[#CCFF00] text-black w-14 h-14 rounded-full flex items-center justify-center shadow-[0_10px_30px_rgba(204,255,0,0.4)] hover:scale-110 active:scale-90 transition-all z-40">
+<span class="material-symbols-outlined font-bold">check</span>
+</button>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md rounded-full border border-white/5 bg-[#131313]/90 backdrop-blur-2xl z-50 flex justify-around items-center px-4 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+<a class="bg-[#CCFF00] text-black rounded-full p-3 shadow-[0_0_15px_rgba(204,255,0,0.4)] active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">fitness_center</span>
+</a>
+<a class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+</a>
+<a class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+</a>
+<a class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">groups</span>
+</a>
+<a class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">person</span>
+</a>
+</nav>
+</body></html>

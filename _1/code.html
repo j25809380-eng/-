@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ONYX VOLT - 训练计划探索</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;700;800&amp;family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#d2e5f5",
+                        "primary-fixed": "#c3f400",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "surface-tint": "#abd600",
+                        "on-background": "#e2e2e2",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed-variant": "#3c4d00",
+                        "outline-variant": "#444933",
+                        "on-primary-fixed": "#161e00",
+                        "surface-container-highest": "#353535",
+                        "primary": "#ffffff",
+                        "primary-container": "#c3f400",
+                        "background": "#131313",
+                        "secondary": "#b5d25e",
+                        "secondary-container": "#5d7602",
+                        "inverse-on-surface": "#303030",
+                        "on-surface": "#e2e2e2",
+                        "on-primary": "#283500",
+                        "on-tertiary-fixed-variant": "#374956",
+                        "on-tertiary-fixed": "#0b1d29",
+                        "inverse-surface": "#e2e2e2",
+                        "surface-bright": "#393939",
+                        "secondary-fixed-dim": "#b5d25e",
+                        "surface-variant": "#353535",
+                        "on-tertiary": "#21323e",
+                        "on-primary-container": "#556d00",
+                        "tertiary": "#ffffff",
+                        "on-secondary-container": "#defd83",
+                        "outline": "#8e9379",
+                        "on-secondary-fixed": "#161e00",
+                        "inverse-primary": "#506600",
+                        "error": "#ffb4ab",
+                        "surface-container": "#1f1f1f",
+                        "primary-fixed-dim": "#abd600",
+                        "on-surface-variant": "#c4c9ac",
+                        "on-tertiary-container": "#556774",
+                        "surface-dim": "#131313",
+                        "secondary-fixed": "#d0ef77",
+                        "tertiary-fixed-dim": "#b6c9d8",
+                        "surface-container-high": "#2a2a2a",
+                        "surface": "#131313",
+                        "on-secondary": "#283500",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed": "#d2e5f5",
+                        "surface-container-low": "#1b1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        .glass-effect {
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .text-glow {
+            text-shadow: 0 0 15px rgba(204, 255, 0, 0.4);
+        }
+        body {
+            background-color: #131313;
+            color: #e2e2e2;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#131313]/80 backdrop-blur-lg flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border-2 border-primary-fixed/20 shadow-lg">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="Close-up portrait of a determined athlete with sweat on brow, dramatic high-contrast gym lighting, cinematic photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOejKsVptHzqA1jqMIV_bzVRYzIxKPEDVnMtJmivb9vgSdjwAhS9dUyZJOxFm86Zke-ZO9xtExBZ2ZmAdfR79-X_tQyRjjtrxSraG86AfhMk0Ik7-_Ukx2Xn6u85T9iWvixet3AqKPhx7N4RkNgFv7O8QRQHTfOHkmWAfT0LrAxg030u-UfAJ11vTqJRXPcI2ckw91GUHyOwimGIvp4lvC8wX_Rhlp5-zNf2pM0_Sw_CzBRlA8wK3M26IUhAgJZzFprygdILmh-GvA"/>
+</div>
+<h1 class="font-headline font-black tracking-widest uppercase text-2xl italic text-primary-fixed tracking-tighter">ONYX VOLT</h1>
+</div>
+<button class="material-symbols-outlined text-primary-fixed text-2xl hover:opacity-80 transition-opacity active:scale-95 active:duration-100">
+            notifications
+        </button>
+</header>
+<main class="pt-24 px-6 max-w-7xl mx-auto space-y-12">
+<!-- Search Bar Section -->
+<section class="relative">
+<div class="flex items-center bg-surface-container-low rounded-full px-6 py-4 border border-outline-variant/10 focus-within:border-primary-fixed/40 transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mr-3">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-on-surface w-full placeholder:text-on-surface-variant font-body" placeholder="探索训练计划、教练或动作..." type="text"/>
+<button class="material-symbols-outlined text-primary-fixed ml-2">tune</button>
+</div>
+</section>
+<!-- Featured Plan - Bento Hero -->
+<section class="relative group">
+<div class="relative h-[480px] rounded-xl overflow-hidden shadow-2xl">
+<img alt="Featured Plan" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Cinematic shot of a muscular athlete lifting heavy barbells in a dark, atmospheric industrial gym with neon green lighting accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPh6tiJnlrU4a4Z36Ws-LANuljuQelz9icTcGN_GCwwcm2va8it0lrlwbVdWL9SyKv4tzOtWjTp8GoSqpqYv_MEJPu00F0iI4J67eFHmWgIQKEpquTzBYykp91z5p1jzxNcAYn6pX0bQJ9yzIopxqsjWSso1Yq2WdHo_Ipp816SFKGW-F4a2J4emvOJsn4ukVbRp-Mq6Xn24DqxOHQx5o6ZhaJ8iLaxUlbcn0FqRYvaV0T8i3eY6FnFplBC7bnbICgeOxdBswMOVlc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8 md:p-12 space-y-4">
+<span class="inline-block px-4 py-1 bg-primary-fixed text-on-primary-fixed font-headline font-extrabold text-xs tracking-widest rounded-full uppercase">本周推荐</span>
+<h2 class="text-4xl md:text-6xl font-headline font-black tracking-tighter text-white">绝对力量：<br/><span class="text-primary-fixed text-glow">极限增肌</span></h2>
+<div class="flex items-center gap-6 pt-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary-fixed">timer</span>
+<span class="font-label text-sm uppercase tracking-wide">12 周计划</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary-fixed">signal_cellular_alt</span>
+<span class="font-label text-sm uppercase tracking-wide">高强度</span>
+</div>
+</div>
+<button class="mt-6 px-10 py-4 bg-primary-fixed text-on-primary-fixed font-headline font-black rounded-full hover:shadow-[0_0_30px_rgba(204,255,0,0.5)] transition-all active:scale-95 uppercase tracking-widest">
+                        立即开始训练
+                    </button>
+</div>
+</div>
+</section>
+<!-- Categories -->
+<section class="space-y-6">
+<div class="flex justify-between items-end">
+<h3 class="text-2xl font-headline font-extrabold tracking-tight">热门分类</h3>
+<a class="text-primary-fixed font-label text-sm uppercase font-bold tracking-widest hover:underline" href="#">查看全部</a>
+</div>
+<div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+<div class="flex-shrink-0 px-8 py-4 bg-surface-container-high rounded-full border border-outline-variant/10 flex items-center gap-3 hover:bg-primary-fixed hover:text-on-primary-fixed transition-colors cursor-pointer group">
+<span class="material-symbols-outlined group-hover:text-on-primary-fixed">fitness_center</span>
+<span class="font-headline font-bold">增肌训练</span>
+</div>
+<div class="flex-shrink-0 px-8 py-4 bg-primary-fixed text-on-primary-fixed rounded-full flex items-center gap-3 cursor-pointer">
+<span class="material-symbols-outlined">bolt</span>
+<span class="font-headline font-bold">极速减脂</span>
+</div>
+<div class="flex-shrink-0 px-8 py-4 bg-surface-container-high rounded-full border border-outline-variant/10 flex items-center gap-3 hover:bg-primary-fixed hover:text-on-primary-fixed transition-colors cursor-pointer group">
+<span class="material-symbols-outlined group-hover:text-on-primary-fixed">exercise</span>
+<span class="font-headline font-bold">力量进阶</span>
+</div>
+<div class="flex-shrink-0 px-8 py-4 bg-surface-container-high rounded-full border border-outline-variant/10 flex items-center gap-3 hover:bg-primary-fixed hover:text-on-primary-fixed transition-colors cursor-pointer group">
+<span class="material-symbols-outlined group-hover:text-on-primary-fixed">self_improvement</span>
+<span class="font-headline font-bold">柔韧塑形</span>
+</div>
+</div>
+</section>
+<!-- Grid of Plans -->
+<section class="space-y-6">
+<h3 class="text-2xl font-headline font-extrabold tracking-tight">精选计划</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="bg-surface-container rounded-lg overflow-hidden flex flex-col group border border-outline-variant/5">
+<div class="relative h-64">
+<img alt="Workout Plan" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Athletic man doing high-intensity functional training in a modern gym setting, cinematic side lighting, moody atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB64Mi8VI5XKdLKlBGKZip-b2H2jPjcXQSyTX3NoukcEWsL4lofErJb80nod4g06Ps1jYvizH7VzAaEKDOix2IQADulcN7wX-eQxcuInoAzCNOhd9ahfG7mCXvRaYGbg9T7SVcczozUxlbywx5kbz9FPQN6qrvyf9rFUBANiUUq88HbGVSTPnI3ZO4hf591FqpabonrlzNfaHkJJVGQvKSep8pX67ojlcfH8nRRw_YQNoAf6xDCu2jpdVhjsEpgKvVc5XNkkVM5oCVa"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent opacity-60"></div>
+<div class="absolute top-4 right-4 bg-background/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+<span class="text-primary-fixed text-[10px] font-bold uppercase tracking-widest">进阶</span>
+</div>
+</div>
+<div class="p-6 flex-grow space-y-4">
+<h4 class="text-xl font-headline font-bold">HIIT 巅峰燃脂</h4>
+<p class="text-on-surface-variant text-sm line-clamp-2 leading-relaxed">通过高强度的间歇训练，在最短的时间内激活代谢，达到极致燃脂效果。</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/10">
+<div class="flex flex-col">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-tighter">持续时间</span>
+<span class="text-on-surface font-bold">45 分钟</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-tighter">难度指数</span>
+<div class="flex gap-0.5">
+<span class="w-2 h-2 rounded-full bg-primary-fixed"></span>
+<span class="w-2 h-2 rounded-full bg-primary-fixed"></span>
+<span class="w-2 h-2 rounded-full bg-primary-fixed"></span>
+<span class="w-2 h-2 rounded-full bg-surface-container-highest"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container rounded-lg overflow-hidden flex flex-col group border border-outline-variant/5">
+<div class="relative h-64">
+<img alt="Workout Plan" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Close-up of gym equipment, heavy dumbbells on a rack in a dark luxury gym with soft backlighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxH33cnd9-hqMVeUBDv5_BxvGgbrCK6jkD3xbq9LO_rf077a73-rRIVyNXGrw7E527L7ekzpZNYgKJ_k5TYEzlN0D_UBADaA8JLHS_B-_FEMKQwKfXrt8zeRl9EKQPqI4RHBQQ0TEnYKB98kxGeTKlh8dIZd9IlVR1l3pVUcogm-Kzt6knNjtSEY8tJoR_9ttDynVUT05RpHJ9hgQEcYX9DdMsJqFE9srQWVZvyZ_mXilFuTnuy7tXBa1iBL_yk8dHkSuZmA2e__Q0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent opacity-60"></div>
+<div class="absolute top-4 right-4 bg-background/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+<span class="text-primary-fixed text-[10px] font-bold uppercase tracking-widest">新手友好</span>
+</div>
+</div>
+<div class="p-6 flex-grow space-y-4">
+<h4 class="text-xl font-headline font-bold">全身基础塑形</h4>
+<p class="text-on-surface-variant text-sm line-clamp-2 leading-relaxed">专为健身新手设计，建立正确的动作模式，稳步提升身体素质。</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/10">
+<div class="flex flex-col">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-tighter">持续时间</span>
+<span class="text-on-surface font-bold">60 分钟</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-tighter">难度指数</span>
+<div class="flex gap-0.5">
+<span class="w-2 h-2 rounded-full bg-primary-fixed"></span>
+<span class="w-2 h-2 rounded-full bg-surface-container-highest"></span>
+<span class="w-2 h-2 rounded-full bg-surface-container-highest"></span>
+<span class="w-2 h-2 rounded-full bg-surface-container-highest"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container rounded-lg overflow-hidden flex flex-col group border border-outline-variant/5">
+<div class="relative h-64">
+<img alt="Workout Plan" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Modern fitness club interior with vibrant neon lighting, high-end exercise machines, and a clean minimalist aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb01wfILy52ORBsXtxz6Dty_kQpB_e1r8iwPtVDnZND-zL0pB5WH1otPQFtUicl14ZoD_Rs5Wgq1I0SqklKcxZJ3yYFANh9rja-4judIPKz8BqHaYEYnP1Xaz_JPHVDQwPVDVFdQPXudrXB7HeXhhg2DSw3s4EihgY2J-CtdwCRxJMdsVSN0M1PnKAPGGwhtyYQ5qqhTzccElVLt1EN0IW29x0UC1YDcAue54B2w5ga9HjhTU8uSvCOL_8hwayoOZrLBIdbnbsmLxD"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent opacity-60"></div>
+<div class="absolute top-4 right-4 bg-background/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+<span class="text-primary-fixed text-[10px] font-bold uppercase tracking-widest">专家级</span>
+</div>
+</div>
+<div class="p-6 flex-grow space-y-4">
+<h4 class="text-xl font-headline font-bold">力量举专项：三大项突破</h4>
+<p class="text-on-surface-variant text-sm line-clamp-2 leading-relaxed">深蹲、硬拉、卧推。专注于绝对力量的提升，打破你的个人记录。</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/10">
+<div class="flex flex-col">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-tighter">持续时间</span>
+<span class="text-on-surface font-bold">90 分钟</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-tighter">难度指数</span>
+<div class="flex gap-0.5">
+<span class="w-2 h-2 rounded-full bg-primary-fixed"></span>
+<span class="w-2 h-2 rounded-full bg-primary-fixed"></span>
+<span class="w-2 h-2 rounded-full bg-primary-fixed"></span>
+<span class="w-2 h-2 rounded-full bg-primary-fixed"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-8 py-4 bg-neutral-900/90 backdrop-blur-2xl rounded-t-[3rem] shadow-[0_-10px_40px_rgba(204,255,0,0.05)] pb-safe">
+<a class="flex flex-col items-center justify-center text-neutral-500 p-3 hover:text-lime-200 transition-colors active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">fitness_center</span>
+<span class="font-headline font-bold text-[10px] uppercase tracking-widest mt-1">训练</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-fixed text-black rounded-full p-4 shadow-[0_0_20px_rgba(204,255,0,0.4)] active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
+<span class="font-headline font-bold text-[10px] uppercase tracking-widest mt-1">探索</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-500 p-3 hover:text-lime-200 transition-colors active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-headline font-bold text-[10px] uppercase tracking-widest mt-1">排行</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-500 p-3 hover:text-lime-200 transition-colors active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-headline font-bold text-[10px] uppercase tracking-widest mt-1">记录</span>
+</a>
+</nav>
+<!-- Floating Action Button (FAB) - Suppressed on Explore for visual clarity, but can be added if needed -->
+<!-- <button class="fixed right-6 bottom-32 w-14 h-14 bg-primary-fixed text-on-primary-fixed rounded-full shadow-2xl flex items-center justify-center active:scale-90 transition-all z-40">
+        <span class="material-symbols-outlined">add</span>
+    </button> -->
+</body></html>

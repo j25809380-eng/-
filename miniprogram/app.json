@@ -1,0 +1,28 @@
+{
+  "pages": [
+    "pages/login/index",
+    "pages/home/index",
+    "pages/plan/index",
+    "pages/plan-create/index",
+    "pages/exercise/index",
+    "pages/exercise-detail/index",
+    "pages/history/index",
+    "pages/workout-editor/index",
+    "pages/workout-complete/index",
+    "pages/ai/index",
+    "pages/community/index",
+    "pages/ranking/index",
+    "pages/profile/index"
+  ],
+  "window": {
+    "navigationStyle": "custom",
+    "backgroundColor": "#131313",
+    "backgroundTextStyle": "light"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "bottom-nav": "/components/bottom-nav/index",
+    "section-title": "/components/section-title/index"
+  }
+}

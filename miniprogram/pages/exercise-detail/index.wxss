@@ -1,0 +1,29 @@
+@import "../../styles/theme.wxss";
+
+.small {
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+.step-card {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  margin-bottom: 18rpx;
+}
+
+.step-index {
+  width: 72rpx;
+  color: #c3f400;
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.step-text {
+  flex: 1;
+  font-size: 28rpx;
+}
+
+.tip-card {
+  margin-bottom: 18rpx;
+}

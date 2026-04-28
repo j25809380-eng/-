@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitNote Data Screen</title>
+  <link rel="stylesheet" href="./big-screen.css">
+</head>
+<body>
+  <div class="screen-shell">
+    <header class="screen-header">
+      <div>
+        <div class="screen-eyebrow">FitNote Graduation Project</div>
+        <h1>FitNote Admin Data Screen</h1>
+        <div class="screen-subtitle">Realtime overview for workouts, community moderation, and audit traceability.</div>
+      </div>
+      <div class="screen-actions">
+        <div class="screen-clock" id="clockText">--:--:--</div>
+        <a class="screen-link" href="/admin">Back to Admin</a>
+        <button class="screen-btn" id="refreshBtn">Refresh</button>
+        <button class="screen-btn primary" id="fullscreenBtn">Fullscreen</button>
+      </div>
+    </header>
+
+    <main class="screen-grid">
+      <section class="screen-panel screen-summary">
+        <div class="panel-head">
+          <h2>Core Metrics</h2>
+          <span id="generatedAt">--</span>
+        </div>
+        <div class="summary-grid" id="summaryGrid"></div>
+      </section>
+
+      <section class="screen-panel">
+        <div class="panel-head">
+          <h2>7-Day Session Trend</h2>
+          <span>Session Trend</span>
+        </div>
+        <div class="bar-chart" id="sessionTrend"></div>
+      </section>
+
+      <section class="screen-panel">
+        <div class="panel-head">
+          <h2>7-Day Volume Trend</h2>
+          <span>Volume Trend</span>
+        </div>
+        <div class="line-card" id="volumeTrend"></div>
+      </section>
+
+      <section class="screen-panel">
+        <div class="panel-head">
+          <h2>User Goal Distribution</h2>
+          <span>Goal Mix</span>
+        </div>
+        <div class="tag-matrix" id="goalDistribution"></div>
+      </section>
+
+      <section class="screen-panel">
+        <div class="panel-head">
+          <h2>Training Level Distribution</h2>
+          <span>Level Mix</span>
+        </div>
+        <div class="tag-matrix" id="levelDistribution"></div>
+      </section>
+
+      <section class="screen-panel">
+        <div class="panel-head">
+          <h2>Hot Exercise Ranking</h2>
+          <span>Exercise Volume</span>
+        </div>
+        <div class="rank-list" id="hotExercises"></div>
+      </section>
+
+      <section class="screen-panel span-2">
+        <div class="panel-head">
+          <h2>Top Active Users</h2>
+          <span>Top Users</span>
+        </div>
+        <div class="leaderboard" id="topUsers"></div>
+      </section>
+
+      <section class="screen-panel">
+        <div class="panel-head">
+          <h2>Pending Moderation</h2>
+          <span>Audit Alerts</span>
+        </div>
+        <div class="alert-list" id="auditAlerts"></div>
+      </section>
+
+      <section class="screen-panel">
+        <div class="panel-head">
+          <h2>Audit Status Distribution (30d)</h2>
+          <span>Audit Status</span>
+        </div>
+        <div class="tag-matrix" id="auditStatusDistribution"></div>
+      </section>
+
+      <section class="screen-panel span-2">
+        <div class="panel-head">
+          <h2>Recent Audit Logs</h2>
+          <span>Traceability</span>
+        </div>
+        <div class="audit-list" id="recentAuditLogs"></div>
+      </section>
+
+      <section class="screen-panel span-3">
+        <div class="panel-head">
+          <h2>14-Day Workout Heat Strip</h2>
+          <span>Heatmap</span>
+        </div>
+        <div class="heat-strip" id="heatmap"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./big-screen.js"></script>
+</body>
+</html>

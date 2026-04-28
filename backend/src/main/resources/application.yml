@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  profiles:
+    active: mysql
+  jackson:
+    default-property-inclusion: non_null
+  messages:
+    encoding: UTF-8
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  web:
+    resources:
+      static-locations: classpath:/static/,file:uploads/
+
+app:
+  jwt:
+    secret: ZmlyLW5vdGUtZ3JhZHVhdGlvbi1wcm9qZWN0LWp3dC1zZWNyZXQtc2VlZC0yMDI2
+    expire-hours: 72
+  wechat:
+    mock-login: false
+    app-id: ${WECHAT_APP_ID:}
+    secret: ${WECHAT_APP_SECRET:}

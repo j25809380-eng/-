@@ -1,0 +1,105 @@
+<view class="page-shell">
+  <view class="top-bar">
+    <view class="row">
+      <view class="icon-btn" bindtap="handleBack">返</view>
+      <view class="brand-block">
+        <view class="brand-avatar"></view>
+        <text class="brand-name">FITNOTE</text>
+      </view>
+    </view>
+    <view class="icon-btn" bindtap="goCreatePlan">建</view>
+  </view>
+
+  <view class="search-box">
+    <input class="search-input" placeholder="探索训练计划、教练或动作..." placeholder-style="color:#707363;" bindinput="handleInput" />
+  </view>
+
+  <view class="section">
+    <section-title title="热门分类"></section-title>
+    <view class="chip-row">
+      <block wx:for="{{categories}}" wx:key="*this">
+        <view class="chip {{item === activeCategory ? 'active' : ''}}" data-value="{{item}}" bindtap="selectCategory">{{item}}</view>
+      </block>
+    </view>
+  </view>
+
+  <view class="hero-card section">
+    <view class="hero-tag">本周推荐</view>
+    <view class="hero-title">绝对力量\n<text class="hero-title-accent">极限增肌</text></view>
+    <view class="hero-subtitle">上肢与下肢交替推进，建立稳定训练节奏和渐进超负荷方案。</view>
+    <view class="hero-actions">
+      <view class="primary-button hero-button" bindtap="startPlan">立即开始训练</view>
+      <view class="ghost-button" bindtap="goCreatePlan">创建自定义计划</view>
+    </view>
+  </view>
+
+  <view class="section">
+    <section-title title="我的自定义计划"></section-title>
+    <view class="create-card" bindtap="goCreatePlan">
+      <view>
+        <view class="plan-title">创建专属训练周期</view>
+        <view class="muted-text">按训练目标、训练日与动作结构，生成你的个人计划。</view>
+      </view>
+      <view class="create-badge">NEW</view>
+    </view>
+    <block wx:if="{{myPlans.length}}">
+      <block wx:for="{{myPlans}}" wx:key="id" wx:for-item="myPlan">
+        <view class="list-card plan-item" data-id="{{myPlan.id}}" bindtap="selectPlan">
+          <view class="plan-left">
+            <view class="badge">自定义</view>
+            <view class="plan-title">{{myPlan.title}}</view>
+            <view class="muted-text">{{myPlan.targetType}} · {{myPlan.daysPerWeek}} 天 / 周</view>
+          </view>
+          <view class="plan-right">
+            <text class="difficulty">{{myPlan.difficulty}}</text>
+            <text class="week">{{myPlan.durationWeeks}} 周</text>
+          </view>
+        </view>
+      </block>
+    </block>
+  </view>
+
+  <view class="section">
+    <section-title title="精选计划"></section-title>
+    <block wx:for="{{plans}}" wx:key="id" wx:for-item="plan">
+      <view class="list-card plan-item" data-id="{{plan.id}}" bindtap="selectPlan">
+        <view class="plan-left">
+          <view class="badge">{{plan.targetType}}</view>
+          <view class="plan-title">{{plan.title}}</view>
+          <view class="muted-text">{{plan.summary}}</view>
+        </view>
+        <view class="plan-right">
+          <text class="difficulty">{{plan.difficulty}}</text>
+          <text class="week">{{plan.durationWeeks}} 周</text>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view wx:if="{{selectedPlan}}" class="section">
+    <section-title title="计划详情"></section-title>
+    <view class="glass-card detail-card">
+      <view class="detail-head">
+        <view>
+          <view class="plan-title">{{selectedPlan.title}}</view>
+          <view class="muted-text">{{selectedPlan.summary}}</view>
+        </view>
+        <view class="badge">{{selectedPlan.daysPerWeek}} 天 / 周</view>
+      </view>
+      <block wx:for="{{selectedPlan.days}}" wx:key="id" wx:for-item="day">
+        <view class="day-card">
+          <view class="day-title">DAY {{day.dayNo}} · {{day.title}}</view>
+          <view class="muted-text">{{day.focus}}</view>
+          <block wx:for="{{day.items}}" wx:key="id" wx:for-item="exercise">
+            <view class="exercise-row">
+              <text>{{exercise.exerciseName}}</text>
+              <text class="muted-mini">{{exercise.setsCount}} 组 · {{exercise.reps}}</text>
+            </view>
+          </block>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <bottom-nav active="plan"></bottom-nav>
+</view>

@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: fitnote-mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: fitnote
+      TZ: Asia/Shanghai
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - fitnote_mysql_data:/var/lib/mysql
+      - ./backend/src/main/resources/sql/schema-mysql.sql:/docker-entrypoint-initdb.d/01-schema.sql
+
+  adminer:
+    image: adminer:4.8.1
+    container_name: fitnote-adminer
+    restart: unless-stopped
+    ports:
+      - "8088:8080"
+    depends_on:
+      - mysql
+
+volumes:
+  fitnote_mysql_data:

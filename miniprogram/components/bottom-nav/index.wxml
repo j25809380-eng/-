@@ -1,0 +1,7 @@
+<view class="nav-shell">
+  <block wx:for="{{navs}}" wx:key="key">
+    <view class="nav-item {{item.key === active ? 'active' : ''}}" data-key="{{item.key}}" data-path="{{item.path}}" bindtap="handleTap">
+      <text class="nav-text">{{item.label}}</text>
+    </view>
+  </block>
+</view>

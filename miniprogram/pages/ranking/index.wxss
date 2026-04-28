@@ -1,0 +1,76 @@
+@import "../../styles/theme.wxss";
+
+.podium {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18rpx;
+}
+
+.podium-card {
+  padding: 24rpx 18rpx;
+  border-radius: 28rpx;
+  background: rgba(255, 255, 255, 0.04);
+  text-align: center;
+}
+
+.winner {
+  background: linear-gradient(180deg, rgba(195, 244, 0, 0.22), rgba(255, 255, 255, 0.04));
+}
+
+.podium-rank,
+.podium-score {
+  display: block;
+}
+
+.podium-rank {
+  color: #c3f400;
+  font-size: 24rpx;
+  font-weight: 800;
+}
+
+.podium-name {
+  display: block;
+  margin-top: 16rpx;
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.podium-score {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #8f937f;
+}
+
+.rank-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18rpx;
+}
+
+.rank-left {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.rank-no {
+  width: 48rpx;
+  color: #c3f400;
+  font-size: 32rpx;
+  font-weight: 900;
+}
+
+.rank-score {
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.self-rank {
+  background: rgba(195, 244, 0, 0.14);
+}
+
+.plan-title {
+  font-size: 30rpx;
+  font-weight: 800;
+}

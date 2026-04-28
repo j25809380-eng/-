@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ONYX VOLT | AI COACH</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#ffffff",
+                        "surface-container": "#1f1f1f",
+                        "outline-variant": "#444933",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-fixed": "#c3f400",
+                        "on-secondary-fixed-variant": "#3c4d00",
+                        "on-primary-fixed": "#161e00",
+                        "inverse-on-surface": "#303030",
+                        "on-secondary-fixed": "#161e00",
+                        "on-background": "#e2e2e2",
+                        "tertiary-fixed": "#d2e5f5",
+                        "on-tertiary-fixed-variant": "#374956",
+                        "primary-container": "#c3f400",
+                        "surface": "#131313",
+                        "inverse-primary": "#506600",
+                        "surface-container-low": "#1b1b1b",
+                        "secondary-fixed": "#d0ef77",
+                        "background": "#131313",
+                        "on-primary": "#283500",
+                        "on-primary-container": "#556d00",
+                        "surface-container-highest": "#353535",
+                        "surface-bright": "#393939",
+                        "tertiary-container": "#d2e5f5",
+                        "primary-fixed-dim": "#abd600",
+                        "on-tertiary-container": "#556774",
+                        "error-container": "#93000a",
+                        "inverse-surface": "#e2e2e2",
+                        "on-surface": "#e2e2e2",
+                        "on-tertiary": "#21323e",
+                        "surface-dim": "#131313",
+                        "secondary": "#b5d25e",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#353535",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "secondary-container": "#5d7602",
+                        "primary": "#ffffff",
+                        "outline": "#8e9379",
+                        "surface-tint": "#abd600",
+                        "secondary-fixed-dim": "#b5d25e",
+                        "on-secondary": "#283500",
+                        "on-surface-variant": "#c4c9ac",
+                        "on-error": "#690005",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#0b1d29",
+                        "on-secondary-container": "#defd83",
+                        "surface-container-lowest": "#0e0e0e",
+                        "tertiary-fixed-dim": "#b6c9d8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-headline { font-family: 'Manrope', sans-serif; }
+        .glass-panel {
+            background: rgba(31, 31, 31, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .kinetic-glow {
+            box-shadow: 0 0 20px rgba(204, 255, 0, 0.15);
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #353535; border-radius: 10px; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="bg-[#131313]/80 backdrop-blur-xl fixed top-0 z-50 flex justify-between items-center w-full px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border border-primary-fixed/20">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="close-up portrait of a fit man with a sharp jawline in a moody dark gym setting with neon green rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuE4XfF8prBZYTpxAT9MQHRcVErmidB5czare75v-TLnCZtKrDe6SrPTvLuOdmKUBZ-H3rqpA2cSjN2dppbdty6dHwddRiUZLDGS9lw2vJVTmnJHa60-Bx8ODbCRqLksXLcqYu36G16nSuvDBfSuoQZwIkkGu7XcROBhkIzoBGT63rj9UXEPcM-uPCm79xykfp90YYemU_1cBnM-ROslxgx1kvq_pOsG6kuGOw_o-raqz8aDR4kut3cl29Ne42CQArW6cUsO72h8Pk"/>
+</div>
+<h1 class="font-['Manrope'] font-black tracking-tighter uppercase text-xl italic tracking-widest text-[#CCFF00]">ONYX VOLT</h1>
+</div>
+<button class="text-[#CCFF00] hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">notifications</span>
+</button>
+</header>
+<main class="pt-24 px-6 max-w-4xl mx-auto space-y-8">
+<!-- AI Coach Hero / Intro -->
+<section class="flex flex-col items-center text-center space-y-4 py-6">
+<div class="relative">
+<div class="absolute inset-0 bg-primary-fixed/20 blur-3xl rounded-full"></div>
+<div class="relative w-24 h-24 rounded-full border-2 border-primary-fixed p-1">
+<div class="w-full h-full rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden">
+<img alt="AI Avatar" class="w-full h-full object-cover opacity-90" data-alt="abstract digital entity represented as a glowing crystalline sphere with fluid motion and emerald green light particles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLzTY5-YCzsRge45IEbSzO_qcaCrOrHegS6lfuTQxRfw1QQW2qlu2Jt-dGVS_jnycCCVWTwtgK26DMqQRK-6S1LlbiGdv_mYeMMLdE3hbkF2PEi7igQL7f4mEyooSJ0CZLaCqNBPk6RR2WVx0hvyyGSG85e_K8TLZrKejDCDgIHQW5M9nyuTsGuA5BTdmr1Jazk5xxhX0AIChO_Zy5xGLNvc3EqeOAtNVPg5WxUMDPnVQlAGZ6pN_059GRiq69EQPqeaTjfExzK7Fb"/>
+</div>
+</div>
+<div class="absolute -bottom-1 -right-1 bg-primary-fixed text-black text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">Live</div>
+</div>
+<div class="space-y-1">
+<h2 class="text-3xl font-headline font-black tracking-tight uppercase">VOLT AI 助手</h2>
+<p class="text-on-surface-variant text-sm font-medium tracking-wide">已就绪，助你突破极限。问我任何关于训练的问题</p>
+</div>
+</section>
+<!-- Chat Canvas -->
+<section class="space-y-6">
+<!-- Message: AI Intro -->
+<div class="flex gap-4 max-w-[85%]">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-fixed/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-fixed text-sm">smart_toy</span>
+</div>
+<div class="glass-panel p-5 rounded-tr-xl rounded-b-xl space-y-3">
+<p class="text-sm leading-relaxed">欢迎回来。我分析了你昨晚的睡眠和恢复数据。你的 <span class="text-primary-fixed font-bold">94% 动能准备度</span>。今天非常适合进行高强度训练。</p>
+</div>
+</div>
+<!-- Message: Dynamic Chart Bubble (AI) -->
+<div class="flex gap-4 max-w-[90%]">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-fixed/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-fixed text-sm">smart_toy</span>
+</div>
+<div class="glass-panel p-5 rounded-tr-xl rounded-b-xl w-full">
+<div class="flex justify-between items-center mb-4">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">末组动作分析：深蹲</span>
+<span class="text-[10px] px-2 py-0.5 bg-primary-fixed/20 text-primary-fixed rounded">精准度 98%</span>
+</div>
+<!-- Chart Placeholder -->
+<div class="h-40 w-full relative flex items-end justify-between px-2 pt-4 border-l border-b border-white/5">
+<div class="w-8 bg-surface-container-highest rounded-t-sm relative h-[60%]">
+<div class="absolute bottom-0 w-full bg-primary-fixed/40 h-[80%] rounded-t-sm"></div>
+</div>
+<div class="w-8 bg-surface-container-highest rounded-t-sm relative h-[85%]">
+<div class="absolute bottom-0 w-full bg-primary-fixed/60 h-[90%] rounded-t-sm"></div>
+</div>
+<div class="w-8 bg-surface-container-highest rounded-t-sm relative h-[70%]">
+<div class="absolute bottom-0 w-full bg-primary-fixed h-full rounded-t-sm shadow-[0_0_15px_rgba(204,255,0,0.3)]"></div>
+</div>
+<div class="w-8 bg-surface-container-highest rounded-t-sm relative h-[40%]">
+<div class="absolute bottom-0 w-full bg-primary-fixed/30 h-[70%] rounded-t-sm"></div>
+</div>
+<div class="w-8 bg-surface-container-highest rounded-t-sm relative h-[90%]">
+<div class="absolute bottom-0 w-full bg-primary-fixed/50 h-[85%] rounded-t-sm"></div>
+</div>
+</div>
+<div class="mt-4 p-3 bg-surface rounded-lg flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-fixed">info</span>
+<p class="text-[11px] text-on-surface-variant leading-tight">你的峰值功率输出出现在离心阶段的 340 毫秒处。考虑更快的过渡。</p>
+</div>
+</div>
+</div>
+<!-- Message: User -->
+<div class="flex flex-row-reverse gap-4 max-w-[85%] ml-auto">
+<div class="glass-panel bg-primary-fixed/10 border-primary-fixed/20 p-5 rounded-tl-xl rounded-b-xl">
+<p class="text-sm leading-relaxed text-right">分析我最后一组深蹲并与我的个人最佳纪录进行比较。</p>
+</div>
+</div>
+</section>
+<!-- Suggested Questions (Bento Style) -->
+<section class="grid grid-cols-2 gap-3 pb-20">
+<button class="glass-panel p-4 text-left rounded-lg hover:bg-surface-container-high transition-colors group">
+<span class="material-symbols-outlined text-primary-fixed mb-2 block group-hover:scale-110 transition-transform">fitness_center</span>
+<p class="text-[12px] font-bold uppercase tracking-tight leading-tight">我今天该练什么？</p>
+</button>
+<button class="glass-panel p-4 text-left rounded-lg hover:bg-surface-container-high transition-colors group">
+<span class="material-symbols-outlined text-primary-fixed mb-2 block group-hover:scale-110 transition-transform">nutrition</span>
+<p class="text-[12px] font-bold uppercase tracking-tight leading-tight">练后饮食建议</p>
+</button>
+<button class="glass-panel p-4 text-left rounded-lg hover:bg-surface-container-high transition-colors group">
+<span class="material-symbols-outlined text-primary-fixed mb-2 block group-hover:scale-110 transition-transform">monitoring</span>
+<p class="text-[12px] font-bold uppercase tracking-tight leading-tight">恢复评估报告</p>
+</button>
+<button class="glass-panel p-4 text-left rounded-lg hover:bg-surface-container-high transition-colors group">
+<span class="material-symbols-outlined text-primary-fixed mb-2 block group-hover:scale-110 transition-transform">history</span>
+<p class="text-[12px] font-bold uppercase tracking-tight leading-tight">近30天进展</p>
+</button>
+</section>
+</main>
+<!-- Chat Input Fixed (Above Nav) -->
+<div class="fixed bottom-24 left-0 right-0 z-40 px-6 max-w-4xl mx-auto">
+<div class="glass-panel rounded-full p-2 flex items-center gap-2 shadow-2xl">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-white">
+<span class="material-symbols-outlined">add</span>
+</button>
+<input class="flex-grow bg-transparent border-none focus:ring-0 text-sm py-2 px-1 placeholder-on-surface-variant/50" placeholder="发送消息给 Volt AI..." type="text"/>
+<button class="w-10 h-10 rounded-full bg-primary-fixed text-black flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md rounded-full border border-white/5 bg-[#131313]/90 backdrop-blur-2xl z-50 flex justify-around items-center px-4 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+<a class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">fitness_center</span>
+</a>
+<a class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+</a>
+<a class="bg-[#CCFF00] text-black rounded-full p-3 shadow-[0_0_15px_rgba(204,255,0,0.4)] active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</a>
+<a class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">groups</span>
+</a>
+<a class="text-neutral-500 p-3 hover:text-white transition-colors active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">person</span>
+</a>
+</nav>
+</body></html>

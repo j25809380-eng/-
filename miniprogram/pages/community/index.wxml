@@ -1,0 +1,112 @@
+<view class="page-shell">
+  <view class="top-bar">
+    <view class="row">
+      <view class="icon-btn" bindtap="handleBack">返</view>
+      <view class="brand-block">
+        <view class="brand-avatar"></view>
+        <text class="brand-name">FITNOTE 社区</text>
+      </view>
+    </view>
+    <view class="icon-btn" bindtap="quickPost">发</view>
+  </view>
+
+  <view class="tabs">
+    <view class="tab-item {{activeTab === '关注' ? 'active' : ''}}" data-tab="关注" bindtap="switchTab">关注</view>
+    <view class="tab-item {{activeTab === '热门' ? 'active' : ''}}" data-tab="热门" bindtap="switchTab">热门</view>
+  </view>
+
+  <view class="section">
+    <view class="glass-card composer-card">
+      <view class="composer-head">
+        <view class="plan-title">发布训练动态</view>
+        <view class="badge">{{composer.postType}}</view>
+      </view>
+      <textarea
+        class="composer-textarea"
+        value="{{composer.content}}"
+        data-field="content"
+        bindinput="updateComposerField"
+        placeholder="记录今天的训练表现、感受或者经验分享..."
+        placeholder-style="color:#707363;"
+      />
+      <input
+        class="composer-input"
+        value="{{composer.topicTags}}"
+        data-field="topicTags"
+        bindinput="updateComposerField"
+        placeholder="例如：训练打卡,卧推,增肌"
+        placeholder-style="color:#707363;"
+      />
+      <view class="composer-actions">
+        <view class="action-pill" bindtap="chooseCoverImage">{{uploadingCover ? '上传中' : '添加图片'}}</view>
+        <view wx:if="{{composer.coverPreview}}" class="action-pill neutral" bindtap="clearCoverImage">移除图片</view>
+        <view class="primary-publish" bindtap="quickPost">{{posting ? '发布中' : '发布动态'}}</view>
+      </view>
+      <image wx:if="{{composer.coverPreview}}" class="composer-preview" src="{{composer.coverPreview}}" mode="aspectFill"></image>
+    </view>
+  </view>
+
+  <view class="section">
+    <block wx:for="{{posts}}" wx:key="id" wx:for-item="post">
+      <view class="feed-card post-card">
+        <view class="post-cover">
+          <image wx:if="{{post.coverPreview}}" class="post-cover-image" src="{{post.coverPreview}}" mode="aspectFill"></image>
+          <view class="cover-badge">{{post.postType}}</view>
+          <view>
+            <view class="cover-title">{{post.authorName}}</view>
+            <view class="cover-subtitle">{{post.liked ? '你已赞过这条动态' : '训练灵感正在持续流动'}}</view>
+          </view>
+        </view>
+        <view class="post-body">
+          <view class="post-meta">{{post.createdAt}}</view>
+          <view class="post-content">{{post.content}}</view>
+          <view class="post-tags">{{post.topicTags}}</view>
+          <view class="post-actions">
+            <view class="action-pill {{post.liked ? 'liked' : ''}}" data-id="{{post.id}}" bindtap="toggleLike">
+              <text>{{post.liked ? '已赞' : '点赞'}} {{post.likeCount}}</text>
+            </view>
+            <view class="action-pill" data-id="{{post.id}}" bindtap="toggleComments">
+              <text>{{post.commentsVisible ? '收起评论' : '评论'}} {{post.commentCount}}</text>
+            </view>
+            <view class="action-pill neutral">
+              <text>收藏 {{post.collectCount}}</text>
+            </view>
+          </view>
+
+          <view wx:if="{{post.commentsVisible}}" class="comments-panel">
+            <block wx:if="{{post.comments.length}}">
+              <block wx:for="{{post.comments}}" wx:key="id" wx:for-item="comment">
+                <view class="comment-row">
+                  <view class="comment-head">
+                    <text class="comment-author">{{comment.authorName}}</text>
+                    <text class="comment-time">{{comment.createdAt}}</text>
+                  </view>
+                  <view class="comment-content">{{comment.content}}</view>
+                </view>
+              </block>
+            </block>
+            <view wx:else class="empty-tip">还没有评论，来做第一个互动吧。</view>
+            <view class="comment-editor">
+              <input
+                class="comment-input"
+                value="{{post.commentDraft}}"
+                data-id="{{post.id}}"
+                bindinput="handleCommentInput"
+                placeholder="写下你的训练感受..."
+                placeholder-style="color:#707363;"
+              />
+              <view class="comment-submit" data-id="{{post.id}}" bindtap="submitComment">发送</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <view wx:if="{{!posts.length}}" class="empty-panel">
+      <view class="plan-title">当前分组还没有内容</view>
+      <view class="muted-text">切换到热门看看大家的训练动态，或者先发布你的第一条打卡。</view>
+    </view>
+  </view>
+
+  <bottom-nav active="community"></bottom-nav>
+</view>

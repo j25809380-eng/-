@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitNote Admin Console</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="auth-mask" id="authMask">
+    <div class="auth-card">
+      <div class="brand auth-brand">
+        <div class="brand-mark">F</div>
+        <div>
+          <div class="brand-title">FitNote Admin</div>
+          <div class="brand-subtitle">Secure Console</div>
+        </div>
+      </div>
+      <div class="auth-title">Administrator Login</div>
+      <p class="auth-copy">Login to manage users, workouts, community moderation, and audit logs.</p>
+      <form class="auth-form" id="loginForm">
+        <label class="field-label" for="usernameInput">Username</label>
+        <input id="usernameInput" class="auth-input" type="text" value="admin" autocomplete="username" placeholder="Enter admin username">
+        <label class="field-label" for="passwordInput">Password</label>
+        <input id="passwordInput" class="auth-input" type="password" value="admin123" autocomplete="current-password" placeholder="Enter admin password">
+        <button class="login-btn" id="loginBtn" type="submit">Login</button>
+      </form>
+      <div class="auth-hint">Demo account: admin / admin123</div>
+      <div class="auth-message" id="authMessage"></div>
+    </div>
+  </div>
+
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">F</div>
+        <div>
+          <div class="brand-title">FitNote Admin</div>
+          <div class="brand-subtitle">Graduation Project Console</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-view="dashboard">Dashboard</button>
+        <button class="nav-item" data-view="users">Users</button>
+        <button class="nav-item" data-view="workouts">Workouts</button>
+        <button class="nav-item" data-view="posts">Community Review</button>
+        <button class="nav-item" data-view="logs">Audit Logs</button>
+        <button class="nav-item" data-view="plans">Plans</button>
+      </nav>
+
+      <div class="sidebar-card">
+        <div class="sidebar-label">System Note</div>
+        <p>This console supports RBAC login, moderation actions, and full audit traceability.</p>
+        <a class="ghost-link sidebar-link" href="/admin/big-screen">Open Data Screen</a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">Admin Management</div>
+          <h1 id="pageTitle">Dashboard</h1>
+        </div>
+        <div class="topbar-actions">
+          <div class="admin-chip" id="adminChip">Not Logged In</div>
+          <a class="ghost-link" href="/admin/big-screen">Data Screen</a>
+          <button class="ghost-btn" id="logoutBtn">Logout</button>
+          <button class="refresh-btn" id="refreshBtn">Refresh</button>
+        </div>
+      </header>
+
+      <section class="view active" id="dashboardView">
+        <div class="metrics-grid" id="summaryCards"></div>
+
+        <div class="content-grid">
+          <section class="panel">
+            <div class="panel-head">
+              <h2>7-Day Activity</h2>
+              <span>Workout Trend</span>
+            </div>
+            <div class="trend-bars" id="weeklyTrend"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h2>Pending Review</h2>
+              <span>Community Moderation</span>
+            </div>
+            <div class="audit-queue" id="auditQueue"></div>
+          </section>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel">
+            <div class="panel-head">
+              <h2>Latest Users</h2>
+              <span>User Growth</span>
+            </div>
+            <div id="recentUsers"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h2>Recent Workouts</h2>
+              <span>Workout Events</span>
+            </div>
+            <div id="recentWorkouts"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="usersView">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>User List</h2>
+            <span>Level / Goal / Activity</span>
+          </div>
+          <div class="table-shell">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nickname</th>
+                  <th>Level</th>
+                  <th>Goal</th>
+                  <th>Weight</th>
+                  <th>Sessions</th>
+                  <th>PR</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="usersTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="workoutsView">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Workout Records</h2>
+            <span>Volume / Calories / Completion</span>
+          </div>
+          <div class="table-shell">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>User</th>
+                  <th>Title</th>
+                  <th>Date</th>
+                  <th>Duration</th>
+                  <th>Volume</th>
+                  <th>Calories</th>
+                  <th>Sets</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="workoutsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="postsView">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Community Review</h2>
+            <span>Review user-generated content</span>
+          </div>
+          <div class="post-list" id="postsList"></div>
+        </div>
+      </section>
+
+      <section class="view" id="logsView">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Audit Logs</h2>
+            <span>Operator trace and status transitions</span>
+          </div>
+          <div class="log-filters">
+            <select id="logsStatusFilter">
+              <option value="">All Status</option>
+              <option value="APPROVED">APPROVED</option>
+              <option value="REJECTED">REJECTED</option>
+              <option value="PENDING">PENDING</option>
+            </select>
+            <select id="logsTypeFilter">
+              <option value="">All Target Types</option>
+              <option value="COMMUNITY_POST">COMMUNITY_POST</option>
+            </select>
+            <input id="logsDaysFilter" type="number" min="1" value="30" placeholder="Days">
+            <button class="refresh-btn filter-btn" id="logsApplyBtn">Apply</button>
+          </div>
+          <div class="table-shell">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Type</th>
+                  <th>Target ID</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Reason</th>
+                  <th>Operator</th>
+                  <th>Snapshot</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody id="logsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="plansView">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Training Plans</h2>
+            <span>System and custom plans</span>
+          </div>
+          <div class="table-shell">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Title</th>
+                  <th>Target</th>
+                  <th>Difficulty</th>
+                  <th>Duration</th>
+                  <th>Frequency</th>
+                  <th>Type</th>
+                  <th>Summary</th>
+                </tr>
+              </thead>
+              <tbody id="plansTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

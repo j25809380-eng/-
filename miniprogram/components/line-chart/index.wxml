@@ -1,0 +1,12 @@
+<view class="chart-shell">
+  <canvas
+    class="chart-canvas"
+    canvas-id="{{canvasId}}"
+    style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;"
+  ></canvas>
+  <view class="labels-row">
+    <block wx:for="{{labels}}" wx:key="index">
+      <text class="label-item">{{item}}</text>
+    </block>
+  </view>
+</view>

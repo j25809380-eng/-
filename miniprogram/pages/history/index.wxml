@@ -1,0 +1,122 @@
+<view class="page-shell">
+  <view class="top-bar">
+    <view class="row">
+      <view class="icon-btn" bindtap="handleBack">Back</view>
+      <view class="brand-block">
+        <view class="brand-avatar"></view>
+        <text class="brand-name">Workout History</text>
+      </view>
+    </view>
+    <view class="icon-btn" bindtap="goRanking">Rank</view>
+  </view>
+
+  <view wx:if="{{overview}}" class="grid-2">
+    <view class="metric-card">
+      <text class="metric-label">Total Sessions</text>
+      <text class="metric-value">{{overview.summary.totalSessions}}</text>
+    </view>
+    <view class="metric-card">
+      <text class="metric-label">PR This Month</text>
+      <text class="metric-value">{{overview.summary.prCount}}</text>
+    </view>
+    <view class="metric-card">
+      <text class="metric-label">30-Day Frequency</text>
+      <text class="metric-value">{{overview.summary.weeklyFrequency}}</text>
+    </view>
+    <view class="metric-card">
+      <text class="metric-label">Total Volume</text>
+      <text class="metric-value small">{{overview.summary.totalVolume}}</text>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{overview}}">
+    <section-title title="Weight Trend"></section-title>
+    <view class="glass-card chart-card">
+      <line-chart
+        canvas-id="weightTrendChart"
+        labels="{{weightTrendLabels}}"
+        values="{{weightTrendValues}}"
+        line-color="#8EE5FF"
+        area-color="rgba(142,229,255,0.2)"
+      />
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{overview}}">
+    <section-title title="Volume Trend"></section-title>
+    <view class="glass-card chart-card">
+      <line-chart
+        canvas-id="volumeTrendChart"
+        labels="{{volumeTrendLabels}}"
+        values="{{volumeTrendValues}}"
+        line-color="#C3F400"
+        area-color="rgba(195,244,0,0.18)"
+      />
+    </view>
+  </view>
+
+  <view class="section">
+    <section-title title="Session Records"></section-title>
+    <block wx:for="{{history}}" wx:key="id" wx:for-item="record">
+      <view class="list-card history-card" data-id="{{record.id}}" bindtap="goWorkout">
+        <view>
+          <view class="plan-title">{{record.title}}</view>
+          <view class="muted-text">{{record.sessionDate}} · {{record.focus}}</view>
+        </view>
+        <view class="history-right">
+          <text class="badge">{{record.durationMinutes}} min</text>
+          <text class="muted-mini">{{record.totalVolume}} kg</text>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view wx:if="{{monthlyReport}}" class="section">
+    <view class="report-head">
+      <section-title title="Monthly Report"></section-title>
+      <view class="export-btn" bindtap="exportMonthlyReport">
+        {{exportingReport ? 'Exporting...' : 'Export CSV'}}
+      </view>
+    </view>
+    <view class="hero-card">
+      <view class="hero-tag">{{monthlyReport.monthLabel}}</view>
+      <view class="hero-subtitle">{{monthlyReport.highlight}}</view>
+      <view class="muted-text">{{monthlyReport.focus}}</view>
+      <view class="report-metrics">
+        <view class="report-chip">Sessions {{monthlyReport.sessionsCount}}</view>
+        <view class="report-chip">PR {{monthlyReport.prCount}}</view>
+        <view class="report-chip">Volume {{monthlyReport.totalVolume}}</view>
+      </view>
+    </view>
+
+    <view class="report-grid">
+      <view class="glass-card report-card">
+        <view class="report-title">Weekly Sessions</view>
+        <view class="weekly-bars">
+          <block wx:for="{{monthlyReport.weeklyBreakdown}}" wx:key="label" wx:for-item="week">
+            <view class="weekly-col">
+              <view class="weekly-bar" style="height: {{week.barHeight}}rpx;"></view>
+              <view class="weekly-count">{{week.count}}</view>
+              <view class="weekly-label">{{week.label}}</view>
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <view class="glass-card report-card">
+        <view class="report-title">Top Exercises</view>
+        <block wx:for="{{monthlyReport.topExercises}}" wx:key="exerciseName" wx:for-item="exercise">
+          <view class="exercise-trend-row">
+            <view class="exercise-trend-head">
+              <text>{{exercise.exerciseName}}</text>
+              <text class="muted-mini">{{exercise.volume}}</text>
+            </view>
+            <view class="exercise-trend-track">
+              <view class="exercise-trend-bar" style="width: {{exercise.barWidth}}rpx;"></view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+</view>

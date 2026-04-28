@@ -1,0 +1,66 @@
+<view class="page-shell">
+  <view class="top-bar">
+    <view class="row">
+      <view class="icon-btn" bindtap="handleBack">返</view>
+      <view class="brand-block">
+        <view class="brand-avatar"></view>
+        <text class="brand-name">FITNOTE</text>
+      </view>
+    </view>
+    <view class="icon-btn">24</view>
+  </view>
+
+  <view wx:if="{{dashboard}}" class="hero-card">
+    <view class="hero-tag">每日训练计划</view>
+    <view class="hero-title">{{dashboard.hero.title}}<text class="hero-title-accent">\n{{dashboard.hero.targetType}}</text></view>
+    <view class="hero-subtitle">{{dashboard.hero.subtitle}}</view>
+    <view class="row section">
+      <view class="badge">{{dashboard.hero.trainingLevel}}</view>
+      <view class="badge">{{dashboard.overview.weeklySessions}} 次 / 周</view>
+    </view>
+    <view class="primary-button" bindtap="goPath" data-path="/pages/workout-editor/index">开始训练</view>
+  </view>
+
+  <view class="section">
+    <section-title title="准备状态"></section-title>
+    <view class="grid-3">
+      <view class="metric-card">
+        <text class="metric-label">训练前饮食</text>
+        <text class="metric-value small">{{dashboard.readiness.mealReady}}</text>
+      </view>
+      <view class="metric-card">
+        <text class="metric-label">补水状态</text>
+        <text class="metric-value small">{{dashboard.readiness.hydration}}</text>
+      </view>
+      <view class="metric-card">
+        <text class="metric-label">恢复评分</text>
+        <text class="metric-value small">{{dashboard.readiness.recovery}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <section-title title="快速操作"></section-title>
+    <view class="row wrap">
+      <block wx:for="{{dashboard.quickActions}}" wx:key="name">
+        <view class="action-pill" bindtap="goPath" data-path="{{item.path}}">{{item.name}}</view>
+      </block>
+    </view>
+  </view>
+
+  <view class="section">
+    <section-title title="推荐计划" actionText="查看全部" bind:action="goPlan"></section-title>
+    <block wx:for="{{dashboard.quickPlans}}" wx:key="id">
+      <view class="list-card plan-card" bindtap="goPlan">
+        <view>
+          <text class="badge">{{item.difficulty}}</text>
+          <view class="plan-title">{{item.title}}</view>
+          <view class="muted-text">{{item.durationWeeks}} 周周期</view>
+        </view>
+        <view class="plan-meta">{{item.durationWeeks}}W</view>
+      </view>
+    </block>
+  </view>
+
+  <bottom-nav active="home"></bottom-nav>
+</view>

@@ -1,0 +1,43 @@
+<view class="page-shell">
+  <view class="top-bar">
+    <view class="row">
+      <view class="icon-btn" bindtap="handleBack">返</view>
+      <view class="brand-block">
+        <view class="brand-avatar"></view>
+        <text class="brand-name">排行榜</text>
+      </view>
+    </view>
+    <view class="icon-btn">VP</view>
+  </view>
+
+  <view class="tabs">
+    <view class="tab-item active">好友排名</view>
+    <view class="tab-item">全站榜单</view>
+  </view>
+
+  <view class="section podium">
+    <block wx:for="{{topThree}}" wx:key="rank">
+      <view class="podium-card {{index === 0 ? 'winner' : ''}}">
+        <text class="podium-rank">#{{item.rank}}</text>
+        <text class="podium-name">{{item.nickname}}</text>
+        <text class="podium-score">{{item.score}}</text>
+      </view>
+    </block>
+  </view>
+
+  <view class="section">
+    <section-title title="榜单详情"></section-title>
+    <block wx:for="{{rankings}}" wx:key="rank">
+      <view class="list-card rank-card {{item.rank === 4 ? 'self-rank' : ''}}">
+        <view class="rank-left">
+          <text class="rank-no">{{item.rank}}</text>
+          <view>
+            <view class="plan-title">{{item.nickname}}</view>
+            <view class="muted-text">{{item.label}}</view>
+          </view>
+        </view>
+        <text class="rank-score">{{item.score}}</text>
+      </view>
+    </block>
+  </view>
+</view>

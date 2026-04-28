@@ -1,0 +1,17 @@
+@import "../../styles/theme.wxss";
+
+.complete-card {
+  margin-top: 30rpx;
+}
+
+.complete-set {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18rpx;
+}
+
+.plan-title {
+  font-size: 30rpx;
+  font-weight: 800;
+}

@@ -1,0 +1,142 @@
+<view class="page-shell">
+  <view class="top-bar">
+    <view class="row">
+      <view class="icon-btn" bindtap="handleBack">返</view>
+      <view class="brand-block">
+        <view class="brand-avatar"></view>
+        <text class="brand-name">创建计划</text>
+      </view>
+    </view>
+    <view class="icon-btn" bindtap="handleBack">返</view>
+  </view>
+
+  <view class="hero-card section">
+    <view class="hero-tag">Phase Three</view>
+    <view class="hero-title">定制你的\n<text class="hero-title-accent">训练周期</text></view>
+    <view class="hero-subtitle">保留 Stitch 的高级视觉语言，在现有风格下补齐真正可创建、可保存、可答辩展示的计划配置流程。</view>
+  </view>
+
+  <view class="section">
+    <section-title title="推荐模板"></section-title>
+    <view class="template-row">
+      <block wx:for="{{presetTemplates}}" wx:key="name" wx:for-item="preset" wx:for-index="index">
+        <view class="template-card" data-index="{{index}}" bindtap="applyTemplate">
+          <view class="badge">{{preset.targetType}}</view>
+          <view class="template-title">{{preset.name}}</view>
+          <view class="muted-text">{{preset.summary}}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view class="section">
+    <section-title title="计划信息"></section-title>
+    <view class="glass-card form-card">
+      <view class="field-block">
+        <text class="field-title">计划标题</text>
+        <input class="field-input" value="{{form.title}}" data-field="title" bindinput="handleFormInput" placeholder="例如：我的增肌周期" placeholder-style="color:#707363;" />
+      </view>
+      <view class="field-block">
+        <text class="field-title">副标题</text>
+        <input class="field-input" value="{{form.subtitle}}" data-field="subtitle" bindinput="handleFormInput" placeholder="一句话概括训练安排" placeholder-style="color:#707363;" />
+      </view>
+      <view class="field-grid">
+        <view class="field-block compact">
+          <text class="field-title">目标</text>
+          <input class="field-input" value="{{form.targetType}}" data-field="targetType" bindinput="handleFormInput" placeholder="增肌 / 减脂 / 力量" placeholder-style="color:#707363;" />
+        </view>
+        <view class="field-block compact">
+          <text class="field-title">难度</text>
+          <input class="field-input" value="{{form.difficulty}}" data-field="difficulty" bindinput="handleFormInput" placeholder="入门 / 中级 / 进阶" placeholder-style="color:#707363;" />
+        </view>
+      </view>
+      <view class="field-grid">
+        <view class="field-block compact">
+          <text class="field-title">周期</text>
+          <input class="field-input" type="number" value="{{form.durationWeeks}}" data-field="durationWeeks" bindinput="handleFormInput" placeholder="周数" placeholder-style="color:#707363;" />
+        </view>
+        <view class="field-block compact">
+          <text class="field-title">每周训练日</text>
+          <input class="field-input" type="number" value="{{form.daysPerWeek}}" data-field="daysPerWeek" bindinput="handleFormInput" placeholder="训练日数量" placeholder-style="color:#707363;" />
+        </view>
+      </view>
+      <view class="field-block">
+        <text class="field-title">计划简介</text>
+        <textarea class="field-textarea" value="{{form.summary}}" data-field="summary" bindinput="handleFormInput" placeholder="描述该计划适合什么目标、如何安排训练容量和节奏" placeholder-style="color:#707363;" />
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <section-title title="推荐动作"></section-title>
+    <view class="chip-row">
+      <block wx:for="{{quickExercises}}" wx:key="*this">
+        <view class="chip" data-name="{{item}}" bindtap="appendQuickExercise">{{item}}</view>
+      </block>
+    </view>
+    <view class="muted-text active-tip">当前追加到：训练日 {{activeDayIndex + 1}}</view>
+  </view>
+
+  <view class="section">
+    <section-title title="训练日配置"></section-title>
+    <block wx:for="{{days}}" wx:key="index" wx:for-item="day" wx:for-index="dayIndex">
+      <view class="glass-card day-card {{activeDayIndex === dayIndex ? 'active' : ''}}" data-day-index="{{dayIndex}}" bindtap="activateDay">
+        <view class="day-head">
+          <view class="day-head-left">
+            <view class="badge">DAY {{dayIndex + 1}}</view>
+            <view class="muted-text">点击卡片可切换推荐动作投放目标</view>
+          </view>
+          <view class="mini-action danger" data-day-index="{{dayIndex}}" catchtap="removeDay">删除</view>
+        </view>
+        <view class="field-block">
+          <text class="field-title">训练日标题</text>
+          <input class="field-input" value="{{day.title}}" data-day-index="{{dayIndex}}" data-field="title" bindinput="handleDayInput" placeholder="例如：胸肩推进" placeholder-style="color:#707363;" />
+        </view>
+        <view class="field-block">
+          <text class="field-title">训练重点</text>
+          <input class="field-input" value="{{day.focus}}" data-day-index="{{dayIndex}}" data-field="focus" bindinput="handleDayInput" placeholder="例如：胸部 + 三角肌前束" placeholder-style="color:#707363;" />
+        </view>
+
+        <block wx:for="{{day.items}}" wx:key="index" wx:for-item="exercise" wx:for-index="itemIndex">
+          <view class="item-card">
+            <view class="item-head">
+              <view class="item-title">动作 {{itemIndex + 1}}</view>
+              <view class="mini-action" data-day-index="{{dayIndex}}" data-item-index="{{itemIndex}}" catchtap="removeItem">移除</view>
+            </view>
+            <view class="field-block">
+              <text class="field-title">动作名称</text>
+              <input class="field-input" value="{{exercise.exerciseName}}" data-day-index="{{dayIndex}}" data-item-index="{{itemIndex}}" data-field="exerciseName" bindinput="handleItemInput" placeholder="例如：杠铃卧推" placeholder-style="color:#707363;" />
+            </view>
+            <view class="field-grid">
+              <view class="field-block compact">
+                <text class="field-title">组数</text>
+                <input class="field-input" type="number" value="{{exercise.setsCount}}" data-day-index="{{dayIndex}}" data-item-index="{{itemIndex}}" data-field="setsCount" bindinput="handleItemInput" />
+              </view>
+              <view class="field-block compact">
+                <text class="field-title">次数</text>
+                <input class="field-input" value="{{exercise.reps}}" data-day-index="{{dayIndex}}" data-item-index="{{itemIndex}}" data-field="reps" bindinput="handleItemInput" placeholder="8-12" placeholder-style="color:#707363;" />
+              </view>
+            </view>
+            <view class="field-grid">
+              <view class="field-block compact">
+                <text class="field-title">休息秒数</text>
+                <input class="field-input" type="number" value="{{exercise.restSeconds}}" data-day-index="{{dayIndex}}" data-item-index="{{itemIndex}}" data-field="restSeconds" bindinput="handleItemInput" />
+              </view>
+              <view class="field-block compact">
+                <text class="field-title">负重策略</text>
+                <input class="field-input" value="{{exercise.weightMode}}" data-day-index="{{dayIndex}}" data-item-index="{{itemIndex}}" data-field="weightMode" bindinput="handleItemInput" placeholder="渐进超负荷" placeholder-style="color:#707363;" />
+              </view>
+            </view>
+          </view>
+        </block>
+
+        <view class="ghost-button" data-day-index="{{dayIndex}}" catchtap="addItem">新增动作</view>
+      </view>
+    </block>
+    <view class="ghost-button add-day-button" bindtap="addDay">新增训练日</view>
+  </view>
+
+  <view class="section submit-section">
+    <view class="primary-button" bindtap="submitPlan">{{submitting ? '创建中...' : '保存自定义计划'}}</view>
+  </view>
+</view>
