@@ -12,7 +12,8 @@
     "pages/ai/index",
     "pages/community/index",
     "pages/ranking/index",
-    "pages/profile/index"
+    "pages/profile/index",
+    "pages/diet-analysis/index"
   ],
   "window": {
     "navigationStyle": "custom",

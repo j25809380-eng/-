@@ -241,3 +241,34 @@ CREATE TABLE IF NOT EXISTS data_report_monthly (
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_report_user_month (user_id, report_month)
 );
+
+-- ========== 饮食分析系统 ==========
+
+CREATE TABLE IF NOT EXISTS user_goal (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL UNIQUE,
+    goal_type VARCHAR(16) NOT NULL DEFAULT 'maintain',
+    target_kcal INT NOT NULL DEFAULT 2200,
+    target_protein INT NOT NULL DEFAULT 120,
+    target_carbs INT NOT NULL DEFAULT 275,
+    target_fat INT NOT NULL DEFAULT 60,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_goal_user FOREIGN KEY (user_id) REFERENCES app_user(id)
+);
+
+CREATE TABLE IF NOT EXISTS diet_log (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    log_date DATE NOT NULL,
+    name VARCHAR(64) NOT NULL,
+    meal_type VARCHAR(16),
+    kcal INT NOT NULL DEFAULT 0,
+    protein DECIMAL(6,1) NOT NULL DEFAULT 0,
+    carbs DECIMAL(6,1) NOT NULL DEFAULT 0,
+    fat DECIMAL(6,1) NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_dietlog_user FOREIGN KEY (user_id) REFERENCES app_user(id),
+    INDEX idx_dietlog_user_date (user_id, log_date)
+);

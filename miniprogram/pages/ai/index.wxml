@@ -11,26 +11,54 @@
   </view>
 
   <view wx:if="{{ai}}" class="hero-card">
-    <view class="hero-tag">LIVE</view>
+    <view class="hero-tag">在线</view>
     <view class="hero-title">{{ai.assistantName}}</view>
     <view class="hero-subtitle">{{ai.status}}</view>
   </view>
 
-  <view class="section">
-    <view class="chat-row">
+  <view class="section chat-section">
+    <block wx:for="{{messages}}" wx:key="index">
+      <view wx:if="{{item.role === 'assistant'}}" class="chat-row assistant-row">
+        <view class="chat-avatar">AI</view>
+        <view class="glass-card chat-bubble assistant-bubble">
+          <text class="chat-text">{{item.content}}</text>
+          <text class="chat-time">{{item.time}}</text>
+        </view>
+      </view>
+      <view wx:else class="chat-row user-row">
+        <view class="glass-card chat-bubble user-bubble">
+          <text class="chat-text">{{item.content}}</text>
+          <text class="chat-time">{{item.time}}</text>
+        </view>
+      </view>
+    </block>
+
+    <view wx:if="{{loading}}" class="chat-row assistant-row loading-row">
       <view class="chat-avatar">AI</view>
-      <view class="glass-card chat-bubble">
-        <text>{{ai.welcomeMessage}}</text>
+      <view class="glass-card chat-bubble loading-bubble">
+        <view class="typing-dots">
+          <view class="dot"></view>
+          <view class="dot"></view>
+          <view class="dot"></view>
+        </view>
       </view>
     </view>
-    <view class="chat-row user">
-      <view class="glass-card chat-bubble user-bubble">
-        <text>分析我最近一次深蹲训练，并与历史峰值进行对比。</text>
-      </view>
+
+    <view id="chat-bottom"></view>
+  </view>
+
+  <view wx:if="{{!messages.length && !loading}}" class="section">
+    <section-title title="快捷提问"></section-title>
+    <view class="grid-2">
+      <block wx:for="{{ai.cards}}" wx:key="title">
+        <view class="metric-card prompt-card" data-title="{{item.title}}" bindtap="fillPrompt">
+          <text class="metric-value prompt-title">{{item.title}}</text>
+        </view>
+      </block>
     </view>
   </view>
 
-  <view class="section">
+  <view class="section" wx:if="{{messages.length > 0}}">
     <section-title title="快捷提问"></section-title>
     <view class="grid-2">
       <block wx:for="{{ai.cards}}" wx:key="title">
@@ -42,9 +70,7 @@
   </view>
 
   <view class="input-shell">
-    <input class="search-input" placeholder="发送消息给 Volt AI..." placeholder-style="color:#707363;" value="{{inputValue}}" bindinput="fillPromptInput" />
-    <view class="send-btn" bindtap="sendMessage">发送</view>
+    <input class="search-input" placeholder="发送消息给 Volt AI..." placeholder-style="color:#707363;" value="{{inputValue}}" bindinput="fillPromptInput" confirm-type="send" bindconfirm="sendMessage" />
+    <view class="send-btn {{loading ? 'send-btn-disabled' : ''}}" bindtap="sendMessage">{{loading ? '...' : '发送'}}</view>
   </view>
-
-  <bottom-nav active="ai"></bottom-nav>
 </view>

@@ -23,9 +23,18 @@ spring:
 
 app:
   jwt:
-    secret: ZmlyLW5vdGUtZ3JhZHVhdGlvbi1wcm9qZWN0LWp3dC1zZWNyZXQtc2VlZC0yMDI2
+    secret: ${JWT_SECRET:ZmlyLW5vdGUtZ3JhZHVhdGlvbi1wcm9qZWN0LWp3dC1zZWNyZXQtc2VlZC0yMDI2}
     expire-hours: 72
   wechat:
     mock-login: false
+    # 真机登录必填：微信小程序 AppID 和 AppSecret
+    # 设置环境变量: $env:WECHAT_APP_ID="wx..." ; $env:WECHAT_APP_SECRET="..."
+    # 不设置时自动降级为 mock-login（开发调试可用）
     app-id: ${WECHAT_APP_ID:}
     secret: ${WECHAT_APP_SECRET:}
+  ai:
+    deepseek:
+      # AI 聊天功能：设置环境变量 DEEPSEEK_API_KEY 启用真实 AI
+      # 不设置则使用本地智能回复（6条预设模板）
+      api-key: ${DEEPSEEK_API_KEY:}
+      enabled: true

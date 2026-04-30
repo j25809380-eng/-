@@ -19,130 +19,43 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/plans")
 public class PlanController {
 
-    private final TrainingPlanRepository trainingPlanRepository;
-    private final TrainingPlanDayRepository trainingPlanDayRepository;
-    private final TrainingPlanItemRepository trainingPlanItemRepository;
+    private final PlanService planService;
 
-    public PlanController(TrainingPlanRepository trainingPlanRepository,
-                          TrainingPlanDayRepository trainingPlanDayRepository,
-                          TrainingPlanItemRepository trainingPlanItemRepository) {
-        this.trainingPlanRepository = trainingPlanRepository;
-        this.trainingPlanDayRepository = trainingPlanDayRepository;
-        this.trainingPlanItemRepository = trainingPlanItemRepository;
+    public PlanController(PlanService planService) {
+        this.planService = planService;
     }
 
     @GetMapping
     public ApiResponse<List<Map<String, Object>>> list(@RequestParam(defaultValue = "") String targetType) {
-        List<Map<String, Object>> plans = trainingPlanRepository.findByTargetTypeContainingIgnoreCase(targetType)
-            .stream()
-            .map(plan -> Map.<String, Object>of(
-                "id", plan.getId(),
-                "title", plan.getTitle(),
-                "subtitle", plan.getSubtitle(),
-                "targetType", plan.getTargetType(),
-                "difficulty", plan.getDifficulty(),
-                "durationWeeks", plan.getDurationWeeks(),
-                "daysPerWeek", plan.getDaysPerWeek(),
-                "summary", plan.getSummary(),
-                "coverImage", plan.getCoverImage() == null ? "" : plan.getCoverImage()
-            ))
-            .toList();
-        return ApiResponse.ok(plans);
+        return ApiResponse.ok(planService.listPlans(targetType));
     }
 
     @GetMapping("/{id}")
     public ApiResponse<Map<String, Object>> detail(@PathVariable Long id) {
-        TrainingPlan plan = trainingPlanRepository.findById(id).orElseThrow();
-        List<Map<String, Object>> days = trainingPlanDayRepository.findByPlanIdOrderByDayNoAsc(id).stream()
-            .map(day -> Map.<String, Object>of(
-                "id", day.getId(),
-                "dayNo", day.getDayNo(),
-                "title", day.getTitle(),
-                "focus", day.getFocus(),
-                "items", trainingPlanItemRepository.findByDayIdOrderBySortNoAsc(day.getId()).stream()
-                    .map(item -> Map.<String, Object>of(
-                        "id", item.getId(),
-                        "exerciseId", item.getExerciseId(),
-                        "exerciseName", item.getExerciseName(),
-                        "setsCount", item.getSetsCount(),
-                        "reps", item.getReps(),
-                        "restSeconds", item.getRestSeconds(),
-                        "weightMode", item.getWeightMode()
-                    ))
-                    .toList()
-            ))
-            .toList();
-
-        return ApiResponse.ok(Map.of(
-            "id", plan.getId(),
-            "title", plan.getTitle(),
-            "subtitle", plan.getSubtitle(),
-            "targetType", plan.getTargetType(),
-            "difficulty", plan.getDifficulty(),
-            "durationWeeks", plan.getDurationWeeks(),
-            "daysPerWeek", plan.getDaysPerWeek(),
-            "summary", plan.getSummary(),
-            "days", days
-        ));
+        return ApiResponse.ok(planService.getPlanDetail(id));
     }
 
     @GetMapping("/mine")
     public ApiResponse<List<Map<String, Object>>> mine() {
-        Long userId = CurrentUser.id();
-        List<Map<String, Object>> mine = trainingPlanRepository.findAll().stream()
-            .filter(plan -> Boolean.TRUE.equals(plan.getCustomPlan()) && userId.equals(plan.getCreatorUserId()))
-            .map(plan -> Map.<String, Object>of(
-                "id", plan.getId(),
-                "title", plan.getTitle(),
-                "targetType", plan.getTargetType(),
-                "difficulty", plan.getDifficulty(),
-                "durationWeeks", plan.getDurationWeeks(),
-                "daysPerWeek", plan.getDaysPerWeek()
-            ))
-            .toList();
-        return ApiResponse.ok(mine);
+        return ApiResponse.ok(planService.getMyPlans(CurrentUser.id()));
     }
 
     @PostMapping("/custom")
     public ApiResponse<Map<String, Object>> createCustom(@Valid @RequestBody CreateCustomPlanRequest request) {
-        Long userId = CurrentUser.id();
-        TrainingPlan plan = new TrainingPlan();
-        plan.setTitle(request.title());
-        plan.setSubtitle(request.subtitle());
-        plan.setTargetType(request.targetType());
-        plan.setDifficulty(request.difficulty());
-        plan.setDurationWeeks(request.durationWeeks());
-        plan.setDaysPerWeek(request.daysPerWeek());
-        plan.setSummary(request.summary());
-        plan.setCustomPlan(true);
-        plan.setCreatorUserId(userId);
-        plan = trainingPlanRepository.save(plan);
-
-        int dayNo = 1;
-        for (PlanDayInput dayInput : request.days()) {
-            TrainingPlanDay day = new TrainingPlanDay();
-            day.setPlanId(plan.getId());
-            day.setDayNo(dayNo++);
-            day.setTitle(dayInput.title());
-            day.setFocus(dayInput.focus());
-            day = trainingPlanDayRepository.save(day);
-
-            int sortNo = 1;
-            for (PlanItemInput itemInput : dayInput.items()) {
-                TrainingPlanItem item = new TrainingPlanItem();
-                item.setDayId(day.getId());
-                item.setExerciseId(itemInput.exerciseId());
-                item.setExerciseName(itemInput.exerciseName());
-                item.setSetsCount(itemInput.setsCount());
-                item.setReps(itemInput.reps());
-                item.setRestSeconds(itemInput.restSeconds());
-                item.setWeightMode(itemInput.weightMode());
-                item.setSortNo(sortNo++);
-                trainingPlanItemRepository.save(item);
-            }
-        }
-
-        return ApiResponse.ok(Map.of("created", true, "planId", plan.getId()));
+        List<PlanService.PlanDayInput> dayInputs = request.days().stream()
+            .map(d -> new PlanService.PlanDayInput(d.title(), d.focus(),
+                d.items().stream()
+                    .map(i -> new PlanService.PlanItemInput(
+                        i.exerciseId(), i.exerciseName(),
+                        i.setsCount(), i.reps(),
+                        i.restSeconds(), i.weightMode()))
+                    .toList()))
+            .toList();
+        return ApiResponse.ok(planService.createCustomPlan(
+            CurrentUser.id(), request.title(), request.subtitle(),
+            request.targetType(), request.difficulty(),
+            request.durationWeeks(), request.daysPerWeek(),
+            request.summary(), dayInputs));
     }
 
     public record CreateCustomPlanRequest(

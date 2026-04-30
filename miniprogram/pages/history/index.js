@@ -89,26 +89,26 @@ Page({
         url,
         success: (downloadRes) => {
           if (downloadRes.statusCode !== 200) {
-            wx.showToast({ title: 'Export failed', icon: 'none' });
+            wx.showToast({ title: '导出失败', icon: 'none' });
             return;
           }
 
           wx.saveFile({
             tempFilePath: downloadRes.tempFilePath,
             success: () => {
-              wx.showToast({ title: 'Report exported', icon: 'success' });
+              wx.showToast({ title: '报告已导出', icon: 'success' });
             },
             fail: () => {
-              wx.showToast({ title: 'Link copied', icon: 'none' });
+              wx.showToast({ title: '链接已复制', icon: 'none' });
             }
           });
         },
         fail: () => {
-          wx.showToast({ title: 'Link copied', icon: 'none' });
+          wx.showToast({ title: '链接已复制', icon: 'none' });
         }
       });
     }).catch(() => {
-      wx.showToast({ title: 'Export failed', icon: 'none' });
+      wx.showToast({ title: '导出失败', icon: 'none' });
     }).finally(() => {
       this.setData({ exportingReport: false });
     });

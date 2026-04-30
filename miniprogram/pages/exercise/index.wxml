@@ -11,8 +11,8 @@
   </view>
 
   <view class="hero-card">
-    <view class="hero-tag">动作库 ENGINE</view>
-    <view class="hero-title">动作库\n<text class="hero-title-accent">Engine</text></view>
+    <view class="hero-tag">动作库</view>
+    <view class="hero-title">动作库\n<text class="hero-title-accent">引擎</text></view>
     <view class="hero-subtitle">建立个人动作数据库，配合历史记录和 PR 统计做长期进阶。</view>
   </view>
 

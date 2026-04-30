@@ -2,7 +2,7 @@ const config = require('./config');
 const ACTIVE_BASE_URL_KEY = 'fitnote_active_base_url';
 
 function request(options) {
-  const { url, method = 'GET', data = {} } = options;
+  const { url, method = 'GET', data = {}, mockData } = options;
   const app = getApp();
   const token = app.globalData.token || wx.getStorageSync('fitnote_token') || '';
 
@@ -11,7 +11,8 @@ function request(options) {
     url,
     method,
     data,
-    token
+    token,
+    mockData
   });
 }
 
@@ -33,9 +34,19 @@ function requestWithFallback(baseUrls, payload, index = 0) {
           return;
         }
 
+        if (res.statusCode === 401) {
+          clearAuthAndRedirect();
+          reject(new Error('登录已过期，请重新登录'));
+          return;
+        }
+
         tryNext(baseUrls, payload, index, resolve, reject, res);
       },
       fail(error) {
+        if (config.fallbackToMock && payload.mockData) {
+          resolve(payload.mockData);
+          return;
+        }
         tryNext(baseUrls, payload, index, resolve, reject, error);
       }
     });
@@ -48,11 +59,25 @@ function tryNext(baseUrls, payload, index, resolve, reject, error) {
     return;
   }
 
+  if (config.fallbackToMock && payload.mockData) {
+    resolve(payload.mockData);
+    return;
+  }
+
   reject(error);
 }
 
+function clearAuthAndRedirect() {
+  const app = getApp();
+  app.globalData.token = '';
+  app.globalData.user = null;
+  wx.removeStorageSync('fitnote_token');
+  wx.removeStorageSync('fitnote_user');
+  wx.reLaunch({ url: '/pages/login/index' });
+}
+
 function uploadFile(options) {
-  const { url, filePath, name = 'file', formData = {} } = options;
+  const { url, filePath, name = 'file', formData = {}, mockData } = options;
   const app = getApp();
   const token = app.globalData.token || wx.getStorageSync('fitnote_token') || '';
 
@@ -62,7 +87,8 @@ function uploadFile(options) {
     filePath,
     name,
     formData,
-    token
+    token,
+    mockData
   });
 }
 
@@ -85,9 +111,19 @@ function uploadWithFallback(baseUrls, payload, index = 0) {
           return;
         }
 
+        if (res.statusCode === 401) {
+          clearAuthAndRedirect();
+          reject(new Error('登录已过期，请重新登录'));
+          return;
+        }
+
         tryNextUpload(baseUrls, payload, index, resolve, reject, json || res);
       },
       fail(error) {
+        if (config.fallbackToMock && payload.mockData) {
+          resolve(payload.mockData);
+          return;
+        }
         tryNextUpload(baseUrls, payload, index, resolve, reject, error);
       }
     });
@@ -97,6 +133,11 @@ function uploadWithFallback(baseUrls, payload, index = 0) {
 function tryNextUpload(baseUrls, payload, index, resolve, reject, error) {
   if (index < baseUrls.length - 1) {
     uploadWithFallback(baseUrls, payload, index + 1).then(resolve).catch(reject);
+    return;
+  }
+
+  if (config.fallbackToMock && payload.mockData) {
+    resolve(payload.mockData);
     return;
   }
 

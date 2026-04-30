@@ -32,7 +32,7 @@
     <block wx:for="{{sets}}" wx:key="setNo">
       <view class="glass-card set-card">
         <view class="set-head">
-          <text class="badge">SET {{index + 1}}</text>
+          <text class="badge">第 {{index + 1}} 组</text>
           <text class="remove-text" data-index="{{index}}" bindtap="removeSet">删除</text>
         </view>
         <text class="form-label">动作名称</text>

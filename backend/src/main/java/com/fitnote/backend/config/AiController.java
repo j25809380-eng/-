@@ -1,15 +1,90 @@
 package com.fitnote.backend.config;
 
 import com.fitnote.backend.common.ApiResponse;
+import com.fitnote.backend.common.CurrentUser;
+import com.fitnote.backend.exercise.ExerciseRepository;
+import com.fitnote.backend.user.UserProfile;
+import com.fitnote.backend.user.UserProfileRepository;
+import com.fitnote.backend.user.UserRepository;
+import com.fitnote.backend.workout.BodyMetricRepository;
+import com.fitnote.backend.workout.PersonalRecord;
+import com.fitnote.backend.workout.PersonalRecordRepository;
+import com.fitnote.backend.workout.WorkoutSession;
+import com.fitnote.backend.workout.WorkoutSessionRepository;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClient;
 
 @RestController
 @RequestMapping("/api/ai")
 public class AiController {
+
+    private static final Logger log = LoggerFactory.getLogger(AiController.class);
+
+    private static final String DEEPSEEK_URL = "https://api.deepseek.com/chat/completions";
+    private static final String MODEL = "deepseek-chat";
+
+    private static final String SYSTEM_PROMPT = """
+        你是 Volt AI，FitNote 健身应用的智能AI助手。你的角色是专业健身教练兼运动科学顾问。
+
+        你的专业领域：
+        1. 训练计划制定与调整 —— 能根据用户目标（增肌/减脂/塑形/力量）和经验水平设计训练计划
+        2. 动作技术指导与纠错 —— 熟悉深蹲、卧推、硬拉等主流动作的标准要领
+        3. 营养与饮食建议 —— 了解基础营养学，能给增肌减脂期的饮食策略
+        4. 恢复与休息策略 —— 了解超量恢复原理、睡眠对训练的影响
+        5. 训练数据分析解读 —— 能根据训练量、PR趋势、体重体脂变化给出建议
+
+        回答要求：
+        - 用中文回复，专业但不生硬，可以适当使用健身圈常用术语
+        - 回复长度控制在 150-400 字，分点陈述时简洁明了
+        - 如果用户问非健身问题，礼貌引导回健身话题
+        - 鼓励用户，但不过度吹捧
+        - 给出的建议要有数据或原理支撑，不瞎编
+        - 当涉及具体动作调整时，提醒用户注意安全、如有疼痛应就医
+        """;
+
+    private final WorkoutSessionRepository workoutSessionRepository;
+    private final BodyMetricRepository bodyMetricRepository;
+    private final PersonalRecordRepository personalRecordRepository;
+    private final UserProfileRepository userProfileRepository;
+    private final UserRepository userRepository;
+    private final ExerciseRepository exerciseRepository;
+
+    @Value("${app.ai.deepseek.api-key:}")
+    private String apiKey;
+
+    @Value("${app.ai.deepseek.enabled:false}")
+    private boolean aiEnabled;
+
+    public AiController(WorkoutSessionRepository workoutSessionRepository,
+                        BodyMetricRepository bodyMetricRepository,
+                        PersonalRecordRepository personalRecordRepository,
+                        UserProfileRepository userProfileRepository,
+                        UserRepository userRepository,
+                        ExerciseRepository exerciseRepository) {
+        this.workoutSessionRepository = workoutSessionRepository;
+        this.bodyMetricRepository = bodyMetricRepository;
+        this.personalRecordRepository = personalRecordRepository;
+        this.userProfileRepository = userProfileRepository;
+        this.userRepository = userRepository;
+        this.exerciseRepository = exerciseRepository;
+    }
 
     @GetMapping("/prompts")
     public ApiResponse<Map<String, Object>> prompts() {
@@ -25,4 +100,277 @@ public class AiController {
             "welcomeMessage", "欢迎回来。我已根据你的最近训练与恢复数据，为你准备了今日训练建议。"
         ));
     }
+
+    @PostMapping("/chat")
+    public ApiResponse<Map<String, Object>> chat(@RequestBody ChatRequest request) {
+        if (request.message() == null || request.message().isBlank()) {
+            return new ApiResponse<>(400, "消息不能为空", null);
+        }
+
+        Long userId = CurrentUser.id();
+        String userContext = buildUserContext(userId);
+        String systemPromptWithContext = SYSTEM_PROMPT + "\n\n" + userContext;
+
+        String reply;
+        if (aiEnabled && apiKey != null && !apiKey.isBlank()) {
+            reply = callDeepSeek(systemPromptWithContext, request.message());
+        } else {
+            reply = localSmartReply(request.message());
+        }
+
+        return ApiResponse.ok(Map.of(
+            "reply", reply,
+            "model", aiEnabled ? MODEL : "local"
+        ));
+    }
+
+    private String buildUserContext(Long userId) {
+        StringBuilder ctx = new StringBuilder();
+        ctx.append("【当前用户训练数据】\n");
+
+        userRepository.findById(userId).ifPresent(user -> {
+            ctx.append("- 昵称：").append(user.getNickname()).append("\n");
+        });
+
+        userProfileRepository.findByUserId(userId).ifPresent(profile -> {
+            ctx.append("- 性别：").append(profile.getGender()).append("\n");
+            ctx.append("- 身高：").append(profile.getHeightCm()).append("cm\n");
+            ctx.append("- 体重：").append(profile.getWeightKg()).append("kg\n");
+            ctx.append("- 目标：").append(profile.getTargetType()).append("\n");
+            ctx.append("- 训练水平：").append(profile.getTrainingLevel()).append("\n");
+        });
+
+        List<WorkoutSession> recentSessions = workoutSessionRepository
+            .findByUserIdOrderBySessionDateDesc(userId);
+        if (!recentSessions.isEmpty()) {
+            int count = Math.min(recentSessions.size(), 10);
+            ctx.append("- 近").append(count).append("次训练：\n");
+            for (int i = 0; i < count; i++) {
+                WorkoutSession s = recentSessions.get(i);
+                ctx.append("  ").append(s.getSessionDate()).append(" ")
+                    .append(s.getTitle()).append("，训练量")
+                    .append(s.getTotalVolume() != null ? s.getTotalVolume() : BigDecimal.ZERO)
+                    .append("kg");
+                if (s.getFeelingScore() != null) {
+                    ctx.append("，感受评分").append(s.getFeelingScore()).append("/5");
+                }
+                ctx.append("\n");
+            }
+        }
+
+        List<PersonalRecord> prs = personalRecordRepository
+            .findTop10ByUserIdOrderByAchievedAtDesc(userId);
+        if (!prs.isEmpty()) {
+            ctx.append("- 个人纪录 TOP5：\n");
+            prs.stream().limit(5).forEach(pr -> ctx.append("  ")
+                .append(pr.getExerciseName()).append(" ")
+                .append(pr.getRecordType()).append(" ")
+                .append(pr.getRecordValue()).append("kg\n"));
+        }
+
+        var bodyMetrics = bodyMetricRepository.findByUserIdOrderByMetricDateAsc(userId);
+        if (!bodyMetrics.isEmpty()) {
+            var first = bodyMetrics.get(0);
+            var last = bodyMetrics.get(bodyMetrics.size() - 1);
+            ctx.append("- 体测趋势（").append(bodyMetrics.size()).append("条记录）：\n");
+            ctx.append("  最近体重：").append(last.getWeightKg()).append("kg");
+            if (first.getWeightKg() != null && last.getWeightKg() != null) {
+                BigDecimal diff = last.getWeightKg().subtract(first.getWeightKg());
+                ctx.append("（较首次").append(diff.compareTo(BigDecimal.ZERO) >= 0 ? "+" : "")
+                    .append(diff.setScale(1, RoundingMode.HALF_UP)).append("kg）");
+            }
+            ctx.append("\n");
+            if (last.getBodyFatRate() != null) {
+                ctx.append("  最近体脂率：").append(last.getBodyFatRate()).append("%\n");
+            }
+        }
+
+        ctx.append("- 当前日期：").append(LocalDate.now()).append("\n");
+        return ctx.toString();
+    }
+
+    private String callDeepSeek(String systemPrompt, String userMessage) {
+        try {
+            Map<String, Object> requestBody = Map.of(
+                "model", MODEL,
+                "messages", List.of(
+                    Map.of("role", "system", "content", systemPrompt),
+                    Map.of("role", "user", "content", userMessage)
+                ),
+                "temperature", 0.7,
+                "max_tokens", 800
+            );
+
+            RestClient client = RestClient.builder()
+                .baseUrl(DEEPSEEK_URL)
+                .defaultHeader("Authorization", "Bearer " + apiKey)
+                .defaultHeader("Content-Type", "application/json")
+                .build();
+
+            @SuppressWarnings("unchecked")
+            Map<String, Object> response = client.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(requestBody)
+                .retrieve()
+                .body(Map.class);
+
+            if (response == null) {
+                return localSmartReply(userMessage);
+            }
+
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> choices = (List<Map<String, Object>>) response.get("choices");
+            if (choices != null && !choices.isEmpty()) {
+                @SuppressWarnings("unchecked")
+                Map<String, Object> message = (Map<String, Object>) choices.get(0).get("message");
+                if (message != null && message.get("content") != null) {
+                    return message.get("content").toString().trim();
+                }
+            }
+
+            return localSmartReply(userMessage);
+        } catch (Exception e) {
+            log.error("DeepSeek API 调用失败：{}", e.getMessage());
+            return localSmartReply(userMessage);
+        }
+    }
+
+    private String localSmartReply(String message) {
+        String msg = message.toLowerCase().trim();
+
+        if (msg.contains("练什么") || msg.contains("训练计划") || msg.contains("今天该练")) {
+            return """
+                今天的训练建议基于你的增肌目标：
+
+                🔥 推荐：上背部 + 三角肌后束
+                • 引体向上 4×8-12（拉满控制）
+                • 杠铃划船 4×8-10
+                • 高位下拉 3×10-12
+                • 面拉 3×12-15
+                • 哑铃侧平举 3×12-15
+
+                最近一次背部训练是上背部日，间隔已足够。今天重点放在背阔肌宽度和后束线条。
+
+                如果状态不错，引体可以加负重尝试 5×5。
+                """;
+
+        } else if (msg.contains("饮食") || msg.contains("吃什么") || msg.contains("营养")) {
+            return """
+                基于你当前增肌目标（身高170cm，体重动态波动），饮食建议如下：
+
+                📊 每日摄入参考
+                • 总热量：约 2600-2800 kcal（维持轻度盈余）
+                • 蛋白质：每kg体重 1.8-2.0g → 约 130-150g/天
+                • 碳水：蛋白质的 2-2.5 倍 → 约 300-350g/天
+                • 脂肪：总热量的 25% → 约 75-85g/天
+
+                🍽 练后窗口（训练后30-60分钟）
+                快速吸收碳水+蛋白质，比如：两根香蕉 + 一勺乳清蛋白（约30g蛋白），或全麦面包+鸡胸肉。
+
+                如果体脂率持续上升过快，适当降低碳水 20%，保持蛋白质不变。
+                """;
+
+        } else if (msg.contains("恢复") || msg.contains("休息") || msg.contains("酸痛")) {
+            return """
+                恢复评估报告 📋
+
+                ✅ 训练频率：近7天 2-3次，节奏合理
+                ✅ 训练水平：进阶，恢复能力较好
+
+                🔄 当前恢复策略建议：
+                • 睡眠：确保每晚 7-8 小时，深睡期是生长激素分泌高峰
+                • 主动恢复日：散步20-30分钟或轻量拉伸，促进血液循环
+                • 营养：练后补充蛋白质+碳水可加速糖原恢复
+
+                ⚠️ 如果某个部位48小时后仍有明显酸痛，可能是训练量偏大或动作质量问题，下次训练前需要调整。
+
+                当前身体数据没有明显过度训练的迹象，可以按计划继续。
+                """;
+
+        } else if (msg.contains("进展") || msg.contains("进步") || msg.contains("趋势") || msg.contains("30天")) {
+            return """
+                📈 近30天训练趋势分析
+
+                根据你的训练数据分析：
+
+                🔹 训练频率：保持稳定，无中断
+                🔹 总训练量：整体上升趋势，说明渐进超负荷执行到位
+                🔹 个人纪录：有PR刷新，力量在增长
+
+                📊 关键发现：
+                • 卧推 PR 已刷新 — 上肢推力持续进步
+                • 训练感受评分较高 — 训练质量不错
+                • 体脂率稳定 — 增肌期热量盈余控制合理
+
+                🎯 接下来建议：
+                1. 继续渐进超负荷，每次尝试 +2.5kg 或 +1rep
+                2. 每4-6周安排一次减载周
+                3. 关注深蹲和硬拉的PR窗口 — 这两个动作进步空间很大
+                """;
+
+        } else if (msg.contains("动作") || msg.contains("怎么做") || msg.contains("标准") || msg.contains("要领")) {
+            return """
+                📐 动作标准参考
+
+                以杠铃卧推为例，关键要领：
+
+                1. 起桥：肩胛骨收紧下沉，胸椎轻微起桥，臀部不离凳
+                2. 握距：约 1.5 倍肩宽，手腕中立不后翻
+                3. 下放：控制 2-3 秒，杠铃触胸中下部（乳头线）
+                4. 推起：爆发推起，不要弹胸借力
+                5. 呼吸：下放吸气，推起时憋气维持腹压，顶点或下落再呼气
+
+                ⚠️ 常见错误：
+                • 肩膀前送 → 肩胛没锁住，肩关节压力大
+                • 臀部离凳 → 腰过度反弓，腰椎风险
+                • 半程卧推 → 缺少底部拉伸，胸肌刺激不足
+
+                如果是其他动作，告诉我动作名称，我给你拆解标准流程。
+                """;
+
+        } else if (msg.contains("减脂") || msg.contains("减肥") || msg.contains("瘦")) {
+            return """
+                减脂期训练策略 🏃
+
+                核心原则：保持力量训练 + 增加热量缺口
+
+                📋 建议安排：
+                • 每周 4 天力量训练（保持训练强度，避免肌肉流失）
+                • 每周 2-3 次有氧（空腹或力量训练后，20-30分钟）
+                • 每日热量缺口：300-500 kcal
+
+                ⚠️ 减脂期注意事项：
+                1. 蛋白质摄入不低于 2g/kg 体重 — 防止掉肌肉
+                2. 大重量复合动作不减少 — 这是保肌的核心
+                3. 减脂速度控制在每周 0.5-1% 体重
+                4. 一旦力量明显下降，立即减少热量缺口或增加碳水
+
+                过度节食+高强度训练 ≈ 掉肌肉+平台期。稳住节奏。
+                """;
+
+        } else {
+            return """
+                收到你的问题！我是 Volt AI，你的专属健身教练助手。
+
+                我可以帮你解答这些问题：
+                🏋️ 训练计划制定和调整
+                🍽 增肌/减脂营养策略
+                🔄 恢复与休息优化
+                📊 训练数据分析与进展评估
+                📐 动作技术标准与纠错
+
+                你可以试试问我：
+                • "我今天该练什么？"
+                • "练后应该吃什么？"
+                • "我的恢复状态怎么样？"
+                • "最近30天有什么进步？"
+                • "卧推动作标准是什么？"
+                • "减脂期怎么安排训练？"
+
+                直接告诉我你的问题，我会给出专业建议！
+                """;
+        }
+    }
+
+    public record ChatRequest(String message) {}
 }

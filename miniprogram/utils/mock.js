@@ -33,6 +33,7 @@ module.exports = {
     ],
     quickActions: [
       { name: '开始训练', path: '/pages/workout-editor/index' },
+      { name: '饮食分析', path: '/pages/diet-analysis/index' },
       { name: '训练历史', path: '/pages/history/index' },
       { name: '动作库', path: '/pages/exercise/index' }
     ]
@@ -291,7 +292,7 @@ module.exports = {
     { rank: 1, nickname: 'Sarah.K', score: 15820, label: '王者段位' },
     { rank: 2, nickname: 'Alex.W', score: 12490, label: '稳定输出' },
     { rank: 3, nickname: 'Marcus', score: 11200, label: '爆发训练' },
-    { rank: 4, nickname: '林燃', score: 9845, label: '你 (You)' }
+    { rank: 4, nickname: '林燃', score: 9845, label: '你' }
   ],
   userProfile: {
     user: {

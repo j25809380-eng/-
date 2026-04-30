@@ -7,12 +7,12 @@
         <text class="brand-name">排行榜</text>
       </view>
     </view>
-    <view class="icon-btn">VP</view>
+    <view class="icon-btn">积分</view>
   </view>
 
   <view class="tabs">
-    <view class="tab-item active">好友排名</view>
-    <view class="tab-item">全站榜单</view>
+    <view class="tab-item {{activeTab === 'friends' ? 'active' : ''}}" data-tab="friends" bindtap="switchTab">好友排名</view>
+    <view class="tab-item {{activeTab === 'global' ? 'active' : ''}}" data-tab="global" bindtap="switchTab">全站榜单</view>
   </view>
 
   <view class="section podium">
@@ -27,7 +27,7 @@
 
   <view class="section">
     <section-title title="榜单详情"></section-title>
-    <block wx:for="{{rankings}}" wx:key="rank">
+    <block wx:for="{{displayRankings}}" wx:key="rank">
       <view class="list-card rank-card {{item.rank === 4 ? 'self-rank' : ''}}">
         <view class="rank-left">
           <text class="rank-no">{{item.rank}}</text>

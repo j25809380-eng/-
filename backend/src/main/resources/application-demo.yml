@@ -18,3 +18,7 @@ spring:
 app:
   wechat:
     mock-login: true
+  ai:
+    deepseek:
+      api-key: ${DEEPSEEK_API_KEY:}
+      enabled: false

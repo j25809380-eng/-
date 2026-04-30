@@ -47,9 +47,16 @@ Page({
       wx.setStorageSync('fitnote_user', res.user);
       wx.reLaunch({ url: '/pages/home/index' });
     } catch (error) {
+      let message = '登录失败，请重试';
+      if (error && error.data && error.data.code === -1) {
+        message = error.data.message || message;
+      } else if (error && error.errMsg) {
+        message = error.errMsg;
+      }
       wx.showToast({
-        title: 'Login failed, please retry',
-        icon: 'none'
+        title: message,
+        icon: 'none',
+        duration: 2500
       });
     } finally {
       this.setData({ loading: false });
@@ -64,7 +71,7 @@ Page({
             resolve(res);
             return;
           }
-          reject(new Error('wx.login did not return code'));
+          reject(new Error('wx.login 未返回 code'));
         },
         fail: reject
       });
@@ -79,7 +86,7 @@ Page({
       }
 
       wx.getUserProfile({
-        desc: 'Used to complete your FitNote profile',
+        desc: '用于完善您的 FitNote 个人资料',
         success: resolve,
         fail: () => resolve({})
       });

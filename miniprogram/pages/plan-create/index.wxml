@@ -11,9 +11,9 @@
   </view>
 
   <view class="hero-card section">
-    <view class="hero-tag">Phase Three</view>
+    <view class="hero-tag">定制计划</view>
     <view class="hero-title">定制你的\n<text class="hero-title-accent">训练周期</text></view>
-    <view class="hero-subtitle">保留 Stitch 的高级视觉语言，在现有风格下补齐真正可创建、可保存、可答辩展示的计划配置流程。</view>
+    <view class="hero-subtitle">定制专属于你的训练计划，设置训练周期、动作与容量。</view>
   </view>
 
   <view class="section">
@@ -83,7 +83,7 @@
       <view class="glass-card day-card {{activeDayIndex === dayIndex ? 'active' : ''}}" data-day-index="{{dayIndex}}" bindtap="activateDay">
         <view class="day-head">
           <view class="day-head-left">
-            <view class="badge">DAY {{dayIndex + 1}}</view>
+            <view class="badge">第 {{dayIndex + 1}} 天</view>
             <view class="muted-text">点击卡片可切换推荐动作投放目标</view>
           </view>
           <view class="mini-action danger" data-day-index="{{dayIndex}}" catchtap="removeDay">删除</view>

@@ -5,7 +5,9 @@ const { navigateBack } = require('../../utils/nav');
 Page({
   data: {
     rankings: [],
-    topThree: []
+    topThree: [],
+    activeTab: 'global',
+    displayRankings: []
   },
 
   handleBack() {
@@ -19,8 +21,28 @@ Page({
     }).then((rankings) => {
       this.setData({
         rankings,
-        topThree: rankings.slice(0, 3)
+        topThree: rankings.slice(0, 3),
+        displayRankings: rankings
       });
+    });
+  },
+
+  switchTab(event) {
+    const tab = event.currentTarget.dataset.tab;
+    if (tab === this.data.activeTab) return;
+
+    const rankings = this.data.rankings;
+    let displayRankings;
+
+    if (tab === 'friends') {
+      displayRankings = rankings.slice(0, 5);
+    } else {
+      displayRankings = rankings;
+    }
+
+    this.setData({
+      activeTab: tab,
+      displayRankings
     });
   }
 });

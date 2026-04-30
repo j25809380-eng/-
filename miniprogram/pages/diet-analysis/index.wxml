@@ -1,0 +1,191 @@
+<view class="page-shell">
+  <view class="top-bar">
+    <view class="row">
+      <view class="icon-btn" bindtap="handleBack">返</view>
+      <view class="brand-block">
+        <view class="brand-avatar"></view>
+        <text class="brand-name">饮食分析</text>
+      </view>
+    </view>
+    <view class="icon-btn" bindtap="toggleForm">+</view>
+  </view>
+
+  <!-- 目标选择器 -->
+  <view class="section">
+    <view class="goal-selector">
+      <view class="goal-chip {{goalType === 'cut' ? 'active-cut' : ''}}" data-type="cut" bindtap="switchGoal">减脂</view>
+      <view class="goal-chip {{goalType === 'bulk' ? 'active-bulk' : ''}}" data-type="bulk" bindtap="switchGoal">增肌</view>
+      <view class="goal-chip {{goalType === 'maintain' ? 'active-maintain' : ''}}" data-type="maintain" bindtap="switchGoal">维持</view>
+    </view>
+
+    <view wx:if="{{goal}}" class="goal-summary">
+      <view class="goal-item">
+        <text class="goal-item-label">目标热量</text>
+        <text class="goal-item-value">{{goal.targetKcal}}</text>
+      </view>
+      <view class="goal-item">
+        <text class="goal-item-label">蛋白质</text>
+        <text class="goal-item-value">{{goal.targetProtein}}g</text>
+      </view>
+      <view class="goal-item">
+        <text class="goal-item-label">碳水</text>
+        <text class="goal-item-value">{{goal.targetCarbs}}g</text>
+      </view>
+      <view class="goal-item">
+        <text class="goal-item-label">脂肪</text>
+        <text class="goal-item-value">{{goal.targetFat}}g</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 录入表单 -->
+  <view wx:if="{{showForm}}" class="form-card glass-card">
+    <view class="form-label">餐食类型</view>
+    <view class="meal-chips">
+      <view class="meal-chip {{form.mealType === 'breakfast' ? 'active' : ''}}" data-field="mealType" data-value="breakfast" bindtap="updateFormField">早餐</view>
+      <view class="meal-chip {{form.mealType === 'lunch' ? 'active' : ''}}" data-field="mealType" data-value="lunch" bindtap="updateFormField">午餐</view>
+      <view class="meal-chip {{form.mealType === 'dinner' ? 'active' : ''}}" data-field="mealType" data-value="dinner" bindtap="updateFormField">晚餐</view>
+      <view class="meal-chip {{form.mealType === 'snack' ? 'active' : ''}}" data-field="mealType" data-value="snack" bindtap="updateFormField">加餐</view>
+    </view>
+
+    <view class="form-label">食物名称</view>
+    <input class="form-input" value="{{form.name}}" data-field="name" bindinput="updateFormField" placeholder="例如：鸡胸肉" placeholder-style="color:#707363;" />
+
+    <view class="field-row">
+      <view class="field-half">
+        <view class="form-label">热量 (kcal)</view>
+        <input class="form-input" type="number" value="{{form.kcal}}" data-field="kcal" bindinput="updateFormField" placeholder="200" placeholder-style="color:#707363;" />
+      </view>
+      <view class="field-half">
+        <view class="form-label">蛋白质 (g)</view>
+        <input class="form-input" type="digit" value="{{form.protein}}" data-field="protein" bindinput="updateFormField" placeholder="30" placeholder-style="color:#707363;" />
+      </view>
+    </view>
+
+    <view class="field-row">
+      <view class="field-half">
+        <view class="form-label">碳水 (g)</view>
+        <input class="form-input" type="digit" value="{{form.carbs}}" data-field="carbs" bindinput="updateFormField" placeholder="0" placeholder-style="color:#707363;" />
+      </view>
+      <view class="field-half">
+        <view class="form-label">脂肪 (g)</view>
+        <input class="form-input" type="digit" value="{{form.fat}}" data-field="fat" bindinput="updateFormField" placeholder="5" placeholder-style="color:#707363;" />
+      </view>
+    </view>
+
+    <view class="primary-button" bindtap="submitLog">{{submitting ? '添加中...' : '添加记录'}}</view>
+  </view>
+
+  <!-- 评分卡片 -->
+  <view wx:if="{{analysis}}" class="section">
+    <view class="glass-card score-card">
+      <view class="score-ring" style="border-color: {{analysis.score >= 85 ? '#c3f400' : analysis.score >= 70 ? '#ffc107' : analysis.score >= 50 ? '#ff8c42' : '#ff4d4f'}};">
+        <text class="score-number" style="color: {{analysis.score >= 85 ? '#c3f400' : analysis.score >= 70 ? '#ffc107' : analysis.score >= 50 ? '#ff8c42' : '#ff4d4f'}};">{{analysis.score}}</text>
+        <text class="score-label">{{analysis.grade}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 营养素进度条 -->
+  <view wx:if="{{analysis}}" class="section">
+    <section-title title="今日摄入 vs 目标"></section-title>
+    <view class="glass-card metric-card">
+      <view class="nutrient-bar-shell">
+        <view class="nutrient-row">
+          <text class="nutrient-label">热量</text>
+          <view class="nutrient-bar-bg">
+            <view class="nutrient-bar-fill" style="width: {{analysis.kcalPct > 100 ? 100 : analysis.kcalPct}}%; background: {{analysis.kcalPct <= 115 && analysis.kcalPct >= 85 ? '#c3f400' : analysis.kcalPct < 85 ? '#ff8c42' : '#ff4d4f'}};"></view>
+          </view>
+          <text class="nutrient-pct">{{analysis.kcalPct}}%</text>
+        </view>
+
+        <view class="nutrient-row">
+          <text class="nutrient-label">蛋白</text>
+          <view class="nutrient-bar-bg">
+            <view class="nutrient-bar-fill" style="width: {{analysis.proteinPct > 100 ? 100 : analysis.proteinPct}}%; background: {{analysis.proteinPct <= 115 && analysis.proteinPct >= 85 ? '#c3f400' : analysis.proteinPct < 85 ? '#ff8c42' : '#ff4d4f'}};"></view>
+          </view>
+          <text class="nutrient-pct">{{analysis.proteinPct}}%</text>
+        </view>
+
+        <view class="nutrient-row">
+          <text class="nutrient-label">碳水</text>
+          <view class="nutrient-bar-bg">
+            <view class="nutrient-bar-fill" style="width: {{analysis.carbsPct > 100 ? 100 : analysis.carbsPct}}%; background: {{analysis.carbsPct <= 120 && analysis.carbsPct >= 80 ? '#c3f400' : analysis.carbsPct < 80 ? '#ff8c42' : '#ff4d4f'}};"></view>
+          </view>
+          <text class="nutrient-pct">{{analysis.carbsPct}}%</text>
+        </view>
+
+        <view class="nutrient-row">
+          <text class="nutrient-label">脂肪</text>
+          <view class="nutrient-bar-bg">
+            <view class="nutrient-bar-fill" style="width: {{analysis.fatPct > 100 ? 100 : analysis.fatPct}}%; background: {{analysis.fatPct <= 130 && analysis.fatPct >= 60 ? '#c3f400' : analysis.fatPct < 60 ? '#ff8c42' : '#ff4d4f'}};"></view>
+          </view>
+          <text class="nutrient-pct">{{analysis.fatPct}}%</text>
+        </view>
+      </view>
+
+      <view class="row" style="margin-top: 24rpx; justify-content: space-between;">
+        <text class="muted-mini">热量 {{analysis.totalKcal}} / {{goal.targetKcal}} kcal</text>
+        <text class="muted-mini">蛋白 {{analysis.totalProtein}} / {{goal.targetProtein}}g</text>
+        <text class="muted-mini">碳水 {{analysis.totalCarbs}} / {{goal.targetCarbs}}g</text>
+        <text class="muted-mini">脂肪 {{analysis.totalFat}} / {{goal.targetFat}}g</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 达标状态 -->
+  <view wx:if="{{analysis}}" class="section">
+    <section-title title="达标分析"></section-title>
+    <view class="row">
+      <view class="metric-card" style="flex: 1;">
+        <text class="metric-label">热量</text>
+        <text class="metric-value small" style="color: {{analysis.status.kcal === '达标' ? '#c3f400' : analysis.status.kcal === '偏低' ? '#ff8c42' : '#ff4d4f'}};">{{analysis.status.kcal}}</text>
+      </view>
+      <view class="metric-card" style="flex: 1;">
+        <text class="metric-label">蛋白质</text>
+        <text class="metric-value small" style="color: {{analysis.status.protein === '达标' ? '#c3f400' : analysis.status.protein === '偏低' ? '#ff8c42' : '#ff4d4f'}};">{{analysis.status.protein}}</text>
+      </view>
+      <view class="metric-card" style="flex: 1;">
+        <text class="metric-label">碳水</text>
+        <text class="metric-value small" style="color: {{analysis.status.carbs === '达标' ? '#c3f400' : analysis.status.carbs === '偏低' ? '#ff8c42' : '#ff4d4f'}};">{{analysis.status.carbs}}</text>
+      </view>
+      <view class="metric-card" style="flex: 1;">
+        <text class="metric-label">脂肪</text>
+        <text class="metric-value small" style="color: {{analysis.status.fat === '达标' ? '#c3f400' : analysis.status.fat === '偏低' ? '#ff8c42' : '#ff4d4f'}};">{{analysis.status.fat}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 智能建议 -->
+  <view wx:if="{{analysis && analysis.suggestions}}" class="section">
+    <section-title title="智能饮食建议"></section-title>
+    <view class="glass-card metric-card">
+      <block wx:for="{{analysis.suggestions}}" wx:key="*this">
+        <view class="suggestion-item">
+          <view class="suggestion-dot"></view>
+          <text class="suggestion-text">{{item}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 今日饮食记录 -->
+  <view class="section">
+    <section-title title="今日记录 ({{logs.length}})"></section-title>
+    <block wx:for="{{logs}}" wx:key="id">
+      <view class="log-row">
+        <view>
+          <text class="log-name">{{item.name}}</text>
+          <text class="log-macros">{{item.kcal}}kcal · 蛋白{{item.protein}}g · 碳水{{item.carbs}}g · 脂肪{{item.fat}}g</text>
+        </view>
+        <view class="icon-btn" style="width: 56rpx; height: 56rpx; font-size: 22rpx;" data-id="{{item.id}}" bindtap="deleteLog">✕</view>
+      </view>
+    </block>
+
+    <view wx:if="{{!logs.length}}" class="empty-tip">
+      今天还没有记录，点击右上角 + 添加
+    </view>
+  </view>
+
+  <view class="bottom-space"></view>
+</view>

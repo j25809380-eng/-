@@ -88,7 +88,7 @@
       </view>
       <block wx:for="{{selectedPlan.days}}" wx:key="id" wx:for-item="day">
         <view class="day-card">
-          <view class="day-title">DAY {{day.dayNo}} · {{day.title}}</view>
+          <view class="day-title">第 {{day.dayNo}} 天 · {{day.title}}</view>
           <view class="muted-text">{{day.focus}}</view>
           <block wx:for="{{day.items}}" wx:key="id" wx:for-item="exercise">
             <view class="exercise-row">

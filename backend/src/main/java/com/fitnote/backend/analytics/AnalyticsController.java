@@ -87,8 +87,8 @@ public class AnalyticsController {
                 .toList(),
             "monthlyReport", Map.of(
                 "month", LocalDate.now().getMonthValue(),
-                "highlight", "This month shows consistent training output and better strength stability.",
-                "focus", "Keep 3-4 sessions per week and prioritize recovery quality."
+                "highlight", "本月训练输出稳定，力量稳定性提升明显。",
+                "focus", "保持每周3-4次训练，重视恢复质量。"
             )
         ));
     }
@@ -156,15 +156,15 @@ public class AnalyticsController {
 
     private String rankLabel(int rank) {
         if (rank == 1) {
-            return "Top Performer";
+            return "王者";
         }
         if (rank <= 3) {
-            return "Elite";
+            return "大师";
         }
         if (rank <= 10) {
-            return "Advanced";
+            return "精英";
         }
-        return "Rising";
+        return "新锐";
     }
 
     private record RankingRow(Long userId, String nickname, long score, long sessionCount, long prCount) {

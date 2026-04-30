@@ -82,7 +82,7 @@ Page({
       difficulty: '进阶',
       durationWeeks: '8',
       daysPerWeek: '4',
-      summary: '根据当前目标安排训练重点、动作与容量，适合答辩展示个人化训练设计。'
+      summary: '根据当前目标安排训练重点、动作与容量，量身定制个性化训练计划。'
     },
     days: [createPlanDay(1), createPlanDay(2)],
     presetTemplates,

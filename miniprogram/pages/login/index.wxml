@@ -1,31 +1,30 @@
 <view class="page-shell login-shell">
-  <view class="icon-btn login-back-btn" bindtap="handleBack">Back</view>
   <view class="login-glow"></view>
   <view class="login-card">
-    <view class="hero-tag">FITNOTE Graduation Demo</view>
-    <view class="login-title">Track your training, build real progress</view>
-    <view class="hero-subtitle">Production-ready WeChat login, workout persistence, analytics, and admin moderation.</view>
+    <view class="hero-tag">FITNOTE</view>
+    <view class="login-title">记录每一次训练，见证真实进步</view>
+    <view class="hero-subtitle">训练记录、数据分析、计划管理与社区互动</view>
 
     <view class="login-panel">
       <view class="metric-card">
-        <text class="metric-label">Core Capability</text>
-        <text class="metric-value">Training Records</text>
-        <text class="muted-text">Plan, history, PR, analytics, and community workflows in one app.</text>
+        <text class="metric-label">核心功能</text>
+        <text class="metric-value">训练记录</text>
+        <text class="muted-text">计划、历史、PR、分析与社区一体化管理</text>
       </view>
       <view class="grid-2 section">
         <view class="metric-card">
-          <text class="metric-label">Frontend</text>
-          <text class="metric-value small">WeChat Mini Program</text>
+          <text class="metric-label">训练计划</text>
+          <text class="metric-value small">灵活定制</text>
         </view>
         <view class="metric-card">
-          <text class="metric-label">Backend</text>
-          <text class="metric-value small">Spring Boot + MySQL</text>
+          <text class="metric-label">数据驱动</text>
+          <text class="metric-value small">可视化分析</text>
         </view>
       </view>
     </view>
 
     <view class="primary-button" bindtap="handleLogin">
-      {{loading ? 'Signing in...' : 'WeChat Login'}}
+      {{loading ? '登录中...' : '微信登录'}}
     </view>
   </view>
 </view>

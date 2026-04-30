@@ -45,7 +45,7 @@
           <view class="plan-title">{{item.exerciseName}} · 第 {{item.setNo}} 组</view>
           <view class="muted-text">{{item.weightKg}}kg × {{item.reps}} 次</view>
         </view>
-        <view class="badge" wx:if="{{item.isPr}}">NEW PR</view>
+        <view class="badge" wx:if="{{item.isPr}}">刷新 PR</view>
       </view>
     </block>
   </view>
