@@ -8,4 +8,6 @@ public interface WorkoutSetRepository extends JpaRepository<WorkoutSet, Long> {
     List<WorkoutSet> findBySessionIdOrderByExerciseNameAscSetNoAsc(Long sessionId);
 
     List<WorkoutSet> findByUserIdAndExerciseId(Long userId, Long exerciseId);
+
+    List<WorkoutSet> findTop200ByOrderByCreatedAtDesc();
 }

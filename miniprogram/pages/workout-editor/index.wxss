@@ -1,5 +1,101 @@
 @import "../../styles/theme.wxss";
 
+/* 计时器 */
+.timer-card {
+  padding: 28rpx 32rpx;
+  margin-bottom: 24rpx;
+}
+
+.timer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.timer-display {
+  font-size: 56rpx;
+  font-weight: 700;
+  font-family: 'SF Mono', 'Menlo', monospace;
+  color: #c3f400;
+  letter-spacing: 4rpx;
+}
+
+.timer-actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.timer-btn {
+  padding: 16rpx 32rpx;
+  border-radius: 32rpx;
+  background: rgba(195, 244, 0, 0.12);
+  color: #c3f400;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.timer-btn.active {
+  background: rgba(255, 77, 79, 0.15);
+  color: #ff4d4f;
+}
+
+.timer-btn.reset {
+  background: rgba(143, 147, 127, 0.12);
+  color: #8f937f;
+}
+
+.timer-hint {
+  margin-top: 12rpx;
+  font-size: 22rpx;
+  color: #707363;
+}
+
+/* 感受评分 */
+.feel-card {
+  padding: 28rpx 32rpx;
+  margin-bottom: 24rpx;
+}
+
+.feel-stars {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 16rpx;
+}
+
+.feel-star {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 2rpx solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.feel-star.on {
+  background: rgba(195, 244, 0, 0.15);
+  border-color: #c3f400;
+}
+
+.star-num {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #8f937f;
+}
+
+.feel-star.on .star-num {
+  color: #c3f400;
+}
+
+.feel-label {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #8f937f;
+}
+
+/* 训练组 */
 .set-card {
   padding: 28rpx;
   margin-bottom: 20rpx;
@@ -29,4 +125,9 @@
 
 .set-input {
   min-height: 88rpx;
+}
+
+.primary-button.disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }

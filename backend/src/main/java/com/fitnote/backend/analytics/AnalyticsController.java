@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -107,6 +108,22 @@ public class AnalyticsController {
             ))
             .toList();
         return ApiResponse.ok(records);
+    }
+
+    @GetMapping("/heatmap")
+    public ApiResponse<List<Map<String, Object>>> heatmap(
+            @RequestParam(defaultValue = "84") int days) {
+        Long userId = CurrentUser.id();
+        return ApiResponse.ok(workoutSessionRepository
+            .findByUserIdAndSessionDateBetween(userId,
+                LocalDate.now().minusDays(days), LocalDate.now())
+            .stream()
+            .collect(Collectors.groupingBy(
+                WorkoutSession::getSessionDate,
+                Collectors.counting()))
+            .entrySet().stream()
+            .map(e -> Map.<String, Object>of("date", e.getKey().toString(), "count", e.getValue()))
+            .toList());
     }
 
     @GetMapping("/rankings")

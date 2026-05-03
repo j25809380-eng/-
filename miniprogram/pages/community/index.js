@@ -7,22 +7,16 @@ function pad(value) {
 }
 
 function formatTime(value) {
-  if (!value) {
-    return '';
-  }
-
+  if (!value) return '';
   if (Array.isArray(value)) {
     const [year, month, day, hour, minute] = value;
     return `${year}-${pad(month)}-${pad(day)} ${pad(hour || 0)}:${pad(minute || 0)}`;
   }
-
   return String(value).replace('T', ' ').slice(0, 16);
 }
 
 function normalizeComment(comment) {
-  return Object.assign({}, comment, {
-    createdAt: formatTime(comment.createdAt)
-  });
+  return Object.assign({}, comment, { createdAt: formatTime(comment.createdAt) });
 }
 
 function normalizePost(post) {
@@ -44,6 +38,11 @@ Page({
     activeTab: '热门',
     posting: false,
     uploadingCover: false,
+    // 分页
+    page: 0,
+    totalPages: 0,
+    hasMore: true,
+    loadingMore: false,
     composer: {
       content: '',
       topicTags: '训练打卡,FitNote',
@@ -58,19 +57,37 @@ Page({
   },
 
   onShow() {
+    this.setData({ page: 0, allPosts: [], posts: [], hasMore: true });
     this.loadPosts();
   },
 
   loadPosts() {
     request({
       url: '/community/posts',
+      data: { page: this.data.page, size: 10 },
       mockData: mock.communityPosts
-    }).then((posts) => {
+    }).then((result) => {
+      // 兼容 PageResult 和 旧格式数组
+      const items = result && result.items ? result.items : (Array.isArray(result) ? result : []);
+      const normalized = (items || []).map(normalizePost);
+      const allPosts = this.data.page === 0 ? normalized : this.data.allPosts.concat(normalized);
       this.setData({
-        allPosts: (posts || []).map(normalizePost)
+        allPosts,
+        totalPages: result ? (result.totalPages || 0) : 0,
+        hasMore: result ? (result.page < result.totalPages - 1) : false,
+        loadingMore: false
       }, () => {
         this.applyTabFilter();
       });
+    }).catch(() => {
+      this.setData({ loadingMore: false });
+    });
+  },
+
+  onReachBottom() {
+    if (!this.data.hasMore || this.data.loadingMore) return;
+    this.setData({ loadingMore: true, page: this.data.page + 1 }, () => {
+      this.loadPosts();
     });
   },
 
@@ -92,15 +109,11 @@ Page({
 
   updateComposerField(event) {
     const field = event.currentTarget.dataset.field;
-    this.setData({
-      [`composer.${field}`]: event.detail.value
-    });
+    this.setData({ [`composer.${field}`]: event.detail.value });
   },
 
   chooseCoverImage() {
-    if (this.data.uploadingCover) {
-      return;
-    }
+    if (this.data.uploadingCover) return;
 
     wx.chooseMedia({
       count: 1,
@@ -108,24 +121,15 @@ Page({
       sourceType: ['album', 'camera'],
       success: (res) => {
         const file = res.tempFiles && res.tempFiles[0];
-        if (!file) {
-          return;
-        }
+        if (!file) return;
 
-        this.setData({
-          uploadingCover: true,
-          'composer.coverPreview': file.tempFilePath
-        });
+        this.setData({ uploadingCover: true, 'composer.coverPreview': file.tempFilePath });
 
         uploadFile({
           url: '/files/upload',
           filePath: file.tempFilePath,
-          formData: {
-            category: 'community'
-          },
-          mockData: {
-            url: file.tempFilePath
-          }
+          formData: { category: 'community' },
+          mockData: { url: file.tempFilePath }
         }).then((uploadRes) => {
           this.setData({
             'composer.coverImage': uploadRes.url,
@@ -133,10 +137,7 @@ Page({
           });
           wx.showToast({ title: '图片已上传', icon: 'success' });
         }).catch(() => {
-          this.setData({
-            'composer.coverImage': '',
-            'composer.coverPreview': ''
-          });
+          this.setData({ 'composer.coverImage': '', 'composer.coverPreview': '' });
           wx.showToast({ title: '图片上传失败', icon: 'none' });
         }).finally(() => {
           this.setData({ uploadingCover: false });
@@ -146,16 +147,11 @@ Page({
   },
 
   clearCoverImage() {
-    this.setData({
-      'composer.coverImage': '',
-      'composer.coverPreview': ''
-    });
+    this.setData({ 'composer.coverImage': '', 'composer.coverPreview': '' });
   },
 
   quickPost() {
-    if (this.data.posting) {
-      return;
-    }
+    if (this.data.posting) return;
 
     const content = String(this.data.composer.content || '').trim();
     if (!content) {
@@ -176,14 +172,9 @@ Page({
       mockData: { created: true, postId: Date.now() }
     }).then(() => {
       this.setData({
-        composer: {
-          content: '',
-          topicTags: '训练打卡,FitNote',
-          postType: 'TRAINING',
-          coverImage: '',
-          coverPreview: ''
-        }
+        composer: { content: '', topicTags: '训练打卡,FitNote', postType: 'TRAINING', coverImage: '', coverPreview: '' }
       });
+      this.setData({ page: 0, allPosts: [], hasMore: true });
       this.loadPosts();
       wx.showToast({ title: '动态已发布', icon: 'success' });
     }).finally(() => {
@@ -194,17 +185,12 @@ Page({
   toggleLike(event) {
     const postId = event.currentTarget.dataset.id;
     const currentPost = this.findPost(postId);
-    if (!currentPost) {
-      return;
-    }
+    if (!currentPost) return;
 
     request({
       url: `/community/posts/${postId}/like`,
       method: 'POST',
-      mockData: {
-        liked: !currentPost.liked,
-        likeCount: currentPost.likeCount + (currentPost.liked ? -1 : 1)
-      }
+      mockData: { liked: !currentPost.liked, likeCount: currentPost.likeCount + (currentPost.liked ? -1 : 1) }
     }).then((res) => {
       this.updatePost(postId, (post) => Object.assign({}, post, {
         liked: res.liked,
@@ -216,18 +202,11 @@ Page({
   toggleComments(event) {
     const postId = event.currentTarget.dataset.id;
     const currentPost = this.findPost(postId);
-    if (!currentPost) {
-      return;
-    }
+    if (!currentPost) return;
 
     const nextVisible = !currentPost.commentsVisible;
-    this.updatePost(postId, (post) => Object.assign({}, post, {
-      commentsVisible: nextVisible
-    }));
-
-    if (nextVisible) {
-      this.fetchComments(postId);
-    }
+    this.updatePost(postId, (post) => Object.assign({}, post, { commentsVisible: nextVisible }));
+    if (nextVisible) this.fetchComments(postId);
   },
 
   fetchComments(postId) {
@@ -253,9 +232,7 @@ Page({
   submitComment(event) {
     const postId = event.currentTarget.dataset.id;
     const currentPost = this.findPost(postId);
-    if (!currentPost) {
-      return;
-    }
+    if (!currentPost) return;
 
     const content = String(currentPost.commentDraft || '').trim();
     if (!content) {
@@ -276,11 +253,7 @@ Page({
       url: `/community/posts/${postId}/comments`,
       method: 'POST',
       data: { content },
-      mockData: {
-        created: true,
-        commentId: Date.now(),
-        commentCount: (currentPost.commentCount || 0) + 1
-      }
+      mockData: { created: true, commentId: Date.now(), commentCount: (currentPost.commentCount || 0) + 1 }
     }).then((res) => {
       this.updatePost(postId, (post) => Object.assign({}, post, {
         commentsVisible: true,
@@ -295,15 +268,9 @@ Page({
 
   updatePost(postId, updater) {
     const allPosts = (this.data.allPosts || []).map((post) => {
-      if (post.id !== postId) {
-        return post;
-      }
-      return updater(post);
+      return post.id !== postId ? post : updater(post);
     });
-
-    this.setData({ allPosts }, () => {
-      this.applyTabFilter();
-    });
+    this.setData({ allPosts }, () => { this.applyTabFilter(); });
   },
 
   findPost(postId) {

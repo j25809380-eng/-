@@ -15,3 +15,9 @@
   font-size: 30rpx;
   font-weight: 800;
 }
+
+.one-rm-text {
+  font-size: 22rpx;
+  color: #8EE5FF;
+  margin-top: 4rpx;
+}

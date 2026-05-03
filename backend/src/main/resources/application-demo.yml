@@ -1,12 +1,14 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:fitnote;MODE=MYSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
+    # 文件持久化 H2，重启不丢数据。数据库文件存储在 ./data/fitnote 目录
+    url: jdbc:h2:file:./data/fitnote;MODE=MYSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE;AUTO_RECONNECT=TRUE
     username: sa
     password:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      # update 模式：保留已有数据，仅更新表结构
+      ddl-auto: update
     open-in-view: false
     properties:
       hibernate:
@@ -14,6 +16,7 @@ spring:
   h2:
     console:
       enabled: true
+      path: /h2-console
 
 app:
   wechat:

@@ -2,9 +2,11 @@ package com.fitnote.backend.workout;
 
 import com.fitnote.backend.common.ApiResponse;
 import com.fitnote.backend.common.CurrentUser;
+import com.fitnote.backend.common.PageResult;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,8 +30,10 @@ public class WorkoutController {
     }
 
     @GetMapping("/history")
-    public ApiResponse<List<Map<String, Object>>> history() {
-        return ApiResponse.ok(workoutService.getHistory(CurrentUser.id()));
+    public ApiResponse<PageResult<Map<String, Object>>> history(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        return ApiResponse.ok(workoutService.getHistory(CurrentUser.id(), page, size));
     }
 
     @GetMapping("/{id}")
@@ -62,6 +67,14 @@ public class WorkoutController {
     ) {
     }
 
+    @PostMapping("/estimate-calories")
+    public ApiResponse<Map<String, Object>> estimateCalories(@Valid @RequestBody EstimateCaloriesRequest request) {
+        int calories = WorkoutCalorieEstimator.estimate(
+            request.trainingType(), request.title(), request.focus(),
+            request.notes(), request.durationMinutes(), request.distanceKm());
+        return ApiResponse.ok(Map.of("calories", calories));
+    }
+
     public record WorkoutSetInput(
         Long exerciseId,
         String exerciseName,
@@ -70,6 +83,16 @@ public class WorkoutController {
         Integer reps,
         Integer rir,
         String remark
+    ) {
+    }
+
+    public record EstimateCaloriesRequest(
+        String trainingType,
+        String title,
+        String focus,
+        String notes,
+        @NotNull Integer durationMinutes,
+        BigDecimal distanceKm
     ) {
     }
 }

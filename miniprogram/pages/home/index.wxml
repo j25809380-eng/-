@@ -22,6 +22,10 @@
   </view>
 
   <view class="section">
+    <heatmap days="{{84}}"></heatmap>
+  </view>
+
+  <view class="section">
     <section-title title="准备状态"></section-title>
     <view class="grid-3">
       <view class="metric-card">

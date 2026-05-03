@@ -44,6 +44,7 @@
         <view>
           <view class="plan-title">{{item.exerciseName}} · 第 {{item.setNo}} 组</view>
           <view class="muted-text">{{item.weightKg}}kg × {{item.reps}} 次</view>
+          <view class="one-rm-text" wx:if="{{item.estimatedOneRm > 0}}">估算 1RM: {{item.estimatedOneRm}}kg</view>
         </view>
         <view class="badge" wx:if="{{item.isPr}}">刷新 PR</view>
       </view>

@@ -1,6 +1,7 @@
 package com.fitnote.backend.admin;
 
 import com.fitnote.backend.common.ApiResponse;
+import com.fitnote.backend.common.BusinessException;
 import com.fitnote.backend.common.CurrentUser;
 import com.fitnote.backend.security.JwtTokenProvider;
 import jakarta.validation.constraints.NotBlank;
@@ -32,12 +33,13 @@ public class AdminAuthController {
 
     @PostMapping("/login")
     public ApiResponse<Map<String, Object>> login(@RequestBody AdminLoginRequest request) {
-        SysAdmin admin = sysAdminRepository.findByUsername(request.username()).orElseThrow(() -> new IllegalArgumentException("管理员不存在"));
+        SysAdmin admin = sysAdminRepository.findByUsername(request.username())
+            .orElseThrow(() -> BusinessException.notFound("管理员不存在"));
         if (admin.getStatus() == null || admin.getStatus() != 1) {
-            throw new IllegalStateException("管理员账号已禁用");
+            throw BusinessException.forbidden("管理员账号已禁用");
         }
         if (!passwordEncoder.matches(request.password(), admin.getPasswordHash())) {
-            throw new IllegalArgumentException("账号或密码错误");
+            throw BusinessException.badRequest("账号或密码错误");
         }
 
         String token = jwtTokenProvider.generateAdminToken(admin.getId(), admin.getNickname());
@@ -55,7 +57,8 @@ public class AdminAuthController {
     @GetMapping("/me")
     public ApiResponse<Map<String, Object>> me() {
         Long adminId = CurrentUser.id();
-        SysAdmin admin = sysAdminRepository.findById(adminId).orElseThrow();
+        SysAdmin admin = sysAdminRepository.findById(adminId)
+            .orElseThrow(() -> BusinessException.notFound("管理员不存在"));
         return ApiResponse.ok(Map.of(
             "id", admin.getId(),
             "username", admin.getUsername(),

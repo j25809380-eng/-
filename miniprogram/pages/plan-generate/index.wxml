@@ -1,0 +1,82 @@
+<view class="page-shell">
+  <view class="top-bar">
+    <view class="row">
+      <view class="icon-btn" bindtap="handleBack">返</view>
+      <view class="brand-block">
+        <view class="brand-avatar"></view>
+        <text class="brand-name">智能计划生成</text>
+      </view>
+    </view>
+    <view></view>
+  </view>
+
+  <view class="hero-card">
+    <view class="hero-tag">AI 推荐引擎</view>
+    <view class="hero-title">生成训练<text class="hero-title-accent">计划</text></view>
+    <view class="hero-subtitle">基于规则引擎 + 动作库，智能推荐最适合你的训练方案。</view>
+  </view>
+
+  <!-- 模式切换 -->
+  <view class="section">
+    <view class="mode-tabs">
+      <view class="mode-tab {{mode === 'single' ? 'active' : ''}}" data-mode="single" bindtap="switchMode">单部位推荐</view>
+      <view class="mode-tab {{mode === 'split' ? 'active' : ''}}" data-mode="split" bindtap="switchMode">分训日生成</view>
+    </view>
+  </view>
+
+  <!-- 训练目标 -->
+  <view class="section">
+    <section-title title="训练目标"></section-title>
+    <view class="chip-row">
+      <block wx:for="{{goals}}" wx:key="*this">
+        <view class="chip {{selectedGoal === item ? 'active' : ''}}" data-value="{{item}}" bindtap="selectGoal">{{item}}</view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 训练部位（单部位模式） -->
+  <view wx:if="{{mode === 'single'}}" class="section">
+    <section-title title="训练部位"></section-title>
+    <view class="chip-row wrap">
+      <block wx:for="{{muscleGroups}}" wx:key="key">
+        <view class="chip {{selectedMuscle === item.key ? 'active' : ''}}" data-value="{{item.key}}" bindtap="selectMuscle">{{item.label}}</view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 分训类型（分训模式） -->
+  <view wx:if="{{mode === 'split'}}" class="section">
+    <section-title title="分训类型"></section-title>
+    <view class="split-list">
+      <block wx:for="{{splitTypes}}" wx:key="key">
+        <view class="split-card {{selectedSplit === item.key ? 'active' : ''}}" data-value="{{item.key}}" bindtap="selectSplit">
+          <text class="split-title">{{item.label}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 训练水平 -->
+  <view class="section">
+    <section-title title="训练水平"></section-title>
+    <view class="chip-row">
+      <block wx:for="{{levels}}" wx:key="key">
+        <view class="chip level-chip {{selectedLevel === item.key ? 'active' : ''}}" data-value="{{item.key}}" bindtap="selectLevel">{{item.label}}</view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 当前选择 -->
+  <view wx:if="{{selectedGoal && selectedLevel}}" class="section">
+    <view class="glass-card preview-card">
+      <text class="preview-label">当前配置</text>
+      <text class="preview-text">{{previewText || '请选择训练目标、部位和水平'}}</text>
+    </view>
+  </view>
+
+  <view class="primary-button {{generating ? 'disabled' : ''}}" bindtap="generatePlan">
+    {{generating ? '智能分析中...' : '智能生成计划'}}
+  </view>
+
+  <bottom-nav active="plan"></bottom-nav>
+</view>

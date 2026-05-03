@@ -1,5 +1,7 @@
 package com.fitnote.backend.community;
 
+import com.fitnote.backend.common.BusinessException;
+import com.fitnote.backend.common.PageResult;
 import com.fitnote.backend.user.User;
 import com.fitnote.backend.user.UserRepository;
 import java.util.List;
@@ -15,18 +17,22 @@ public class CommunityService {
     private final CommunityLikeRepository communityLikeRepository;
     private final UserRepository userRepository;
 
+    private final UserFollowRepository userFollowRepository;
+
     public CommunityService(CommunityPostRepository communityPostRepository,
                             CommunityCommentRepository communityCommentRepository,
                             CommunityLikeRepository communityLikeRepository,
-                            UserRepository userRepository) {
+                            UserRepository userRepository,
+                            UserFollowRepository userFollowRepository) {
         this.communityPostRepository = communityPostRepository;
         this.communityCommentRepository = communityCommentRepository;
         this.communityLikeRepository = communityLikeRepository;
         this.userRepository = userRepository;
+        this.userFollowRepository = userFollowRepository;
     }
 
-    public List<Map<String, Object>> listPosts(Long currentUserId) {
-        return communityPostRepository.findAll().stream()
+    public PageResult<Map<String, Object>> listPosts(Long currentUserId, int page, int size) {
+        List<Map<String, Object>> all = communityPostRepository.findByOrderByCreatedAtDesc().stream()
             .filter(post -> "APPROVED".equalsIgnoreCase(post.getAuditStatus())
                 || (currentUserId != null && currentUserId.equals(post.getUserId())))
             .sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()))
@@ -56,12 +62,14 @@ public class CommunityService {
                 Map.entry("createdAt", post.getCreatedAt())
             ))
             .toList();
+        return PageResult.fromList(all, page, size);
     }
 
     @Transactional
     public Map<String, Object> createPost(Long userId, String content, String coverImage,
                                            String postType, String topicTags) {
-        User user = userRepository.findById(userId).orElseThrow();
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> BusinessException.notFound("用户不存在"));
 
         CommunityPost post = new CommunityPost();
         post.setUserId(userId);
@@ -94,8 +102,10 @@ public class CommunityService {
 
     @Transactional
     public Map<String, Object> createComment(Long userId, Long postId, String content, Long parentId) {
-        User user = userRepository.findById(userId).orElseThrow();
-        CommunityPost post = communityPostRepository.findById(postId).orElseThrow();
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> BusinessException.notFound("用户不存在"));
+        CommunityPost post = communityPostRepository.findById(postId)
+            .orElseThrow(() -> BusinessException.notFound("帖子不存在"));
 
         CommunityComment comment = new CommunityComment();
         comment.setPostId(postId);
@@ -113,7 +123,8 @@ public class CommunityService {
 
     @Transactional
     public Map<String, Object> toggleLike(Long userId, Long postId) {
-        CommunityPost post = communityPostRepository.findById(postId).orElseThrow();
+        CommunityPost post = communityPostRepository.findById(postId)
+            .orElseThrow(() -> BusinessException.notFound("帖子不存在"));
         boolean liked;
 
         var existing = communityLikeRepository.findByPostIdAndUserId(postId, userId);
@@ -132,5 +143,62 @@ public class CommunityService {
         post.setLikeCount(likeCount);
         communityPostRepository.save(post);
         return Map.of("liked", liked, "likeCount", likeCount);
+    }
+
+    @Transactional
+    public Map<String, Object> toggleFollow(Long followerId, Long followingId) {
+        if (followerId.equals(followingId)) {
+            return Map.of("following", false, "error", "不能关注自己");
+        }
+        var existing = userFollowRepository.findByFollowerIdAndFollowingId(followerId, followingId);
+        boolean following;
+        if (existing.isPresent()) {
+            userFollowRepository.delete(existing.get());
+            following = false;
+        } else {
+            UserFollow follow = new UserFollow();
+            follow.setFollowerId(followerId);
+            follow.setFollowingId(followingId);
+            userFollowRepository.save(follow);
+            following = true;
+        }
+        return Map.of("following", following,
+            "followerCount", userFollowRepository.countByFollowingId(followingId),
+            "followingCount", userFollowRepository.countByFollowerId(followerId));
+    }
+
+    public Map<String, Object> getFollowStatus(Long userId) {
+        List<Long> followingIds = userFollowRepository.findByFollowerId(userId).stream()
+            .map(UserFollow::getFollowingId).toList();
+        return Map.of("following", followingIds, "followingCount", followingIds.size());
+    }
+
+    public PageResult<Map<String, Object>> listFollowingPosts(Long userId, int page, int size) {
+        List<Long> followingIds = userFollowRepository.findByFollowerId(userId).stream()
+            .map(UserFollow::getFollowingId).toList();
+        if (followingIds.isEmpty()) return PageResult.of(List.of(), page, size, 0);
+
+        List<Map<String, Object>> all = communityPostRepository.findByUserIdInOrderByCreatedAtDesc(followingIds).stream()
+            .filter(p -> "APPROVED".equalsIgnoreCase(p.getAuditStatus()))
+            .map(this::toPostMap)
+            .toList();
+        return PageResult.fromList(all, page, size);
+    }
+
+    private Map<String, Object> toPostMap(CommunityPost post) {
+        return Map.<String, Object>ofEntries(
+            Map.entry("id", post.getId()),
+            Map.entry("authorName", post.getAuthorName()),
+            Map.entry("authorAvatar", post.getAuthorAvatar() == null ? "" : post.getAuthorAvatar()),
+            Map.entry("content", post.getContent()),
+            Map.entry("coverImage", post.getCoverImage() == null ? "" : post.getCoverImage()),
+            Map.entry("postType", post.getPostType()),
+            Map.entry("topicTags", post.getTopicTags() == null ? "" : post.getTopicTags()),
+            Map.entry("likeCount", post.getLikeCount()),
+            Map.entry("commentCount", post.getCommentCount()),
+            Map.entry("liked", false),
+            Map.entry("commentsPreview", List.of()),
+            Map.entry("createdAt", post.getCreatedAt())
+        );
     }
 }

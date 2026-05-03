@@ -1,0 +1,32 @@
+.heatmap-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24rpx 8rpx;
+}
+
+.heatmap-title {
+  font-size: 22rpx;
+  color: #8f937f;
+  margin-bottom: 16rpx;
+  align-self: flex-start;
+  padding-left: 8rpx;
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  margin-top: 12rpx;
+}
+
+.legend-label {
+  font-size: 18rpx;
+  color: #707363;
+}
+
+.legend-box {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 4rpx;
+}

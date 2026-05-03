@@ -1,5 +1,6 @@
 package com.fitnote.backend.plan;
 
+import com.fitnote.backend.common.BusinessException;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,8 @@ public class PlanService {
     }
 
     public Map<String, Object> getPlanDetail(Long id) {
-        TrainingPlan plan = trainingPlanRepository.findById(id).orElseThrow();
+        TrainingPlan plan = trainingPlanRepository.findById(id)
+            .orElseThrow(() -> BusinessException.notFound("计划不存在"));
         List<Map<String, Object>> days = trainingPlanDayRepository.findByPlanIdOrderByDayNoAsc(id).stream()
             .map(day -> Map.<String, Object>of(
                 "id", day.getId(),
@@ -73,8 +75,7 @@ public class PlanService {
     }
 
     public List<Map<String, Object>> getMyPlans(Long userId) {
-        return trainingPlanRepository.findAll().stream()
-            .filter(plan -> Boolean.TRUE.equals(plan.getCustomPlan()) && userId.equals(plan.getCreatorUserId()))
+        return trainingPlanRepository.findByCustomPlanTrueAndCreatorUserId(userId).stream()
             .map(plan -> Map.<String, Object>of(
                 "id", plan.getId(),
                 "title", plan.getTitle(),

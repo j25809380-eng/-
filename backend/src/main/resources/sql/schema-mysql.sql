@@ -54,6 +54,9 @@ CREATE TABLE IF NOT EXISTS exercise (
     description TEXT,
     movement_steps TEXT,
     tips TEXT,
+    is_compound TINYINT DEFAULT 0,
+    priority INT DEFAULT 5,
+    suitable_level VARCHAR(64),
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_exercise_category (category, primary_muscle)
@@ -209,6 +212,17 @@ CREATE TABLE IF NOT EXISTS sys_admin (
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS food_preset (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(64) NOT NULL,
+    category VARCHAR(32),
+    meal_type VARCHAR(16),
+    kcal INT NOT NULL,
+    protein DECIMAL(6,1),
+    carbs DECIMAL(6,1),
+    fat DECIMAL(6,1)
+);
+
 CREATE TABLE IF NOT EXISTS content_audit_log (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     target_type VARCHAR(32),
@@ -226,6 +240,16 @@ CREATE TABLE IF NOT EXISTS content_audit_log (
     INDEX idx_audit_log_target (target_type, target_id),
     INDEX idx_audit_log_status (audit_status, created_at),
     INDEX idx_audit_log_operator (operator_id, created_at)
+);
+
+CREATE TABLE IF NOT EXISTS user_follow (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    follower_id BIGINT NOT NULL,
+    following_id BIGINT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uk_follow (follower_id, following_id),
+    INDEX idx_follow_follower (follower_id),
+    INDEX idx_follow_following (following_id)
 );
 
 CREATE TABLE IF NOT EXISTS data_report_monthly (

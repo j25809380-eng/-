@@ -1,0 +1,13 @@
+<view class="heatmap-wrap">
+  <view class="heatmap-title">训练热力图（近{{days}}天）</view>
+  <canvas type="2d" id="heatmap-canvas" style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;"></canvas>
+  <view class="heatmap-legend">
+    <text class="legend-label">少</text>
+    <view class="legend-box" style="background: #1a1a1a;"></view>
+    <view class="legend-box" style="background: #0e4429;"></view>
+    <view class="legend-box" style="background: #006d32;"></view>
+    <view class="legend-box" style="background: #26a641;"></view>
+    <view class="legend-box" style="background: #39d353;"></view>
+    <text class="legend-label">多</text>
+  </view>
+</view>

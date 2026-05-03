@@ -48,6 +48,15 @@ public class Exercise extends BaseEntity {
     @Lob
     private String tips;
 
+    @Column(name = "is_compound")
+    private Boolean compound = false;
+
+    @Column(name = "priority")
+    private Integer priority = 5;
+
+    @Column(name = "suitable_level", length = 64)
+    private String suitableLevel;
+
     public Long getId() {
         return id;
     }
@@ -130,5 +139,29 @@ public class Exercise extends BaseEntity {
 
     public void setTips(String tips) {
         this.tips = tips;
+    }
+
+    public Boolean getCompound() {
+        return compound;
+    }
+
+    public void setCompound(Boolean compound) {
+        this.compound = compound;
+    }
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
+
+    public String getSuitableLevel() {
+        return suitableLevel;
+    }
+
+    public void setSuitableLevel(String suitableLevel) {
+        this.suitableLevel = suitableLevel;
     }
 }

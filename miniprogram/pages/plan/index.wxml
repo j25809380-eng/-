@@ -29,6 +29,7 @@
     <view class="hero-subtitle">上肢与下肢交替推进，建立稳定训练节奏和渐进超负荷方案。</view>
     <view class="hero-actions">
       <view class="primary-button hero-button" bindtap="startPlan">立即开始训练</view>
+      <view class="ghost-button" bindtap="goGeneratePlan">智能生成计划</view>
       <view class="ghost-button" bindtap="goCreatePlan">创建自定义计划</view>
     </view>
   </view>

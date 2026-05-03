@@ -1,0 +1,84 @@
+<view class="page-shell">
+  <view class="top-bar">
+    <view class="row">
+      <view class="icon-btn" bindtap="handleBack">返</view>
+      <view class="brand-block">
+        <view class="brand-avatar"></view>
+        <text class="brand-name">训练计划</text>
+      </view>
+    </view>
+    <view class="icon-btn" bindtap="refreshPlan">{{refreshing ? '...' : '换一组'}}</view>
+  </view>
+
+  <view wx:if="{{plan}}" class="hero-card">
+    <view class="hero-tag">{{plan.goal || '增肌'}} · {{plan.level || '进阶'}}</view>
+    <view class="hero-title">{{plan.title}}<text class="hero-title-accent">计划</text></view>
+    <view class="hero-subtitle">共 {{plan.totalExercises}} 个动作 · {{plan.totalSets}} 组</view>
+  </view>
+
+  <!-- 完成进度 -->
+  <view wx:if="{{plan}}" class="section">
+    <view class="glass-card progress-card">
+      <text class="progress-text">训练进度：已完成 {{getCompletedCount()}} / {{getTotalCount()}} 个动作</text>
+      <view class="progress-bar-bg">
+        <view class="progress-bar-fill" style="width: {{getTotalCount() > 0 ? getCompletedCount() / getTotalCount() * 100 : 0}}%;"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 动作列表 -->
+  <view wx:if="{{plan && plan.exercises}}" class="section">
+    <section-title title="动作列表"></section-title>
+    <block wx:for="{{plan.exercises}}" wx:key="exerciseId">
+      <view class="glass-card exercise-card {{completedMap[item.exerciseId] ? 'done' : ''}}">
+        <view class="ex-head">
+          <view class="ex-badge-row">
+            <text class="badge">{{item.isCompound ? '复合' : '孤立'}}</text>
+            <text class="badge muted">{{item.equipment}}</text>
+            <text class="badge muted">{{item.difficulty}}</text>
+          </view>
+          <view class="check-btn {{completedMap[item.exerciseId] ? 'checked' : ''}}" data-id="{{item.exerciseId}}" bindtap="toggleComplete">
+            {{completedMap[item.exerciseId] ? '✓' : '○'}}
+          </view>
+        </view>
+        <view class="ex-title">{{item.exerciseName}}</view>
+        <view class="ex-muscle">{{item.primaryMuscle}}</view>
+
+        <view class="ex-params">
+          <view class="param-item">
+            <text class="param-num">{{item.sets}}</text>
+            <text class="param-unit">组数</text>
+          </view>
+          <view class="param-item">
+            <text class="param-num">{{item.repsDisplay}}</text>
+            <text class="param-unit">次数</text>
+          </view>
+          <view class="param-item">
+            <text class="param-num">{{item.restSeconds}}s</text>
+            <text class="param-unit">组间休息</text>
+          </view>
+          <view class="param-item">
+            <text class="param-num weight">{{item.weightMode}}</text>
+            <text class="param-unit">重量模式</text>
+          </view>
+        </view>
+
+        <view wx:if="{{item.reason}}" class="ex-tips reason">
+          <text class="tips-icon">🎯</text>
+          <text class="tips-text">{{item.reason}}</text>
+        </view>
+        <view wx:if="{{item.tips}}" class="ex-tips">
+          <text class="tips-icon">💡</text>
+          <text class="tips-text">{{item.tips}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view wx:if="{{plan}}" class="section">
+    <view class="primary-button" bindtap="startWorkout">开始此计划</view>
+    <view class="ghost-button" bindtap="refreshPlan">{{refreshing ? '生成中...' : '换一组计划'}}</view>
+  </view>
+
+  <view class="bottom-space"></view>
+</view>

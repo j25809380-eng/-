@@ -87,14 +87,22 @@ Page({
     this.loadPlanDetail(event.currentTarget.dataset.id);
   },
 
+  goGeneratePlan() {
+    wx.navigateTo({ url: '/pages/plan-generate/index' });
+  },
+
   goCreatePlan() {
     wx.navigateTo({ url: '/pages/plan-create/index' });
   },
 
   startPlan() {
-    const selectedPlan = this.data.selectedPlan || {};
-    wx.navigateTo({
-      url: `/pages/workout-editor/index?title=${encodeURIComponent(selectedPlan.title || '今日训练')}&focus=${encodeURIComponent(selectedPlan.targetType || '计划执行')}`
-    });
+    const converter = require('../../utils/plan-converter');
+    const blueprint = converter.fromStandardPlan(this.data.selectedPlan, 0);
+    if (blueprint) {
+      wx.setStorageSync('fitnote_plan_blueprint', blueprint);
+      wx.navigateTo({ url: '/pages/workout-editor/index?fromPlan=1' });
+    } else {
+      wx.navigateTo({ url: '/pages/workout-editor/index?title=' + encodeURIComponent('今日训练') + '&focus=' + encodeURIComponent('计划执行') });
+    }
   }
 });

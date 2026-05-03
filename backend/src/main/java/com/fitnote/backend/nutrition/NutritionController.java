@@ -2,7 +2,9 @@ package com.fitnote.backend.nutrition;
 
 import com.fitnote.backend.common.ApiResponse;
 import com.fitnote.backend.common.CurrentUser;
+import com.fitnote.backend.common.PageResult;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.*;
@@ -48,20 +50,12 @@ public class NutritionController {
     }
 
     @GetMapping("/logs")
-    public ApiResponse<List<Map<String, Object>>> logs() {
-        List<DietLog> logs = nutritionService.getTodayLogs(CurrentUser.id());
-        return ApiResponse.ok(logs.stream()
-            .map(log -> Map.<String, Object>of(
-                "id", log.getId(),
-                "name", log.getName(),
-                "mealType", log.getMealType(),
-                "kcal", log.getKcal(),
-                "protein", log.getProtein(),
-                "carbs", log.getCarbs(),
-                "fat", log.getFat(),
-                "logDate", log.getLogDate().toString()
-            ))
-            .toList());
+    public ApiResponse<PageResult<Map<String, Object>>> logs(
+            @RequestParam(required = false) String date,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        LocalDate logDate = (date != null && !date.isBlank()) ? LocalDate.parse(date) : LocalDate.now();
+        return ApiResponse.ok(nutritionService.getLogs(CurrentUser.id(), logDate, page, size));
     }
 
     @PostMapping("/log")
@@ -86,6 +80,11 @@ public class NutritionController {
     public ApiResponse<Map<String, Object>> deleteLog(@PathVariable Long id) {
         nutritionService.deleteLog(id);
         return ApiResponse.ok(Map.of("deleted", true));
+    }
+
+    @GetMapping("/food-presets")
+    public ApiResponse<List<Map<String, Object>>> foodPresets(@RequestParam(defaultValue = "") String keyword) {
+        return ApiResponse.ok(nutritionService.getFoodPresets(keyword));
     }
 
     public record AddLogRequest(

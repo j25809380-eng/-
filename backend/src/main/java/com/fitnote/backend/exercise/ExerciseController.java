@@ -1,6 +1,7 @@
 package com.fitnote.backend.exercise;
 
 import com.fitnote.backend.common.ApiResponse;
+import com.fitnote.backend.common.BusinessException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,8 @@ public class ExerciseController {
 
     @GetMapping("/{id}")
     public ApiResponse<Map<String, Object>> detail(@PathVariable Long id) {
-        Exercise exercise = exerciseRepository.findById(id).orElseThrow();
+        Exercise exercise = exerciseRepository.findById(id)
+            .orElseThrow(() -> BusinessException.notFound("动作不存在"));
         return ApiResponse.ok(Map.ofEntries(
             Map.entry("id", exercise.getId()),
             Map.entry("name", exercise.getName()),

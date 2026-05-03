@@ -9,4 +9,6 @@ public interface ContentAuditLogRepository extends JpaRepository<ContentAuditLog
     List<ContentAuditLog> findTop20ByOrderByCreatedAtDesc();
 
     List<ContentAuditLog> findByCreatedAtGreaterThanEqualOrderByCreatedAtDesc(LocalDateTime createdAt);
+
+    List<ContentAuditLog> findByOrderByCreatedAtDesc();
 }

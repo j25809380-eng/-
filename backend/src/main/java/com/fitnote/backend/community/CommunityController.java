@@ -2,6 +2,7 @@ package com.fitnote.backend.community;
 
 import com.fitnote.backend.common.ApiResponse;
 import com.fitnote.backend.common.CurrentUser;
+import com.fitnote.backend.common.PageResult;
 import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Validated
@@ -25,9 +27,11 @@ public class CommunityController {
     }
 
     @GetMapping
-    public ApiResponse<List<Map<String, Object>>> list() {
+    public ApiResponse<PageResult<Map<String, Object>>> list(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         Long currentUserId = CurrentUser.optionalId().orElse(null);
-        return ApiResponse.ok(communityService.listPosts(currentUserId));
+        return ApiResponse.ok(communityService.listPosts(currentUserId, page, size));
     }
 
     @PostMapping
@@ -60,6 +64,23 @@ public class CommunityController {
         String postType,
         String topicTags
     ) {
+    }
+
+    @PostMapping("/follow/{userId}")
+    public ApiResponse<Map<String, Object>> toggleFollow(@PathVariable Long userId) {
+        return ApiResponse.ok(communityService.toggleFollow(CurrentUser.id(), userId));
+    }
+
+    @GetMapping("/follow/status")
+    public ApiResponse<Map<String, Object>> followStatus() {
+        return ApiResponse.ok(communityService.getFollowStatus(CurrentUser.id()));
+    }
+
+    @GetMapping("/following/posts")
+    public ApiResponse<PageResult<Map<String, Object>>> followingPosts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ApiResponse.ok(communityService.listFollowingPosts(CurrentUser.id(), page, size));
     }
 
     public record CreateCommentRequest(

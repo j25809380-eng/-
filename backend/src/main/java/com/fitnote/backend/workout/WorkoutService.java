@@ -1,5 +1,7 @@
 package com.fitnote.backend.workout;
 
+import com.fitnote.backend.common.BusinessException;
+import com.fitnote.backend.common.PageResult;
 import com.fitnote.backend.exercise.Exercise;
 import com.fitnote.backend.exercise.ExerciseRepository;
 import java.math.BigDecimal;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class WorkoutService {
+public class WorkoutService implements IWorkoutService {
 
     private final WorkoutSessionRepository workoutSessionRepository;
     private final WorkoutSetRepository workoutSetRepository;
@@ -29,8 +31,8 @@ public class WorkoutService {
         this.personalRecordRepository = personalRecordRepository;
     }
 
-    public List<Map<String, Object>> getHistory(Long userId) {
-        return workoutSessionRepository.findByUserIdOrderBySessionDateDesc(userId).stream()
+    public PageResult<Map<String, Object>> getHistory(Long userId, int page, int size) {
+        List<Map<String, Object>> all = workoutSessionRepository.findByUserIdOrderBySessionDateDesc(userId).stream()
             .map(session -> Map.<String, Object>of(
                 "id", session.getId(),
                 "title", session.getTitle(),
@@ -42,22 +44,28 @@ public class WorkoutService {
                 "completionStatus", session.getCompletionStatus()
             ))
             .toList();
+        return PageResult.fromList(all, page, size);
     }
 
     public Map<String, Object> getDetail(Long id) {
-        WorkoutSession session = workoutSessionRepository.findById(id).orElseThrow();
+        WorkoutSession session = workoutSessionRepository.findById(id)
+            .orElseThrow(() -> BusinessException.notFound("训练记录不存在"));
         List<Map<String, Object>> sets = workoutSetRepository.findBySessionIdOrderByExerciseNameAscSetNoAsc(id).stream()
-            .map(set -> Map.<String, Object>of(
-                "id", set.getId(),
-                "exerciseId", set.getExerciseId(),
-                "exerciseName", set.getExerciseName(),
-                "setNo", set.getSetNo(),
-                "weightKg", set.getWeightKg(),
-                "reps", set.getReps(),
-                "rir", set.getRir(),
-                "remark", set.getRemark() == null ? "" : set.getRemark(),
-                "isPr", set.getPr()
-            ))
+            .map(set -> {
+                BigDecimal estimatedOneRm = OneRmCalculator.estimate(set.getWeightKg(), set.getReps() != null ? set.getReps() : 1);
+                return Map.<String, Object>of(
+                    "id", set.getId(),
+                    "exerciseId", set.getExerciseId(),
+                    "exerciseName", set.getExerciseName(),
+                    "setNo", set.getSetNo(),
+                    "weightKg", set.getWeightKg(),
+                    "reps", set.getReps(),
+                    "rir", set.getRir(),
+                    "remark", set.getRemark() == null ? "" : set.getRemark(),
+                    "isPr", set.getPr(),
+                    "estimatedOneRm", estimatedOneRm
+                );
+            })
             .toList();
         return Map.of(
             "id", session.getId(),
@@ -131,7 +139,8 @@ public class WorkoutService {
         if (exerciseName != null && !exerciseName.isBlank()) {
             return exerciseName;
         }
-        Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow();
+        Exercise exercise = exerciseRepository.findById(exerciseId)
+            .orElseThrow(() -> BusinessException.notFound("动作不存在"));
         return exercise.getName();
     }
 

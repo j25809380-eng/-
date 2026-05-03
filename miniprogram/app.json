@@ -9,6 +9,8 @@
     "pages/history/index",
     "pages/workout-editor/index",
     "pages/workout-complete/index",
+    "pages/plan-generate/index",
+    "pages/plan-result/index",
     "pages/ai/index",
     "pages/community/index",
     "pages/ranking/index",
@@ -24,6 +26,7 @@
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
     "bottom-nav": "/components/bottom-nav/index",
-    "section-title": "/components/section-title/index"
+    "section-title": "/components/section-title/index",
+    "heatmap": "/components/heatmap/index"
   }
 }

@@ -1,5 +1,6 @@
 package com.fitnote.backend.nutrition;
 
+import com.fitnote.backend.common.PageResult;
 import com.fitnote.backend.user.UserProfile;
 import com.fitnote.backend.user.UserProfileRepository;
 import java.math.BigDecimal;
@@ -12,18 +13,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class NutritionService {
+public class NutritionService implements INutritionService {
 
     private final UserGoalRepository userGoalRepository;
     private final DietLogRepository dietLogRepository;
     private final UserProfileRepository userProfileRepository;
+    private final FoodPresetRepository foodPresetRepository;
 
     public NutritionService(UserGoalRepository userGoalRepository,
                             DietLogRepository dietLogRepository,
-                            UserProfileRepository userProfileRepository) {
+                            UserProfileRepository userProfileRepository,
+                            FoodPresetRepository foodPresetRepository) {
         this.userGoalRepository = userGoalRepository;
         this.dietLogRepository = dietLogRepository;
         this.userProfileRepository = userProfileRepository;
+        this.foodPresetRepository = foodPresetRepository;
     }
 
     // ========== 目标管理 ==========
@@ -114,9 +118,45 @@ public class NutritionService {
         return dietLogRepository.findByUserIdAndLogDate(userId, LocalDate.now());
     }
 
+    public PageResult<Map<String, Object>> getLogs(Long userId, LocalDate logDate, int page, int size) {
+        List<Map<String, Object>> all = dietLogRepository.findByUserIdAndLogDate(userId, logDate).stream()
+            .map(log -> Map.<String, Object>of(
+                "id", log.getId(),
+                "name", log.getName(),
+                "mealType", log.getMealType(),
+                "kcal", log.getKcal(),
+                "protein", log.getProtein(),
+                "carbs", log.getCarbs(),
+                "fat", log.getFat(),
+                "logDate", log.getLogDate().toString()
+            ))
+            .toList();
+        return PageResult.fromList(all, page, size);
+    }
+
     @Transactional
     public void deleteLog(Long id) {
         dietLogRepository.deleteById(id);
+    }
+
+    // ========== 食物预设库 ==========
+
+    public List<Map<String, Object>> getFoodPresets(String keyword) {
+        List<FoodPreset> presets = (keyword == null || keyword.isBlank())
+            ? foodPresetRepository.findAll()
+            : foodPresetRepository.findByNameContainingIgnoreCase(keyword);
+        return presets.stream()
+            .map(p -> Map.<String, Object>of(
+                "id", p.getId(),
+                "name", p.getName(),
+                "category", p.getCategory() != null ? p.getCategory() : "",
+                "mealType", p.getMealType() != null ? p.getMealType() : "other",
+                "kcal", p.getKcal(),
+                "protein", p.getProtein(),
+                "carbs", p.getCarbs(),
+                "fat", p.getFat()
+            ))
+            .toList();
     }
 
     // ========== 每日分析 ==========

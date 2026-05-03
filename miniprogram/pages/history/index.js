@@ -2,9 +2,7 @@ const { request, resolveFileUrl } = require('../../utils/request');
 const { navigateBack } = require('../../utils/nav');
 
 function normalizeMonthlyReport(report) {
-  if (!report) {
-    return null;
-  }
+  if (!report) return null;
 
   const topExercises = report.topExercises || [];
   const maxVolume = topExercises.reduce((max, item) => Math.max(max, Number(item.volume) || 0), 1);
@@ -40,7 +38,12 @@ Page({
     weightTrendLabels: [],
     weightTrendValues: [],
     volumeTrendLabels: [],
-    volumeTrendValues: []
+    volumeTrendValues: [],
+    // 分页
+    page: 0,
+    totalPages: 0,
+    hasMore: true,
+    loadingMore: false
   },
 
   handleBack() {
@@ -48,17 +51,44 @@ Page({
   },
 
   onShow() {
+    this.setData({ page: 0, history: [], hasMore: true });
     Promise.all([
-      request({ url: '/workouts/history' }),
+      request({ url: '/workouts/history', data: { page: 0, size: 20 } }),
       request({ url: '/analytics/overview' }),
       request({ url: '/reports/monthly' })
-    ]).then(([history, overview, monthlyReport]) => {
+    ]).then(([pageResult, overview, monthlyReport]) => {
       const charts = toChartData(overview);
+      const history = pageResult && pageResult.items ? pageResult.items : (Array.isArray(pageResult) ? pageResult : []);
       this.setData(Object.assign({
-        history: history || [],
+        history,
         overview: overview || null,
-        monthlyReport: normalizeMonthlyReport(monthlyReport)
+        monthlyReport: normalizeMonthlyReport(monthlyReport),
+        page: 0,
+        totalPages: pageResult ? (pageResult.totalPages || 0) : 0,
+        hasMore: pageResult ? (pageResult.page < pageResult.totalPages - 1) : false
       }, charts));
+    });
+  },
+
+  onReachBottom() {
+    if (!this.data.hasMore || this.data.loadingMore) return;
+    const nextPage = this.data.page + 1;
+    this.setData({ loadingMore: true });
+
+    request({
+      url: '/workouts/history',
+      data: { page: nextPage, size: 20 }
+    }).then((pageResult) => {
+      const newItems = pageResult && pageResult.items ? pageResult.items : (Array.isArray(pageResult) ? pageResult : []);
+      this.setData({
+        history: this.data.history.concat(newItems),
+        page: nextPage,
+        totalPages: pageResult ? (pageResult.totalPages || 0) : 0,
+        hasMore: pageResult ? (pageResult.page < pageResult.totalPages - 1) : false,
+        loadingMore: false
+      });
+    }).catch(() => {
+      this.setData({ loadingMore: false });
     });
   },
 
@@ -71,9 +101,7 @@ Page({
   },
 
   exportMonthlyReport() {
-    if (this.data.exportingReport) {
-      return;
-    }
+    if (this.data.exportingReport) return;
 
     const month = this.data.monthlyReport && this.data.monthlyReport.month;
     const query = month ? `?month=${encodeURIComponent(month)}` : '';
@@ -92,20 +120,13 @@ Page({
             wx.showToast({ title: '导出失败', icon: 'none' });
             return;
           }
-
           wx.saveFile({
             tempFilePath: downloadRes.tempFilePath,
-            success: () => {
-              wx.showToast({ title: '报告已导出', icon: 'success' });
-            },
-            fail: () => {
-              wx.showToast({ title: '链接已复制', icon: 'none' });
-            }
+            success: () => wx.showToast({ title: '报告已导出', icon: 'success' }),
+            fail: () => wx.showToast({ title: '链接已复制', icon: 'none' })
           });
         },
-        fail: () => {
-          wx.showToast({ title: '链接已复制', icon: 'none' });
-        }
+        fail: () => wx.showToast({ title: '链接已复制', icon: 'none' })
       });
     }).catch(() => {
       wx.showToast({ title: '导出失败', icon: 'none' });

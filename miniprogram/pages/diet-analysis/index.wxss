@@ -223,3 +223,104 @@
   background: rgba(195, 244, 0, 0.18);
   color: #c3f400;
 }
+
+/* 日期导航 */
+.date-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24rpx;
+  padding: 16rpx 0;
+}
+
+.date-arrow {
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ea391;
+  font-size: 24rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.date-picker-wrap {
+  padding: 12rpx 32rpx;
+  border-radius: 32rpx;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.date-text {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #c3f400;
+}
+
+/* 食物预设 */
+.food-input-row {
+  display: flex;
+  gap: 12rpx;
+  align-items: center;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.preset-btn {
+  padding: 16rpx 24rpx;
+  border-radius: 24rpx;
+  background: rgba(195, 244, 0, 0.12);
+  color: #c3f400;
+  font-size: 24rpx;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.preset-panel {
+  margin-top: 16rpx;
+  border-radius: 20rpx;
+  background: rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+}
+
+.preset-search {
+  padding: 16rpx;
+}
+
+.preset-list {
+  max-height: 400rpx;
+}
+
+.preset-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 24rpx;
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.04);
+}
+
+.preset-name {
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.preset-macros {
+  font-size: 20rpx;
+  color: #9ea391;
+  display: block;
+  margin-top: 4rpx;
+}
+
+.preset-add {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: rgba(195, 244, 0, 0.15);
+  color: #c3f400;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

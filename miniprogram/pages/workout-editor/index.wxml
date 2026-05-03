@@ -16,6 +16,21 @@
     <view class="hero-subtitle">自动记录动作、重量、次数与组数，支持后续 PR 分析和历史回溯。</view>
   </view>
 
+  <!-- 计时器卡片 -->
+  <view class="glass-card timer-card">
+    <view class="timer-row">
+      <view class="timer-display">{{timerDisplay}}</view>
+      <view class="timer-actions">
+        <view class="timer-btn {{timerRunning ? 'active' : ''}}" bindtap="toggleTimer">
+          {{timerRunning ? '暂停' : '开始'}}
+        </view>
+        <view class="timer-btn reset" bindtap="resetTimer">重置</view>
+      </view>
+    </view>
+    <view class="timer-hint">训练时长将自动记录</view>
+  </view>
+
+  <!-- 训练信息 -->
   <view class="section input-card">
     <text class="form-label">训练标题</text>
     <input class="form-input" value="{{title}}" data-field="title" bindinput="updateField" />
@@ -27,6 +42,20 @@
     <textarea class="form-textarea" value="{{notes}}" data-field="notes" bindinput="updateField" placeholder="记录今天的状态、感觉或细节..." placeholder-style="color:#707363;" />
   </view>
 
+  <!-- 训练感受评分 -->
+  <view class="glass-card feel-card">
+    <text class="form-label">训练感受</text>
+    <view class="feel-stars">
+      <block wx:for="{{[1,2,3,4,5]}}" wx:key="*this">
+        <view class="feel-star {{feelingScore >= item ? 'on' : ''}}" data-score="{{item}}" bindtap="rateFeeling">
+          <text class="star-num">{{item}}</text>
+        </view>
+      </block>
+    </view>
+    <text class="feel-label">{{feelingScore > 0 ? feelLabels[feelingScore-1] : '点击评分'}}</text>
+  </view>
+
+  <!-- 训练组明细 -->
   <view class="section">
     <section-title title="训练组明细" actionText="新增一组" bind:action="addSet"></section-title>
     <block wx:for="{{sets}}" wx:key="setNo">
@@ -55,5 +84,7 @@
     </block>
   </view>
 
-  <view class="primary-button" bindtap="saveWorkout">保存并完成训练</view>
+  <view class="primary-button {{saving ? 'disabled' : ''}}" bindtap="saveWorkout">
+    {{saving ? '保存中...' : (timerSeconds > 0 ? '完成训练 (' + timerDisplay + ')' : '保存并完成训练')}}
+  </view>
 </view>

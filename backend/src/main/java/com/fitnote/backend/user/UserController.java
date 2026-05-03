@@ -1,6 +1,7 @@
 package com.fitnote.backend.user;
 
 import com.fitnote.backend.common.ApiResponse;
+import com.fitnote.backend.common.BusinessException;
 import com.fitnote.backend.common.CurrentUser;
 import com.fitnote.backend.workout.BodyMetricRepository;
 import com.fitnote.backend.workout.PersonalRecordRepository;
@@ -48,8 +49,11 @@ public class UserController {
     @GetMapping("/users/me")
     public ApiResponse<Map<String, Object>> me() {
         Long userId = CurrentUser.id();
-        User user = userRepository.findById(userId).orElseThrow();
-        UserProfile profile = userProfileRepository.findByUserId(userId).orElseThrow();
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> BusinessException.notFound("用户不存在"));
+
+        // Profile 可能不存在（新用户未填写资料），使用安全默认值
+        UserProfile profile = userProfileRepository.findByUserId(userId).orElse(null);
 
         Map<String, Object> stats = new LinkedHashMap<>();
         stats.put("totalSessions", workoutSessionRepository.findByUserIdOrderBySessionDateDesc(userId).size());
@@ -59,19 +63,19 @@ public class UserController {
         return ApiResponse.ok(Map.of(
             "user", Map.of(
                 "id", user.getId(),
-                "nickname", user.getNickname(),
-                "avatarUrl", user.getAvatarUrl(),
+                "nickname", safeStr(user.getNickname(), ""),
+                "avatarUrl", safeStr(user.getAvatarUrl(), ""),
                 "phone", user.getPhone() == null ? "" : user.getPhone()
             ),
             "profile", Map.of(
-                "gender", profile.getGender(),
-                "heightCm", profile.getHeightCm(),
-                "weightKg", profile.getWeightKg(),
-                "bodyFatRate", profile.getBodyFatRate(),
-                "targetType", profile.getTargetType(),
-                "targetWeightKg", profile.getTargetWeightKg(),
-                "trainingLevel", profile.getTrainingLevel(),
-                "bio", profile.getBio()
+                "gender", profile != null ? safeStr(profile.getGender(), "") : "",
+                "heightCm", profile != null && profile.getHeightCm() != null ? profile.getHeightCm() : "",
+                "weightKg", profile != null && profile.getWeightKg() != null ? profile.getWeightKg() : "",
+                "bodyFatRate", profile != null && profile.getBodyFatRate() != null ? profile.getBodyFatRate() : "",
+                "targetType", profile != null ? safeStr(profile.getTargetType(), "未设置") : "未设置",
+                "targetWeightKg", profile != null && profile.getTargetWeightKg() != null ? profile.getTargetWeightKg() : "",
+                "trainingLevel", profile != null ? safeStr(profile.getTrainingLevel(), "新手") : "新手",
+                "bio", profile != null ? safeStr(profile.getBio(), "") : ""
             ),
             "stats", stats
         ));
@@ -80,8 +84,15 @@ public class UserController {
     @PutMapping("/users/me/profile")
     public ApiResponse<Map<String, Object>> updateProfile(@Valid @RequestBody UpdateProfileRequest request) {
         Long userId = CurrentUser.id();
-        User user = userRepository.findById(userId).orElseThrow();
-        UserProfile profile = userProfileRepository.findByUserId(userId).orElseThrow();
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> BusinessException.notFound("用户不存在"));
+
+        // 若 Profile 不存在则自动创建
+        UserProfile profile = userProfileRepository.findByUserId(userId).orElseGet(() -> {
+            UserProfile p = new UserProfile();
+            p.setUserId(userId);
+            return p;
+        });
 
         user.setNickname(request.nickname());
         if (request.avatarUrl() != null && !request.avatarUrl().isBlank()) {
@@ -119,13 +130,18 @@ public class UserController {
         } catch (Exception ex) {
             throw new RuntimeException("头像上传失败", ex);
         }
-        User user = userRepository.findById(userId).orElseThrow();
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> BusinessException.notFound("用户不存在"));
         user.setAvatarUrl("/uploads/" + safeName);
         userRepository.save(user);
         return ApiResponse.ok(Map.of(
             "fileName", safeName,
             "url", "/uploads/" + safeName
         ));
+    }
+
+    private static String safeStr(String value, String fallback) {
+        return value == null || value.isBlank() ? fallback : value;
     }
 
     public record UpdateProfileRequest(
